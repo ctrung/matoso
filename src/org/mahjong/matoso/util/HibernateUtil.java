@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
@@ -54,9 +55,16 @@ public class HibernateUtil {
 	// from the default configuration files
 	static {
 		try {
-			configuration = new Configuration();
-			// Calling configure because we want to use hibernate.cfg.xml
-			sessionFactory = configuration.configure().buildSessionFactory();
+			configuration = new Configuration().configure();
+			
+			// using MATOSO_HOME env. variable value to locate database path
+			String connectionUrl = configuration.getProperty(Environment.URL);
+			String matosoHome = System.getenv("MATOSO_HOME") == null ? "" : System.getenv("MATOSO_HOME");
+			connectionUrl = connectionUrl.replace("${MATOSO_HOME}", matosoHome);
+			configuration.setProperty(Environment.URL, connectionUrl);
+			
+			logger.info("connection url = " + connectionUrl);
+			sessionFactory = configuration.buildSessionFactory();
 		} catch (Throwable t) {
 			// we have to catch Throwable, otherwise we will miss
 			// NoClassDefFoundError and other subclasses of Error

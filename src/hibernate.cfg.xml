@@ -9,7 +9,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
-        <property name="connection.url">jdbc:derby:C:\devs\projects\MATOSO_DB_MMSP</property>
+        <property name="connection.url">jdbc:derby:${MATOSO_HOME}/MATOSO_DB</property>
         
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
