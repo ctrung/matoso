@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.mahjong.matoso.bean.Game" table="GAME">
+		<id name="id">
+			<generator class="increment"/>
+		</id>
+	
+		<many-to-one name="table" class="org.mahjong.matoso.bean.Table" column="ID_TABLE" />
+
+		<property name="gameNumber" 				type="integer" column="GAME_NUMBER"/>
+		<property name="scorePlayer1" 				type="integer" column="RESULT_EMA1"/>
+		<property name="scorePlayer2" 				type="integer" column="RESULT_EMA2"/>
+		<property name="scorePlayer3" 				type="integer" column="RESULT_EMA3"/>
+		<property name="scorePlayer4" 				type="integer" column="RESULT_EMA4"/>
+		
+	</class>
+</hibernate-mapping>

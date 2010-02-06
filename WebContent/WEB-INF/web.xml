@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+	<display-name>matoso</display-name>
+
+	<!-- Filters -->
+	
+	<filter>
+		<filter-name>HibernateFilter</filter-name>
+		<filter-class>org.mahjong.matoso.filter.HibernateFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>HibernateFilter</filter-name>
+		<url-pattern>/servlet/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Startup Servlets -->
+
+	<servlet>
+		<description>Servlet initialisation on start-up system</description>
+		<servlet-name>ServletInit</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.init.ServletInit</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- Servlets -->
+	
+	<servlet>
+		<description>List the tournaments</description>
+		<display-name>ListTournament</display-name>
+		<servlet-name>ListTournament</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.tournament.ListTournament</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Create a tournament with some parameters</description>
+		<display-name>CreateTournament</display-name>
+		<servlet-name>CreateTournament</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.tournament.CreateTournament</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Import players form</description>
+		<display-name>ImportFormPlayer</display-name>
+		<servlet-name>ImportFormPlayer</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.player.ImportFormPlayer</servlet-class>
+	</servlet>	
+	<servlet>
+		<description>Import the csv file of players</description>
+		<display-name>ImportPlayer</display-name>
+		<servlet-name>ImportPlayer</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.player.ImportPlayer</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Save a table games and scores</description>
+		<display-name>SaveTableGamesAndScores</display-name>
+		<servlet-name>SaveTableGamesAndScores</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.table.SaveTableGamesAndScores</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Change the language</description>
+		<display-name>ChangeLanguage</display-name>
+		<servlet-name>ChangeLanguage</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.other.ChangeLanguage</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Add a player form page</description>
+		<display-name>AddFormPlayer</display-name>
+		<servlet-name>AddFormPlayer</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.player.AddFormPlayer</servlet-class>
+	</servlet>	
+	<servlet>
+		<description>Add a player to the tournament</description>
+		<display-name>AddPlayer</display-name>
+		<servlet-name>AddPlayer</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.player.AddPlayer</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Fill the tables with the players</description>
+		<display-name>FillTables</display-name>
+		<servlet-name>FillTables</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.table.FillTables</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Load a tournament in the current session</description>
+		<display-name>LoadTournament</display-name>
+		<servlet-name>LoadTournament</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.tournament.LoadTournament</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Delete a tournament</description>
+		<display-name>DeleteTournament</display-name>
+		<servlet-name>DeleteTournament</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.tournament.DeleteTournament</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Edit a table</description>
+		<display-name>EditTable</display-name>
+		<servlet-name>EditTable</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.table.EditTable</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Save a player</description>
+		<display-name>SavePlayer</display-name>
+		<servlet-name>SavePlayer</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.player.SavePlayer</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Edit a player</description>
+		<display-name>EditPlayer</display-name>
+		<servlet-name>EditPlayer</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.player.EditPlayer</servlet-class>
+	</servlet>	
+	<servlet>
+		<description>View ranking</description>
+		<display-name>ViewRanking</display-name>
+		<servlet-name>ViewRanking</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.ranking.ViewRanking</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Add rounds</description>
+		<display-name>AddMoreRounds</display-name>
+		<servlet-name>AddMoreRounds</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.round.AddMoreRounds</servlet-class>
+	</servlet>
+	<servlet>
+		<description>View the tournament draw</description>
+		<display-name>ViewTournamentDraw</display-name>
+		<servlet-name>ViewTournamentDraw</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.tournament.ViewTournamentDraw</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Dynamic view of the  ranking</description>
+		<display-name>DynamicViewRanking</display-name>
+		<servlet-name>DynamicViewRanking</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.ranking.DynamicViewRanking</servlet-class>
+	</servlet>
+	
+	<!-- Servlets mappings -->
+	
+	<servlet-mapping>
+		<servlet-name>ListTournament</servlet-name>
+		<url-pattern>/servlet/ListTournament</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CreateTournament</servlet-name>
+		<url-pattern>/servlet/CreateTournament</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ImportFormPlayer</servlet-name>
+		<url-pattern>/servlet/ImportFormPlayer</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>ImportPlayer</servlet-name>
+		<url-pattern>/servlet/ImportPlayer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SaveTableGamesAndScores</servlet-name>
+		<url-pattern>/servlet/SaveTableGamesAndScores</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ChangeLanguage</servlet-name>
+		<url-pattern>/servlet/ChangeLanguage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddFormPlayer</servlet-name>
+		<url-pattern>/servlet/AddFormPlayer</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>AddPlayer</servlet-name>
+		<url-pattern>/servlet/AddPlayer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FillTables</servlet-name>
+		<url-pattern>/servlet/FillTables</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoadTournament</servlet-name>
+		<url-pattern>/servlet/LoadTournament</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DeleteTournament</servlet-name>
+		<url-pattern>/servlet/DeleteTournament</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditTable</servlet-name>
+		<url-pattern>/servlet/EditTable</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SavePlayer</servlet-name>
+		<url-pattern>/servlet/SavePlayer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditPlayer</servlet-name>
+		<url-pattern>/servlet/EditPlayer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewRanking</servlet-name>
+		<url-pattern>/servlet/ViewRanking</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewTournamentDraw</servlet-name>
+		<url-pattern>/servlet/ViewTournamentDraw</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DynamicViewRanking</servlet-name>
+		<url-pattern>/servlet/DynamicViewRanking</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Welcome file -->
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<jsp-config>
+		<taglib>
+	        <taglib-uri>http://displaytag.sourceforge.net/</taglib-uri>
+	        <taglib-location>/WEB-INF/tld/displaytag.tld</taglib-location>
+	    </taglib>	
+	</jsp-config>
+
+</web-app>

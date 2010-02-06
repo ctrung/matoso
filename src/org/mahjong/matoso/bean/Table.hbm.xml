@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.mahjong.matoso.bean.Table" table="TABLE_PLAYERS">
+
+		<id name="id" column="ID">
+			<generator class="increment" />
+		</id>
+		
+		<property name="name" type="string" column="NAME" />
+		<property name="round" type="integer" column="ROUND" />
+		
+		<many-to-one name="tournament" class="org.mahjong.matoso.bean.Tournament" column="ID_TOURNAMENT" />
+		
+		<many-to-one name="player1" class="org.mahjong.matoso.bean.Player" column="ID_PLAYER_1" />
+		<many-to-one name="player2" class="org.mahjong.matoso.bean.Player" column="ID_PLAYER_2" />
+		<many-to-one name="player3" class="org.mahjong.matoso.bean.Player" column="ID_PLAYER_3" />
+		<many-to-one name="player4" class="org.mahjong.matoso.bean.Player" column="ID_PLAYER_4" />
+
+		<bag name="games">
+			<key column="ID_TABLE" />
+			<one-to-many class="org.mahjong.matoso.bean.Game" />
+		</bag>
+		
+		<many-to-one name="result" class="org.mahjong.matoso.bean.GameResult" column="ID_RESULT" cascade="all"/>
+		
+		<many-to-one name="penalty" class="org.mahjong.matoso.bean.Penalty" column="ID_PENALTY" cascade="all"/>
+		
+	</class>
+</hibernate-mapping>

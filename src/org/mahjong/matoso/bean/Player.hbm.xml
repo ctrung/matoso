@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.mahjong.matoso.bean.Player" table="PLAYER">
+		<id name="id" column="ID">
+			<generator class="increment"/>
+		</id>
+	
+		<property name="firstname" 			type="string" column="FIRSTNAME"/>
+		<property name="lastname" 			type="string" column="LASTNAME"/>
+		<property name="email" 				type="string" column="EMAIL"/>
+		<property name="country" 			type="string" column="COUNTRY"/>
+		<property name="ema" 				type="string" column="EMA"/>
+		<property name="pseudo" 			type="string" column="PSEUDO"/>
+		
+		<property name="dateArrival" 		type="date"   column="DATE_ARRIVAL"/>
+		<property name="dateDeparture" 		type="date"   column="DATE_DEPARTURE"/>
+		<property name="dateFormular" 		type="date"   column="DATE_FORMULAR"/>
+		<property name="datePayment" 		type="date"   column="DATE_PAYMENT"/>
+		
+		<property name="paymentMode" 		type="string"  column="PAYMENT_MODE"/>
+		<property name="hasPhoto" 			type="boolean" column="HAS_PHOTO"/>
+		<property name="cj" 				type="string"  column="CJ"/>
+		<property name="cp" 				type="string"  column="CP"/>
+		<property name="details" 			type="string"  column="DETAILS" length="1000" />
+		<property name="club" 				type="string"  column="CLUB"/>
+		
+		
+		
+		<set name="tournaments" table="TOURNAMENT_PLAYER">
+			<key column="ID_PLAYER"/>
+			<many-to-many column="ID_TOURNAMENT" class="org.mahjong.matoso.bean.Tournament"/>
+		</set>
+		
+	</class>
+</hibernate-mapping>

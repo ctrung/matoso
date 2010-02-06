@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.mahjong.matoso.bean.Penalty" table="PENALTY">
+		<id name="id">
+			<generator class="increment"/>
+		</id>
+	
+		<property name="penaltyPlayer1" 	type="integer" column="PENALTY_PLAYER1" />
+		<property name="penaltyPlayer2" 	type="integer" column="PENALTY_PLAYER2" />
+		<property name="penaltyPlayer3" 	type="integer" column="PENALTY_PLAYER3" />
+		<property name="penaltyPlayer4" 	type="integer" column="PENALTY_PLAYER4" />
+				
+	</class>
+</hibernate-mapping>

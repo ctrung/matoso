@@ -1,0 +1,189 @@
+<%@page
+	language="java"
+	contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" %>
+
+<%@page import="org.mahjong.matoso.bean.*"%>
+<%@page import="org.mahjong.matoso.constant.*"%>
+<%@page import="java.util.List"%>
+<%@page import="org.mahjong.matoso.bean.Player"%>
+<%@page import="org.mahjong.matoso.display.TournamentStats"%>
+
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>MaToSo</title>
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
+		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
+	</head>
+
+	<body>
+	
+		<!-- header -->
+		<%@include file="include/head.jsp"%>
+		
+		<%
+		 	String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
+		%>
+			
+		<h2><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
+		
+		<div id="ranking">
+		
+			<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+
+				RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+name%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
+			
+			<!-- ---------------- -->
+			<!-- Tournament stats -->
+			<!-- ---------------- -->			
+
+			<h3><%=BundleCst.BUNDLE.getString("ranking.stats.tournament")%></h3>
+
+			<table cellpadding="0" cellspacing="0" border="1">
+				<thead class="labels">
+					
+					<!-- header labels -->
+					<tr>
+						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_GAMES)%></td>
+						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK)%></td>
+						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_VICTORY)%></td>
+						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%></td>
+						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_SELFPICK)%></td>
+						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_VICTORY)%></td>
+						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_DRAW)%></td>
+					</tr>
+				</thead>
+				
+				<tbody>
+				
+					<% TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats"); %>
+						
+					<tr class="color0">
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_GAMES)%>"><%=""+ts.getNbGames() %></td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK)%>"><%=""+ts.getNbSelfpick() %></td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_VICTORY)%>"><%=""+ts.getNbVictory() %></td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%>"><%=""+ts.getNbDraw() %></td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_SELFPICK)%>"><%=""+ts.getPercSelfpick() %></td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_VICTORY)%>"><%=""+ts.getPercVictory() %></td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_DRAW)%>"><%=""+ts.getPercDraw() %></td>
+					</tr>
+						
+	
+				</tbody>
+			</table>
+
+			<!-- --------------------- -->
+			<!-- Teams ranking + stats -->
+			<!-- --------------------- -->
+				
+			<h3><%=BundleCst.BUNDLE.getString("ranking.by.team")%></h3>
+			<table border="1" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr><td></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POINTS)%></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE)%></td></tr>
+				</thead>
+				<tbody>
+					<%
+					int i = 0;
+					for (Team team : (List<Team>) session.getAttribute("rankingTeam")) {
+					%>				<tr class="<%="color"+(i++%2) %>">
+										<td>
+											<h3><%=team.getName()%></h3>
+											<%=team.getPlayer1().getFirstname()%> <%=team.getPlayer1().getPrettyPrintName()%>,
+											<%=team.getPlayer2().getFirstname()%> <%=team.getPlayer2().getPrettyPrintName()%>,
+											<%=team.getPlayer3().getFirstname()%> <%=team.getPlayer3().getPrettyPrintName()%>,
+											<%=team.getPlayer4().getFirstname()%> <%=team.getPlayer4().getPrettyPrintName()%>
+										</td>
+										<td><%=team.getPrettyPrintPoints()%></td>
+										<td><%=team.getScore()%></td>
+									</tr>
+					<%
+					}
+					%>
+				</tbody>
+			</table>
+	
+			<!-- ----------------------- -->
+			<!-- Players ranking + stats -->
+			<!-- ----------------------- -->
+					
+			<h3><%=BundleCst.BUNDLE.getString("ranking.by.player")%></h3>
+			
+			<p class="info">
+				<%= BundleCst.BUNDLE.getString("ranking.stats.player.text")%>
+			</p>
+			
+			<form action=<%=request.getContextPath() + "/servlet/ViewRanking?nbElementsByPage=redefine" %>" id="redefineNbElementsByPage">
+				<label for="nbElementsByPageId"><%= BundleCst.BUNDLE.getString("ranking.nb.elements.by.page")%></label>
+				<input type="text" id="nbElementsByPageId" name="nbElementsByPage" />
+				<input type="submit" value="<%= BundleCst.BUNDLE.getString("ranking.nb.elements.by.page.define.button")%>" />
+			</form>
+			
+			<a href="<%=request.getContextPath() + "/servlet/ViewRanking" %>">
+				<%= BundleCst.BUNDLE.getString("general.reload.default") %></a>
+			<br/>
+			
+			<display:table name="sessionScope.ranking" 
+						sort="list" 
+						decorator="org.mahjong.matoso.util.decorator.PlayerDecorator" 
+						pagesize="<%=((Integer)session.getAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE)).intValue() %>" 
+						id="player" 
+						export="true">
+				
+				<display:column media="html" headerClass="edit">
+					<a href="<%="EditPlayer?old-firstname=" + ((Player)player).getFirstname() + "&old-name=" + ((Player)player).getLastname() %>">
+						<img class="editUser" src="<%=request.getContextPath() + "/img/user_48.png"%>" title="<%= BundleCst.BUNDLE.getString("general.edit") %>" /></a>
+				</display:column>
+						
+			 	<display:column headerClass="position" property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" 
+			 		sortable="true" defaultorder="ascending" />
+			 	
+			 	<display:column headerClass="name" property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" 
+			 		sortable="true" defaultorder="ascending" />
+			 		
+			    <display:column property="points" titleKey="<%=BundleCst.RANKING_POINTS%>" format="{0,number,###.##}" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="nbGames" titleKey="<%=BundleCst.RANKING_NB_GAMES%>" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="nbSelfpick" titleKey="<%=BundleCst.RANKING_NB_SELFPICK%>" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			 	<display:column property="nbVictory" titleKey="<%=BundleCst.RANKING_NB_VICTORY%>" 
+			 		sortable="true" defaultorder="descending" />
+			 		
+			    <display:column property="nbDefeat" titleKey="<%=BundleCst.RANKING_NB_DEFEAT%>" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="nbGiven" titleKey="<%=BundleCst.RANKING_NB_GIVEN%>" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="nbSustainSelfpick" titleKey="<%=BundleCst.RANKING_NB_SUSTAIN_SELFPICK%>" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="nbDraw" titleKey="<%=BundleCst.RANKING_NB_DRAW%>" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="percSelfpick" titleKey="<%=BundleCst.RANKING_PERC_SELFPICK%>" format="{0,number,##.##} %" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="percVictory" titleKey="<%=BundleCst.RANKING_PERC_VICTORY%>" format="{0,number,##.##} %" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			    <display:column property="percGiven" titleKey="<%=BundleCst.RANKING_PERC_GIVEN%>" format="{0,number,##.##} %" 
+			    	sortable="true" defaultorder="descending" />
+			    	
+			</display:table>			
+			
+		</div>
+	</body>
+</html>
