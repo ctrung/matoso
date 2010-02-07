@@ -7,14 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.mahjong.matoso.bean.GameResult;
-import org.mahjong.matoso.bean.Penalty;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
 import org.mahjong.matoso.display.DisplayTableGame;
 import org.mahjong.matoso.service.GameResultService;
 import org.mahjong.matoso.service.GameService;
-import org.mahjong.matoso.service.PenaltyService;
 import org.mahjong.matoso.service.TableService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.NumberUtils;
@@ -59,14 +57,6 @@ public final class EditTable extends MatosoServlet {
 			request.setAttribute(RequestCst.REQ_ATTR_TABLE_RESULT, results);
 		} catch (FatalException e) {
 			LOGGER.error("Can't retrieve table game result : " + e.getMessage());
-		}
-		
-		// PUT the penalties in the request attrs.
-		try {
-			Penalty penalty = PenaltyService.getByTable(table);
-			request.setAttribute(RequestCst.REQ_ATTR_TABLE_PENALTY, penalty);
-		} catch (FatalException e) {
-			LOGGER.error("Can't retrieve table penalties : " + e.getMessage());
 		}
 		
 		return ServletCst.REDIRECT_TO_TABLE;

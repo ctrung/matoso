@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.mahjong.matoso.bean.GameResult;
-import org.mahjong.matoso.bean.Penalty;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.constant.ApplicationCst;
 import org.mahjong.matoso.constant.BundleCst;
@@ -57,9 +56,9 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 		Enumeration<String> paramNames 	= request.getParameterNames();
 		String paramName				= null;
 		String paramValue				= null;
-		GameResult results			= null;
+		String[] paramValues			= null;
+		GameResult results				= null;
 		boolean autoCalculate			= false;
-		Penalty penalty					= null;
 		
 		List<DisplayTableGame> rcvdGamesData	= new ArrayList<DisplayTableGame>();
 		DisplayTableGame gameData				= null;
@@ -73,9 +72,6 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 		//  -> The table points and scores
 		results = GameResultService.getByTable(table);
 		assert results!=null;
-		//  -> The penalty
-		penalty = PenaltyService.getByTable(table);
-		assert penalty!=null;
 		
 		/*
 		 *  2. Collect the user inputs via the request parameters...
@@ -88,6 +84,7 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 		while (paramNames.hasMoreElements()) {
 			paramName = paramNames.nextElement();
 			paramValue = request.getParameter(paramName);
+			paramValues = request.getParameterValues(paramName);
 			boolean found = false;
 			
 			if (LOGGER.isDebugEnabled()) LOGGER.debug(paramName + " = " + paramValue);
@@ -104,7 +101,7 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 			if(found) continue;
 			
 			// or a penalty data ?
-			found = PenaltyService.collectPenaltyData(paramName, paramValue, penalty);
+			found = PenaltyService.collectPenaltyData(paramName, paramValues, table);
 			if(found) continue;
 			
 			// or perhaps the auto calculate flag ?
@@ -125,6 +122,11 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 		 */
 		MatosoMessages userMsgs = new MatosoMessages();
 		request.setAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES, userMsgs);
+		
+		// penalties
+		if(!PenaltyService.isPenaltiesValid(table.getPenalties())) {
+			userMsgs.addMessage(MatosoMessage.ERROR, BundleCst.BUNDLE.getString("table.errors.penalties.not.valid"));
+		}
 		
 		// tables scores
 		if(!autoCalculate && !GameResultService.isEmpty(results) && !GameResultService.isTableScoresValid(results)) {
@@ -164,7 +166,6 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 			request.setAttribute(RequestCst.REQ_ATTR_TABLE, table);
 			request.setAttribute(RequestCst.REQ_ATTR_TABLE_DISPLAY_GAMES, rcvdGamesData);
 			request.setAttribute(RequestCst.REQ_ATTR_TABLE_RESULT, results);
-			request.setAttribute(RequestCst.REQ_ATTR_TABLE_PENALTY, penalty);
 			return ServletCst.REDIRECT_TO_TABLE;
 		}
 		
@@ -197,14 +198,15 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 			LOGGER.info("No more games for this table, deleting eventual existing results.");
 			GameResultService.delete(table, results);
 		} else {
-			GameResultService.addOrUpdate(table, results, rcvdGamesData, penalty, autoCalculate);
+			GameResultService.addOrUpdate(table, results, rcvdGamesData, autoCalculate);
 		}
-		// -> Penalty
-		if(noGames && PenaltyService.isEmpty(penalty)) {
+		// -> Penalties
+		if(noGames) {
 			LOGGER.info("No more games for this table, deleting eventual existing penalty.");
-			PenaltyService.delete(table, penalty);
+			PenaltyService.deleteAll(table);
+			
 		} else {
-			PenaltyService.addOrUpdate(table, penalty);
+			PenaltyService.addOrUpdateAll(table);
 		}
 		
 		

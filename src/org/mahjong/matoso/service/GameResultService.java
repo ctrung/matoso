@@ -91,13 +91,13 @@ public abstract class GameResultService {
 	 * @param table 
 	 * @param results  
 	 * @param gamesData needed if you asked for auto calculation... assert is not null
-	 * @param penalty the penalty to substract some points
+	 * @param penalties the penalties to substract some points
 	 * @param autoCalculate do you want the boring job done ;) ? 
 	 * 
 	 * @throws FatalException 
 	 */
 	public static void addOrUpdate(Table table, GameResult results,
-			List<DisplayTableGame> gamesData, Penalty penalty, boolean autoCalculate) throws FatalException {
+			List<DisplayTableGame> gamesData, boolean autoCalculate) throws FatalException {
 		
 		Iterator<DisplayTableGame> gamesDataIt 	= null;
 		DisplayTableGame aGameData				= null;
@@ -122,7 +122,8 @@ public abstract class GameResultService {
 			}
 			
 			// count the penalty in 
-			addPenaltyInScore(results, penalty);
+			List<Penalty> penalties = table.getPenalties();
+			addPenaltyInScore(results, penalties);
 		} 
 		
 		// generate the table points...
@@ -135,40 +136,46 @@ public abstract class GameResultService {
 	}
 
 	/**
-	 * Update each players final scores by adding eventual penalty points.
-	 * <br>Penalties are supposed to be nehative values...
+	 * Update each players final scores by adding eventual penalties points.
+	 * <br>Penalties can be negative values if the person made the fault itself 
+	 * or positive values also.
 	 * 
 	 * @param results each players' score must not be null.
-	 * @param penalty
+	 * @param penalties
 	 */
-	private static void addPenaltyInScore(GameResult results, Penalty penalty) {
+	private static void addPenaltyInScore(GameResult results, List<Penalty> penalties) {
 		
-		if(penalty == null) return;
+		if(penalties == null || penalties.size()==0) return;
 		
 		Integer p = null;
 		
-		p = penalty.getPenaltyPlayer1();
-		if(p != null) {
-			assert results.getScorePlayer1() != null;
-			results.setScorePlayer1( results.getScorePlayer1() + p );
-		}
-		
-		p = penalty.getPenaltyPlayer2();
-		if(p != null) {
-			assert results.getScorePlayer2() != null;
-			results.setScorePlayer2( results.getScorePlayer2() + p );
-		}
-		
-		p = penalty.getPenaltyPlayer3();
-		if(p != null) {
-			assert results.getScorePlayer3() != null;
-			results.setScorePlayer3( results.getScorePlayer3() + p );
-		}
-		
-		p = penalty.getPenaltyPlayer4();
-		if(p != null) {
-			assert results.getScorePlayer4() != null;
-			results.setScorePlayer4( results.getScorePlayer4() + p );
+		for (Iterator<Penalty> iterator = penalties.iterator(); iterator.hasNext();) {
+			Penalty penalty = (Penalty) iterator.next();
+			if(penalty == null) continue;
+
+			p = penalty.getPenaltyPlayer1();
+			if(p != null) {
+				assert results.getScorePlayer1() != null;
+				results.setScorePlayer1( results.getScorePlayer1() + p );
+			}
+			
+			p = penalty.getPenaltyPlayer2();
+			if(p != null) {
+				assert results.getScorePlayer2() != null;
+				results.setScorePlayer2( results.getScorePlayer2() + p );
+			}
+			
+			p = penalty.getPenaltyPlayer3();
+			if(p != null) {
+				assert results.getScorePlayer3() != null;
+				results.setScorePlayer3( results.getScorePlayer3() + p );
+			}
+			
+			p = penalty.getPenaltyPlayer4();
+			if(p != null) {
+				assert results.getScorePlayer4() != null;
+				results.setScorePlayer4( results.getScorePlayer4() + p );
+			}
 		}
 	}
 

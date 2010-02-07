@@ -53,7 +53,7 @@ public class Table {
 	private List<Game> games;
 	
 	private GameResult result;
-	private Penalty penalty;
+	private List<Penalty> penalties;
 	
 	public Table() {
 		super();
@@ -163,17 +163,17 @@ public class Table {
 	}
 
 	/**
-	 * @return the penalty
+	 * @return the penalties
 	 */
-	public Penalty getPenalty() {
-		return penalty;
+	public List<Penalty> getPenalties() {
+		return penalties;
 	}
 
 	/**
-	 * @param penalty the penalty to set
+	 * @param penalties the penalties to set
 	 */
-	public void setPenalty(Penalty penalty) {
-		this.penalty = penalty;
+	public void setPenalties(List<Penalty> penalties) {
+		this.penalties = penalties;
 	}
 
 	/**

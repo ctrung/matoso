@@ -27,7 +27,6 @@ public interface RequestCst {
 	String REQ_ATTR_TABLE = "table";
 	String REQ_ATTR_TABLE_DISPLAY_GAMES = "table_display_games";
 	String REQ_ATTR_TABLE_RESULT = "table_result";
-	String REQ_ATTR_TABLE_PENALTY = "table_penalty";
 	
 	String REQ_ATTR_MATOSO_MESSAGES = "matosoMessages";
 	

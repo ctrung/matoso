@@ -27,7 +27,11 @@
 		
 		<many-to-one name="result" class="org.mahjong.matoso.bean.GameResult" column="ID_RESULT" cascade="all"/>
 		
-		<many-to-one name="penalty" class="org.mahjong.matoso.bean.Penalty" column="ID_PENALTY" cascade="all"/>
+		<list name="penalties" cascade="all-delete-orphan" fetch="join">
+            <key column="ID_TABLE"/>
+            <list-index column="PENALTY_INDEX" />
+            <one-to-many class="org.mahjong.matoso.bean.Penalty"/>
+        </list>
 		
 	</class>
 </hibernate-mapping>

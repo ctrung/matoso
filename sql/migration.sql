@@ -44,3 +44,10 @@ alter table player add column club varchar(255);
 /* ---------------------------------------- */
 /* [CTR] 30/01/10 : adding a column to save the auto-calculate mode */
 alter table game_result add column auto_calculate smallint default 0;
+
+/* ---------------------------------------- */
+/* [CTR] 07/02/10 : one to many relation between table and penalties */
+delete from penalty;
+alter table penalty add column penalty_index int;
+alter table penalty add column id_table int;
+alter table table_players drop column id_penalty;

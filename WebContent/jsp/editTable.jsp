@@ -29,6 +29,16 @@
 		<title>MaToSo</title>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
+		
+		<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.1.min.js"></script>          
+		<script type="text/javascript">                                         
+			$(document).ready(function() {
+				// add penalty
+				$('.addPenaltyButton').click(function(){
+					$('div#editTable table tbody>tr:last').clone(true).insertAfter('div#editTable table tbody>tr:last'); 
+				});
+			});                        
+		</script>  
 	</head>
 
 	<body>
@@ -294,19 +304,41 @@
 							
 						<%}%>
 						
-						<% Penalty pen = (Penalty)request.getAttribute(RequestCst.REQ_ATTR_TABLE_PENALTY); %>
+						<% 
+							List<Penalty> penalties = table.getPenalties();
+							if(penalties==null | penalties.size()==0) {
+						%>
+							<tr id="penalty">
+								<td colspan="3"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
+								<td title="<%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" /></td>
+								<td title="<%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" /></td>
+								<td title="<%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" /></td>
+								<td title="<%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" name="penalty4" id="penalty4" class="score" /></td>
+							</tr>
+						<%} else { %>
 						
-						<tr id="penalty">
-							<td colspan="3"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
-							<td title="<%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" value="<%=pen.getPenaltyPlayer1PrettyPrint() %>"/></td>
-							<td title="<%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" value="<%=pen.getPenaltyPlayer2PrettyPrint() %>"/></td>
-							<td title="<%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" value="<%=pen.getPenaltyPlayer3PrettyPrint() %>"/></td>
-							<td title="<%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" name="penalty4" id="penalty4" class="score" value="<%=pen.getPenaltyPlayer4PrettyPrint() %>"/></td>
-						</tr>
-						
+							<%
+								for (int j=0; j<penalties.size(); j++) {
+									Penalty pen = penalties.get(j);
+							%>
+							
+								<tr id="penalty">
+									<td colspan="3"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
+									<td title="<%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" value="<%=pen.getPenaltyPlayer1PrettyPrint() %>"/></td>
+									<td title="<%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" value="<%=pen.getPenaltyPlayer2PrettyPrint() %>"/></td>
+									<td title="<%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" value="<%=pen.getPenaltyPlayer3PrettyPrint() %>"/></td>
+									<td title="<%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" name="penalty4" id="penalty4" class="score" value="<%=pen.getPenaltyPlayer4PrettyPrint() %>"/></td>
+								</tr>
+							<%} %>
+						<%} %>
 					</tbody>
 				</table>
 				<br/>
+				
+				<input type="button" class="addPenaltyButton" value="ajouter une pénalité" />
+				
+				<br/><br/>
+				
 				<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_SAVE)%>" />
 				<input type="button" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_RESET)%>" onclick="return blankAllFields();" />
 			</form>
