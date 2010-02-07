@@ -27,10 +27,9 @@ import org.mahjong.matoso.util.exception.FatalException;
 public class TeamService {
 	private static final Logger LOG = Logger.getLogger(TeamService.class);
 
-	public static void addPlayerToTeam(String name, String teamName, Player player) throws FatalException {
+	public static void addPlayerToTeam(Tournament tournament, String teamName, Player player) throws FatalException {
 		if (LOG.isDebugEnabled())
-			LOG.debug("addPlayerToTeam(" + player + ", " + name + ')');
-		Tournament tournament = TournamentService.getByName(name);
+			LOG.debug("addPlayerToTeam(" + player + ", " + tournament.getName() + ')');
 		if (tournament.getTeams() == null)
 			tournament.setTeams(new LinkedHashSet<Team>());
 

@@ -17,7 +17,6 @@ import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.BundleCst;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.PlayerService;
 import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
@@ -67,11 +66,7 @@ public class ImportPlayer extends MatosoServlet {
 			
 		} else {
 			
-			String tournamentName = (String)request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-			if(tournamentName==null) throw new FatalException("Tournament ??? not found", null);
-			
-			Tournament tournament	= TournamentService.getByName(tournamentName);
-			if(tournament==null) throw new FatalException("Tournament " + tournamentName + " not found", null);
+			Tournament tournament = super.getTournament(request);
 			
 			TournamentService.importPlayers(tournament, playersData);
 		}

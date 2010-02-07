@@ -309,13 +309,6 @@ public abstract class TournamentService {
 		return result;
 	}
 
-	public static Player getPlayer(String firstname, String name, Tournament tournament) {
-		for (Player player : tournament.getPlayers())
-			if (player.getFirstname().equals(firstname) && player.getLastname().equals(name))
-				return player;
-		return null;
-	}
-
 	/**
 	 * Calculate the tournament statitics based on the players statistics.
 	 * 

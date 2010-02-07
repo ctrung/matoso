@@ -31,9 +31,9 @@ public class DynamicViewRanking extends MatosoServlet {
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
 		HttpSession session  = request.getSession();
 		// which tournament ?
-		String name = (String) session.getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-		Tournament tournament = TournamentService.getByName(name);
+		Tournament tournament = super.getTournament(request);
 		assert (tournament != null);
+		
 		// The players ranking 
 		List<Player> orderedPlayers = RankingService.getByTournament(tournament);
 		session.setAttribute("ranking", orderedPlayers);

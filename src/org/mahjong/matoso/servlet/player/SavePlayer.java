@@ -16,11 +16,11 @@ import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
+import org.mahjong.matoso.service.PlayerService;
 import org.mahjong.matoso.service.TeamService;
-import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.HibernateUtil;
+import org.mahjong.matoso.util.NumberUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
@@ -35,23 +35,31 @@ public class SavePlayer extends MatosoServlet {
 
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
 		
-		String oldname = request.getParameter("old-name");
-		String oldfirstname = request.getParameter("old-firstname");
 		String name = request.getParameter(RequestCst.REQ_PARAM_PLAYER_NAME);
 		String firstName = request.getParameter(RequestCst.REQ_PARAM_PLAYER_FIRSTNAME);
 		String ema = request.getParameter(RequestCst.REQ_PARAM_PLAYER_EMA);
 		String nationality = request.getParameter(RequestCst.REQ_PARAM_PLAYER_NATIONALITY);
 		String mahjongtime = request.getParameter(RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME);
-		String tournamentName = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
 		String playerTeam = request.getParameter(RequestCst.REQ_PARAM_PLAYER_TEAM);
 
-		Tournament tournament = TournamentService.getByName(tournamentName);
-		Player player = TournamentService.getPlayer(oldfirstname, oldname, tournament);
 
+		Integer id = NumberUtils.getInteger(request.getParameter("id")); 
+		Player player = PlayerService.getById(id);
+
+		request.setAttribute("player", player);
+		
+		if(player == null) {
+			return ServletCst.REDIRECT_TO_PLAYER_EDIT_FORM;
+		}
+		
+		// TODO : better way to get player's team
+		Tournament tournament = super.getTournament(request);
 		Team team = TeamService.getTeamForPlayer(tournament.getTeams(), player);
 		if(team != null) {
 			team.setName(playerTeam);
 			HibernateUtil.save(team);
+			
+			request.setAttribute("team", team);
 		}
 
 		player.setLastname(name);

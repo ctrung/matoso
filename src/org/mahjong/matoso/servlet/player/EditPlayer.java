@@ -11,8 +11,14 @@ package org.mahjong.matoso.servlet.player;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mahjong.matoso.bean.Player;
+import org.mahjong.matoso.bean.Team;
+import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ServletCst;
+import org.mahjong.matoso.service.PlayerService;
+import org.mahjong.matoso.service.TeamService;
 import org.mahjong.matoso.servlet.MatosoServlet;
+import org.mahjong.matoso.util.NumberUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
@@ -28,7 +34,17 @@ public class EditPlayer extends MatosoServlet {
 	@Override
 	public String serve(HttpServletRequest request, HttpServletResponse response)
 			throws FatalException {
-		// just forward to jsp
+		
+		Integer id = NumberUtils.getInteger(request.getParameter("id")); 
+		Player player = PlayerService.getById(id);
+		request.setAttribute("player", player);
+		
+		// TODO : better way to get the player's team
+		// the player's team
+		Tournament tournament = super.getTournament(request);
+		Team team = TeamService.getTeamForPlayer(tournament.getTeams(), player);
+		request.setAttribute("team", team);
+		
 		return ServletCst.REDIRECT_TO_PLAYER_EDIT_FORM;
 	}
 

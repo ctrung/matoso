@@ -11,7 +11,6 @@ import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.RoundService;
 import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
@@ -39,12 +38,7 @@ public final class FillTables extends MatosoServlet {
 			LOG.debug("=>serve");
 
 		// Get the tournament
-		String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-
-		if (LOG.isDebugEnabled())
-			LOG.debug("tournament = " + name);
-
-		Tournament tournament = TournamentService.getByName(name);
+		Tournament tournament = super.getTournament(request);
 
 		// Get the number of wanted rounds
 		String parameterRound = request.getParameter(RequestCst.REQ_PARAM_ROUND);

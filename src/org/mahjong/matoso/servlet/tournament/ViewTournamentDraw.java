@@ -16,10 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.DrawService;
 import org.mahjong.matoso.service.PlayerService;
-import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.exception.FatalException;
 
@@ -36,13 +34,11 @@ public class ViewTournamentDraw extends MatosoServlet {
 	public String serve(HttpServletRequest request, HttpServletResponse response)
 			throws FatalException {
 		
-		String tName = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-		
 		// load the tournament
-		Tournament t = TournamentService.getByName(tName);
+		Tournament tournament = super.getTournament(request);
 		
 		// load all players 
-		List<Player> ps = PlayerService.getListFromTournament(t);
+		List<Player> ps = PlayerService.getListFromTournament(tournament);
 		request.setAttribute("players", ps);
 		
 		// for each player, load its draw

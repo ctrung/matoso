@@ -10,7 +10,6 @@ import org.hibernate.HibernateException;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.RoundService;
 import org.mahjong.matoso.service.TableService;
 import org.mahjong.matoso.service.TournamentService;
@@ -28,8 +27,8 @@ public class AddMoreRounds extends MatosoServlet {
 	private static final Logger LOG = Logger.getLogger(AddMoreRounds.class);
 
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
-		String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-		Tournament tournament = TournamentService.getByName(name);
+
+		Tournament tournament = super.getTournament(request);
 
 		String nbroundS = request.getParameter("nbrounds");
 		int nbRound = Integer.parseInt(nbroundS);

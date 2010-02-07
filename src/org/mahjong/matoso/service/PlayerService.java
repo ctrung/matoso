@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Tournament;
@@ -49,7 +50,7 @@ public abstract class PlayerService {
 	private static Logger LOGGER = Logger.getLogger(PlayerService.class);
 	
 	/**
-	 * Find all players particating in a tournament.
+	 * Find all players participating in a tournament.
 	 * 
 	 * @param tournament The tournament.
 	 * @return A non null list of players.
@@ -65,7 +66,31 @@ public abstract class PlayerService {
 
 			return q.list();
 			
-		} catch (FatalException e) {
+		} catch (HibernateException e) {
+			throw new FatalException(e);
+		}
+	}
+	
+	/**
+	 * Get a player based on its id.
+	 * 
+	 * @param id 
+	 * @return 
+	 * 
+	 * @throws FatalException
+	 */
+	public static Player getById(Integer id) throws FatalException {
+		
+		if(id==null) return null;
+		
+		try {
+			Query q = HibernateUtil.getSession().createQuery(
+					"from Player p where p.id = :id");
+			q.setParameter("id", id);
+
+			return (Player) q.uniqueResult();
+			
+		} catch (HibernateException e) {
 			throw new FatalException(e);
 		}
 	}

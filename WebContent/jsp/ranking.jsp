@@ -136,7 +136,7 @@
 						export="true">
 				
 				<display:column media="html" headerClass="edit">
-					<a href="<%="EditPlayer?old-firstname=" + ((Player)player).getFirstname() + "&old-name=" + ((Player)player).getLastname() %>">
+					<a href="<%="EditPlayer?id=" + ((Player)player).getId() %>">
 						<img class="editUser" src="<%=request.getContextPath() + "/img/user_48.png"%>" title="<%= BundleCst.BUNDLE.getString("general.edit") %>" /></a>
 				</display:column>
 						

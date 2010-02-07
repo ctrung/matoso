@@ -45,10 +45,7 @@ public class ViewRanking extends MatosoServlet {
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
 		HttpSession session  = request.getSession();
 		
-		// which tournament ?
-		String name = (String) session.getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-
-		Tournament tournament = TournamentService.getByName(name);
+		Tournament tournament = super.getTournament(request);
 		
 		assert (tournament != null);
 

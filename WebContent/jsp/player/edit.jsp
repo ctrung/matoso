@@ -3,8 +3,6 @@
 	language="java"
 	contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
-%><%
-String name = (String) session.getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -30,45 +28,45 @@ String name = (String) session.getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
 			</a>
 				
 			<form action="<%=request.getContextPath()%>/servlet/SavePlayer" method="post">
-				<input type="hidden" name="old-firstname" value="<%= request.getParameter("old-firstname") %>" />
-				<input type="hidden" name="old-name" value="<%= request.getParameter("old-name") %>" />
-				
 				<%
-					Tournament tournament = TournamentService.getByName(name);
-					Player player = TournamentService.getPlayer(request.getParameter("old-firstname"), request.getParameter("old-name"), tournament);
+					Player player = (Player) request.getAttribute("player");
 					if(player != null) {
 				%>
-				
-				<div class="field">
-					<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_NAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NAME) %></label> :</div>
-					<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_NAME %>" value="<%=player.getLastname()%>" />
-				</div>
-				<div class="field">
-					<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_FIRSTNAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_FIRSTNAME) %></label> :</div>
-					<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_FIRSTNAME %>" value="<%=player.getFirstname()%>" />
-				</div>
-				<div class="field">
-					<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_EMA %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_EMA) %></label> :</div>
-					<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_EMA %>" value="<%=player.getEma()%>" /></div>
-				<div class="field">
-					<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_NATIONALITY %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NATIONALITY) %></label> :</div>
-					<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_NATIONALITY %>" value="<%=player.getCountry()%>" /></div>
-				<div class="field">
-					<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_MAHJONGTIME) %></label> :</div>
-					<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME %>" value="<%=player.getPseudo()%>" />
-				</div>
-				
-				<% 
-					Team team = TeamService.getTeamForPlayer(tournament.getTeams(), player);
-					if (team != null) {
-						String teamName = team.getName(); %>
+
+					<input type="hidden" name="id" value="<%=player.getId().toString() %>" />	
+								
 					<div class="field">
-						<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_TEAM %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM) %></label> :</div>
-						<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_TEAM %>" value="<%=teamName%>" />
+						<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_NAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NAME) %></label> :</div>
+						<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_NAME %>" value="<%=player.getLastname()%>" />
 					</div>
-				<%}%>
+					<div class="field">
+						<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_FIRSTNAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_FIRSTNAME) %></label> :</div>
+						<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_FIRSTNAME %>" value="<%=player.getFirstname()%>" />
+					</div>
+					<div class="field">
+						<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_EMA %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_EMA) %></label> :</div>
+						<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_EMA %>" value="<%=player.getEma()%>" /></div>
+					<div class="field">
+						<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_NATIONALITY %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NATIONALITY) %></label> :</div>
+						<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_NATIONALITY %>" value="<%=player.getCountry()%>" /></div>
+					<div class="field">
+						<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_MAHJONGTIME) %></label> :</div>
+						<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME %>" value="<%=player.getPseudo()%>" />
+					</div>
+					
+					<% 
+						Team team = (Team) request.getAttribute("team");
+						if (team != null) {
+							String teamName = team.getName(); %>
+						<div class="field">
+							<div class="label"><label for="<%= RequestCst.REQ_PARAM_PLAYER_TEAM %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM) %></label> :</div>
+							<input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_TEAM %>" value="<%=teamName%>" />
+						</div>
+					<%}%>
 				
-				<%} %>
+				<%} else { %>
+					<%= BundleCst.BUNDLE.getString("player.error.missing") %>
+				<% } %>
 				
 				<div class="field"><input type="submit" value="Modifier le joueur" /></div>
 			</form>

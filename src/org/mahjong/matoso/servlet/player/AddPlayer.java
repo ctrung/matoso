@@ -16,7 +16,6 @@ import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.TeamService;
 import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
@@ -43,8 +42,8 @@ public class AddPlayer extends MatosoServlet {
 		String playerTeam = "team ";
 		String team = "";
 		Player player;
-		String tournamentName = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-		Tournament tournament = TournamentService.getByName(tournamentName);
+		
+		Tournament tournament = super.getTournament(request);
 		boolean isTeam = tournament.isTeamActivate();
 		for (int i = 1; i < nbPlayers + 1; i++) {
 			player = new Player("player", "" + i, "fr", "", "");
@@ -54,7 +53,7 @@ public class AddPlayer extends MatosoServlet {
 			try {
 				TournamentService.addPlayer(player, tournament);
 				if (isTeam)
-					TeamService.addPlayerToTeam(tournamentName, team, player);
+					TeamService.addPlayerToTeam(tournament, team, player);
 			} catch (FatalException e) {
 				LOGGER.error("unable to save the player " + player, e);
 			}

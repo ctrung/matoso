@@ -4,6 +4,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mahjong.matoso.bean.Tournament;
+import org.mahjong.matoso.constant.SessionCst;
+import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.util.SessionUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
@@ -56,4 +59,28 @@ public abstract class MatosoServlet extends HttpServlet {
 	 */
 	public abstract String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException;
 	
+	/**
+	 * Return the tournament whose name is in the user's session.
+	 * 
+	 * @param request 
+	 * @return
+	 * @throws FatalException 
+	 */
+	public static Tournament getTournament(HttpServletRequest request) throws FatalException{
+		
+		// TODO : get the tournament by id, not by name (error prone)
+		
+		String tournamentName = (String)request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
+		if(tournamentName==null) {
+			throw new FatalException("Tournament ??? not found", null);
+		}
+		
+		Tournament tournament	= TournamentService.getByName(tournamentName);
+		if(tournament==null) {
+			throw new FatalException("Tournament " + tournamentName + " not found", null);
+		}
+		
+		return tournament;
+		
+	}
 }

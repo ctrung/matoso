@@ -82,7 +82,7 @@ if (nbRounds == 0) {
 								for (Player player : table.getListPlayers()) {
 							%>
 								<li>
-									<a href="<%=request.getContextPath()%>/servlet/EditPlayer?old-firstname=<%= player.getFirstname() %>&old-name=<%= player.getLastname() %>">
+									<a href="<%=request.getContextPath() + "/servlet/EditPlayer?id=" + player.getId() %>">
 									<%= player.getPrettyPrintName() %></a>
 								</li>
 							<%}%>

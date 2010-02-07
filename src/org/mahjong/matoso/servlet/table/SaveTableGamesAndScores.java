@@ -136,7 +136,8 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 			gameData = rcvdGamesData.get(i);
 			
 			if(gameData.getHandValue() != null) {
-				if(gameData.getHandValue() < 8) {
+				// hand-value = 0 OK, draw game
+				if(gameData.getHandValue() > 0 && gameData.getHandValue() < 8) {
 					String mesg = I18nUtils.getMessage("table.errors.hand.value.invalid", Integer.toString(i+1), I18nUtils.getWind(i));
 					userMsgs.addMessage(MatosoMessage.ERROR, mesg);
 				}
