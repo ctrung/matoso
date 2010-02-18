@@ -6,6 +6,7 @@
 	background-repeat: no-repeat;
 }
 body {
+	font-size : 12px;
 	background-color: #EFEFEF;
 }
 input {
@@ -216,18 +217,24 @@ span.pdf {
 	
 /* Edit table page */
 #editTable {padding-left: 20px;}
-#editTable .buttonPane {margin-top: 10px; margin-bottom: 10px;}
+#editTable table * {
+	text-align:center;
+	border:none;
+}
+#editTable table input, #editTable td {
+	text-align:center;
+	border-width:1px;
+	border-style:solid;
+}
+#editTable table input {width:40px}
 #editTable #tableInfos {margin-top: 10px; width: 150px; border: 1px solid black; padding: 5px; margin-bottom: 20px;}
-#editTable table {border-collapse: collapse; border: 1px solid black;}
-#editTable table td {border: none;}
-#editTable table tr.separate td {padding-top: 20px; padding-bottom: 20px;}
-.color2 {background-color: #F7FFEF}
-.color3 {background-color: #FFEFF0}
-#editTable table tr.game td {border-top: 1px solid black; padding-top: 10px; padding-bottom: 10px;}
+#editTable ul.information {font-weight:normal;font-size:smaller;padding:0;margin:0;list-style:none}
+#editTable .color2 {background-color: #F7FFEF}
+#editTable .color3 {background-color: #FFEFF0}
 #editTable table tr#penalty {background-color: #C40016;}
-#editTable table tr#penalty td, #editTable table tr#auto td {padding-top: 10px; padding-bottom: 10px;}
-#editTable table tr.game td input.handValue {width: 50px;}
-#editTable table tr.game td input.score {width: 50px;}
+#editTable .columnGameNumber {width:10px}
+#editTable .columnHandValue {width:10px}
+#editTable .columnPlayer {width:150px}
 
 /* Ranking */
 #ranking {padding-left: 20px;}

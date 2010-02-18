@@ -33,9 +33,16 @@ public abstract class RoundService {
 		List<Table> current = new ArrayList<Table>();
 		while (nbTries-- > 1 && System.currentTimeMillis() - t0 < maxTimeToWait * 1000) {
 			fillTables(current, players, teams, -1, nbMaxRounds);
-			if (current.size() * 4 / players.size() >= nbMaxRounds ) {
+			if (current.size() * 4 / players.size() >= nbMaxRounds) {
 				max.clear();
-				max.addAll(current);
+				if (current.size() * 4 / players.size() > nbMaxRounds) {
+					// Delete some tables
+					for (Table tableI : current)
+						if (tableI.getRound() <= nbMaxRounds)
+							max.add(tableI);
+
+				} else
+					max.addAll(current);
 				break;
 			}
 			if (current.size() > max.size()) {
@@ -43,8 +50,7 @@ public abstract class RoundService {
 				max.addAll(current);
 			}
 			if (nbTries % 10000 == 0) {
-				LOG.debug("time=" + ((System.currentTimeMillis() - t0) / 1000) + "\tnbTry=" + nbTries + "\tmax=" + max.size() * 4
-						/ players.size());
+				LOG.debug("time=" + ((System.currentTimeMillis() - t0) / 1000) + "\tnbTry=" + nbTries + "\tmax=" + max.size() * 4 / players.size());
 			}
 			current.clear();
 		}
@@ -66,9 +72,10 @@ public abstract class RoundService {
 		Player player = null;
 
 		do {
-			
+
 			roundNumber++;
-			if (roundNumber > nbRoundMax) break;
+			if (roundNumber > nbRoundMax)
+				break;
 
 			// Get a list of random players
 			playersToAdd.clear();
@@ -84,8 +91,6 @@ public abstract class RoundService {
 				table = new Table();
 				table.setRound(roundNumber);
 				table.setName(Integer.toString(countTable));
-
-				// round.getTables().add(table);
 
 				// Find 4 players
 				indexPlayer = 0;
