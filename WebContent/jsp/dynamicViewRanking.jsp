@@ -10,7 +10,8 @@
 	<body id="bodyDynamicRanking">
 <%
 String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-%>		<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+name%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+%><h2><%=name%></h2>
+		<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+name%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 		<display:table name="sessionScope.ranking" pagesize="10" uid="dynamicRanking">
 			<display:column property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" />
 			<display:column property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" />
@@ -24,14 +25,20 @@ String value = request.getParameter(paramName);
 if (value != null && value.length() !=0)  currentPage = Integer.parseInt(value);
 int nextPage = currentPage + 1;
 int nbPlayers = ((java.util.List) session.getAttribute("ranking")).size();
-if (nextPage > nbPlayers / 10) nextPage = 1;
+if (nextPage > Math.ceil((double) nbPlayers / 10)) nextPage = 1;
 String url = request.getContextPath() + "/jsp/dynamicViewRanking.jsp?nbElementsByPage=10&" + paramName + "=" + nextPage;
 %>		<script>
+			newurl='<%=url%>';
 			var spans = document.getElementsByTagName("span");
 			for (i=0;i<spans.length;i++){
 				spans[i].style.display="none";
 			}
-			setTimeout("window.location.href='<%=url%>'", 10000);
+			function setNewTime() {
+				clearTimeout();
+				var time = 10;
+				setTimeout("window.location.href='<%=url%>'", time * 1000);
+			}
+			setNewTime();
 		</script>
 	</body>
 </html>
