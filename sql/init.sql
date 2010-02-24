@@ -14,7 +14,7 @@ create table player (
 	firstname varchar(100),
 	country varchar(2),
 	pseudo  varchar(100),
-	email varchar(255);
+	email varchar(255),
 	date_arrival date,
 	date_departure date,
 	date_formular date,
