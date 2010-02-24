@@ -26,13 +26,12 @@
 	<body>
 	
 		<!-- header -->
-		<%@include file="include/head.jsp"%>
-		
-		<%
-		 	String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-		%>
-			
-		<h2><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
+<%@
+include file="include/head.jsp"
+%><%
+String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
+
+%>		<h2><%=name + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
 		
 		<div id="ranking">
 		
@@ -75,36 +74,6 @@
 					</tr>
 						
 	
-				</tbody>
-			</table>
-
-			<!-- --------------------- -->
-			<!-- Teams ranking + stats -->
-			<!-- --------------------- -->
-				
-			<h3><%=BundleCst.BUNDLE.getString("ranking.by.team")%></h3>
-			<table border="1" cellpadding="0" cellspacing="0">
-				<thead>
-					<tr><td></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POINTS)%></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE)%></td></tr>
-				</thead>
-				<tbody>
-					<%
-					int i = 0;
-					for (Team team : (List<Team>) session.getAttribute("rankingTeam")) {
-					%>				<tr class="<%="color"+(i++%2) %>">
-										<td>
-											<h3><%=team.getName()%></h3>
-											<%=team.getPlayer1().getFirstname()%> <%=team.getPlayer1().getPrettyPrintName()%>,
-											<%=team.getPlayer2().getFirstname()%> <%=team.getPlayer2().getPrettyPrintName()%>,
-											<%=team.getPlayer3().getFirstname()%> <%=team.getPlayer3().getPrettyPrintName()%>,
-											<%=team.getPlayer4().getFirstname()%> <%=team.getPlayer4().getPrettyPrintName()%>
-										</td>
-										<td><%=team.getPrettyPrintPoints()%></td>
-										<td><%=team.getScore()%></td>
-									</tr>
-					<%
-					}
-					%>
 				</tbody>
 			</table>
 	
@@ -182,7 +151,37 @@
 			    <display:column property="percGiven" titleKey="<%=BundleCst.RANKING_PERC_GIVEN%>" format="{0,number,##.##} %" 
 			    	sortable="true" defaultorder="descending" />
 			    	
-			</display:table>			
+			</display:table>
+
+			<!-- --------------------- -->
+			<!-- Teams ranking + stats -->
+			<!-- --------------------- -->
+				
+			<h3><%=BundleCst.BUNDLE.getString("ranking.by.team")%></h3>
+			<table border="1" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr><td></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POINTS)%></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE)%></td></tr>
+				</thead>
+				<tbody>
+<%
+int i = 0;
+for (Team team : (List<Team>) session.getAttribute("rankingTeam")) {
+%>				<tr class="<%="color"+(i++%2) %>">
+					<td>
+						<h3><%=team.getName()%></h3>
+						<%=team.getPlayer1().getPrettyPrintName()%>,
+						<%=team.getPlayer2().getPrettyPrintName()%>,
+						<%=team.getPlayer3().getPrettyPrintName()%>,
+						<%=team.getPlayer4().getPrettyPrintName()%>
+					</td>
+					<td><%=team.getPrettyPrintPoints()%></td>
+					<td><%=team.getScore()%></td>
+				</tr>
+<%
+}
+%>
+				</tbody>
+			</table>
 			
 		</div>
 	</body>
