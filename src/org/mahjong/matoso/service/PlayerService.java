@@ -96,15 +96,18 @@ public abstract class PlayerService {
 	}
 
 	/**
-	 * Return the players data in the import file from the request.
+	 * Return the players data form the file's request.<br>
+	 * Also do all the validation, messages can therefore be retrieved by the msgs objects.
 	 * 
 	 * @param request
-	 * @param msgs The messages if there is an error.
+	 * @param msgs The validation messages.
+	 * 
 	 * @return List<String[]> object or null if there is an error.
+	 * 
 	 * @throws ImportException 
 	 * @throws FatalException 
 	 */
-	public static List<String[]> readFileFromRequest(HttpServletRequest request,
+	public static List<String[]> getRawDataFromRequest(HttpServletRequest request,
 			MatosoMessages msgs) throws ImportException, FatalException {
 		
 		FileItemIterator iter 	= null;
@@ -120,8 +123,7 @@ public abstract class PlayerService {
 		
 		// Check that we have a file upload request
 		if( ! ServletFileUpload.isMultipartContent(request) ) {
-			msgs.addMessage(MatosoMessage.ERROR, "[TECHNICAL] The encryption type of the form is not multipart/form-data.");
-			return res;
+			throw new ImportException("The encryption type of the form is not multipart/form-data.", null);
 		}
 		
 		boolean imported = false;
@@ -210,7 +212,7 @@ public abstract class PlayerService {
 			}
 		}
 		
-		if(! imported ) {
+		if( !imported ) {
 			msgs.addMessage(MatosoMessage.ERROR, BundleCst.BUNDLE.getString("player.mass.import.error.type.invalid"));
 		}
 		
@@ -221,6 +223,15 @@ public abstract class PlayerService {
 		if(rounds == null || rounds <= 0) {
 			msgs.addMessage(MatosoMessage.ERROR, BundleCst.BUNDLE.getString("player.mass.import.error.nb.rounds.missing"));
 		}
+		
+		if(res == null) {
+			msgs.addMessage(MatosoMessage.ERROR, BundleCst.BUNDLE.getString("player.mass.import.error.no.file"));
+		} else if(res.size() == 0) {
+			msgs.addMessage(MatosoMessage.WARNING, BundleCst.BUNDLE.getString("player.mass.import.error.no.players"));
+		} 
+		
+		// team validation
+		TeamService.validate(res, msgs);
 		
 		return res;
 	}

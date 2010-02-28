@@ -222,7 +222,7 @@ if (penalties == null | penalties.size() == 0) {
 				<input type="button" class="addPenaltyButton" value="ajouter une pénalité" />
 				<br/><br/>
 				<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_SAVE)%>" />
-				<input type="button" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_RESET)%>" onclick="return blankAllFields();" />
+				<input type="button" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_RESET)%>" onclick="return blankAllFields('<%=BundleCst.BUNDLE.getString("general.reset.confirm")%>');" />
 			</form>
 		</div>
 	</body>

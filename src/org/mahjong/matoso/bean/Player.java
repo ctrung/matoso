@@ -28,7 +28,6 @@ public class Player {
 	private String email;
 	private String country;
 	private String ema;
-	private String team;
 	private String pseudo;
 	private Date dateArrival;
 	private Date dateDeparture;
@@ -72,7 +71,7 @@ public class Player {
 	}
 
 	public String toString() {
-		return "Player\t" + this.firstname + " " + this.lastname;
+		return this.firstname + " " + this.lastname;
 	}
 
 	public Player(String firstname, String lastname, String email,
@@ -86,7 +85,6 @@ public class Player {
 		this.email = email;
 		this.country = country;
 		this.ema = ema;
-		this.team = team;
 		this.pseudo = pseudo;
 		this.dateArrival = dateArrival;
 		this.dateDeparture = dateDeparture;
@@ -193,20 +191,6 @@ public class Player {
 	 */
 	public void setEma(String ema) {
 		this.ema = ema;
-	}
-
-	/**
-	 * @return the team
-	 */
-	public String getTeam() {
-		return team;
-	}
-
-	/**
-	 * @param team the team to set
-	 */
-	public void setTeam(String team) {
-		this.team = team;
 	}
 
 	/**

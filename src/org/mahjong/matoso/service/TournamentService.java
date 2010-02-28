@@ -11,9 +11,11 @@ package org.mahjong.matoso.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
@@ -24,6 +26,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Table;
+import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.display.TournamentStats;
 import org.mahjong.matoso.util.DateUtils;
@@ -111,10 +114,11 @@ public abstract class TournamentService {
 	 * 
 	 * @throws FatalException
 	 */
-	public static void importPlayers(Tournament tournament, List<String[]> lines) throws FatalException {
+	public static void addPlayers(Tournament tournament, List<String[]> lines) throws FatalException {
 
 		String[] line = null;
 		Player player = null;
+		Map<String, List<Player>> teams = new HashMap<String, List<Player>>();
 		
 		String firstname = null;
 		String lastname = null;
@@ -191,12 +195,46 @@ public abstract class TournamentService {
 				details = line[15];
 				club = line[16];
 				
-				player = new Player(firstname, lastname, email, country, ema, team, pseudo, dateArrival, dateDeparture,
+				// TODO : suppress team property ?
+				player = new Player(firstname, lastname, email, country, ema, null, pseudo, dateArrival, dateDeparture,
 						dateFormular, datePayment, paymentMode, hasPhoto, cj, cp, details, club);
 
 				addPlayer(player, tournament);
-
+				
+				
+				// add player to team
+				if(team !=null) {
+					if(teams.get(team) == null) {
+						teams.put(team, new ArrayList<Player>());
+					}
+					List<Player> players = teams.get(team);
+					players.add(player);
+				}
 			}
+			
+			// Teams
+			if(teams.keySet() != null) {
+				for (Iterator<String> iterator = teams.keySet().iterator(); iterator.hasNext();) {
+					String tn = (String) iterator.next();
+					
+					List<Player> players = teams.get(tn);
+					if(players.size() > 4) {
+						LOG.warn("Validation let team [" + tn + "] have more than 4 players : " + players.toString());
+					}
+					
+					Team teamObj = new Team();
+					teamObj.setName(tn);
+					teamObj.setTournament(tournament);
+					
+					if(players.get(0) != null) teamObj.setPlayer1(players.get(0));
+					if(players.get(1) != null) teamObj.setPlayer2(players.get(1));
+					if(players.get(2) != null) teamObj.setPlayer3(players.get(2));
+					if(players.get(3) != null) teamObj.setPlayer4(players.get(3));
+					
+					HibernateUtil.save(teamObj);
+				}
+			}
+			
 		} catch (FatalException e) {
 			throw new FatalException("Can't add player " + player.getPrettyPrintName(), e);
 		}

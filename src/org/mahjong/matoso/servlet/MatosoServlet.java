@@ -5,10 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mahjong.matoso.bean.Tournament;
+import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.util.SessionUtils;
 import org.mahjong.matoso.util.exception.FatalException;
+import org.mahjong.matoso.util.message.MatosoMessages;
 
 /**
  * Mother class to inherit from.<br>
@@ -82,5 +84,20 @@ public abstract class MatosoServlet extends HttpServlet {
 		
 		return tournament;
 		
+	}
+
+	/**
+	 * Get the MatosoMessages object in the request if exists or create a new one otherwise.
+	 * 
+	 * @param request Can't be null.
+	 * @return Always non null MatosoMessages object.
+	 */
+	public MatosoMessages getMatosoMessagesInRequest(HttpServletRequest request) {
+		if (request == null) throw new IllegalArgumentException("HttpServletRequest request object can't be null");
+		
+		if(request.getAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES) == null) {
+			request.setAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES, new MatosoMessages());
+		}
+		return (MatosoMessages) request.getAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES);
 	}
 }

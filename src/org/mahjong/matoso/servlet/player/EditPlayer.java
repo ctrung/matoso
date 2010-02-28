@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mahjong.matoso.bean.Player;
-import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ServletCst;
 import org.mahjong.matoso.service.PlayerService;
@@ -39,11 +38,8 @@ public class EditPlayer extends MatosoServlet {
 		Player player = PlayerService.getById(id);
 		request.setAttribute("player", player);
 		
-		// TODO : better way to get the player's team
-		// the player's team
 		Tournament tournament = super.getTournament(request);
-		Team team = TeamService.getTeamForPlayer(tournament.getTeams(), player);
-		request.setAttribute("team", team);
+		request.setAttribute("team", TeamService.getTeamForPlayer(player, tournament));
 		
 		return ServletCst.REDIRECT_TO_PLAYER_EDIT_FORM;
 	}

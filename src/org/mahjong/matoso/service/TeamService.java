@@ -8,15 +8,24 @@
  */
 package org.mahjong.matoso.service;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.util.HibernateUtil;
+import org.mahjong.matoso.util.I18nUtils;
 import org.mahjong.matoso.util.exception.FatalException;
+import org.mahjong.matoso.util.message.MatosoMessage;
+import org.mahjong.matoso.util.message.MatosoMessages;
 
 /**
  * Service layer for Team.
@@ -69,12 +78,37 @@ public class TeamService {
 		tournament.getPlayers().add(player);
 	}
 
+	/**
+	 * Loop around a list of teams and returns the team the player is in.
+	 * 
+	 * @param listTeams
+	 * @param player
+	 * @return
+	 */
 	public static Team getTeamForPlayer(Set<Team> listTeams, Player player) {
 		for (Team team : listTeams) {
 			if (team.getPlayers().contains(player))
 				return team;
 		}
 		return null;
+	}
+	
+	/**
+	 * Get the team of a player in a tournament by querying the database.
+	 * 
+	 * @param player
+	 * @param tournament
+	 * @return
+	 * @throws FatalException
+	 */
+	public static Team getTeamForPlayer(Player player, Tournament tournament) throws FatalException {
+		
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from Team as t where t.tournament = :t and (t.player1 = :p or t.player2 = :p or t.player3 = :p or t.player4 = :p)");
+		query.setParameter("t", tournament);
+		query.setParameter("p", player);
+		
+		return (Team) query.uniqueResult();
 	}
 
 	/**
@@ -103,6 +137,52 @@ public class TeamService {
 		team.setName(name);
 		tournament.getTeams().add(team);
 		HibernateUtil.save(team);
+	}
+
+	/**
+	 * Check teams consistency :
+	 * <ul>
+	 * 	<li>max. 4 players per team</li>
+	 * </ul>
+	 * @param players
+	 * @param msgs Can't be null.
+	 */
+	public static void validate(List<String[]> players, MatosoMessages msgs) {
+		
+		if(players == null) return;
+		assert msgs != null;
+		
+		Map<String, Integer> teamCount = new HashMap<String, Integer>();
+		String badTeams = "";
+		
+		for (Iterator<String[]> iterator = players.iterator(); iterator.hasNext();) {
+			
+			String[] player = (String[]) iterator.next();
+			if(player == null) continue;
+			
+				
+			String team = player[5]; // team property is at position 5
+			
+			if(team!=null) {
+				if(teamCount.get(team) == null) {
+					teamCount.put(team, 0);
+				}
+				
+				Integer count = teamCount.get(team);
+				count++;
+				teamCount.put(team, count);
+				
+				if(count > 4) {
+					badTeams += ", " + team;
+				}
+			}
+			
+		}
+		
+		badTeams = badTeams.replaceFirst(", ", "");
+		if (badTeams.length() > 0) {
+			msgs.addMessage(MatosoMessage.ERROR, I18nUtils.getMessage("player.mass.import.error.team.too.many.players", badTeams));
+		}
 	}
 
 }

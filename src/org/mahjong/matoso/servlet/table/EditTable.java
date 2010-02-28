@@ -81,13 +81,13 @@ public final class EditTable extends MatosoServlet {
 		form.setPlayer3Ema(table.getPlayer3().getEma());
 		form.setPlayer4Ema(table.getPlayer4().getEma());
 		// Team names
-		Team team1 = TeamService.getTeamForPlayer(tournament.getTeams(), table.getPlayer1());
+		Team team1 = TeamService.getTeamForPlayer(table.getPlayer1(), tournament);
 		form.setPlayer1Team(team1 == null ? "" : team1.getName());
-		Team team2 = TeamService.getTeamForPlayer(tournament.getTeams(), table.getPlayer2());
+		Team team2 = TeamService.getTeamForPlayer(table.getPlayer2(), tournament);
 		form.setPlayer2Team(team2 == null ? "" : team2.getName());
-		Team team3 = TeamService.getTeamForPlayer(tournament.getTeams(), table.getPlayer3());
+		Team team3 = TeamService.getTeamForPlayer(table.getPlayer3(), tournament);
 		form.setPlayer3Team(team3 == null ? "" : team3.getName());
-		Team team4 = TeamService.getTeamForPlayer(tournament.getTeams(), table.getPlayer4());
+		Team team4 = TeamService.getTeamForPlayer(table.getPlayer4(), tournament);
 		form.setPlayer4Team(team4 == null ? "" : team4.getName());
 
 		request.setAttribute("EditTableForm", form);

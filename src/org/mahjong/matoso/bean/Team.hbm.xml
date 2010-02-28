@@ -9,6 +9,8 @@
 			<generator class="increment"/>
 		</id>
 	
+		<many-to-one name="tournament" column="ID_TOURNAMENT" class="org.mahjong.matoso.bean.Tournament" />
+	
 		<property name="name" 			type="string" column="NAME"/>
 
 		<many-to-one name="player1" class="org.mahjong.matoso.bean.Player" column="ID_PLAYER_1" />

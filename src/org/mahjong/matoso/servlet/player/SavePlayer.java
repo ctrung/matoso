@@ -52,9 +52,9 @@ public class SavePlayer extends MatosoServlet {
 			return ServletCst.REDIRECT_TO_PLAYER_EDIT_FORM;
 		}
 		
-		// TODO : better way to get player's team
+		// get player's team
 		Tournament tournament = super.getTournament(request);
-		Team team = TeamService.getTeamForPlayer(tournament.getTeams(), player);
+		Team team = TeamService.getTeamForPlayer(player, tournament);
 		if(team != null) {
 			team.setName(playerTeam);
 			HibernateUtil.save(team);

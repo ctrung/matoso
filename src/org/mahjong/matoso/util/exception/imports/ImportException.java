@@ -15,7 +15,7 @@ package org.mahjong.matoso.util.exception.imports;
  * @date 1 févr. 2010
  */
 @SuppressWarnings("serial")
-public abstract class ImportException extends Exception {
+public class ImportException extends Exception {
 
 	public ImportException(String mesg, Throwable t) {
 		super(mesg, t);

@@ -27,6 +27,8 @@ public class Team {
 
 	private Integer score;
 
+	Tournament tournament;
+	
 	public Integer getScore() {
 		return score;
 	}
@@ -155,6 +157,20 @@ public class Team {
 			players.add(player4);
 
 		return players;
+	}
+
+	/**
+	 * @return the tournament
+	 */
+	public Tournament getTournament() {
+		return tournament;
+	}
+
+	/**
+	 * @param tournament the tournament to set
+	 */
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
 	}
 
 }
