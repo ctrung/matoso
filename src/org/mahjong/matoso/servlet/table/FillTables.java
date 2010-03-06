@@ -24,6 +24,7 @@ import org.mahjong.matoso.util.exception.FatalException;
  * <li>the attribute "tournament" in the session to get the tournament.</li>
  * <li>the parameter "round" in the request to get the number of wanted rounds</li>
  * </ul>
+ * 
  * @author Nicolas POCHIC
  */
 public final class FillTables extends MatosoServlet {
@@ -42,7 +43,18 @@ public final class FillTables extends MatosoServlet {
 
 		// Get the number of wanted rounds
 		String parameterRound = request.getParameter(RequestCst.REQ_PARAM_ROUND);
+
+		if (LOG.isDebugEnabled())
+			LOG.debug("parameterRound1 =" + parameterRound);
+
 		int nbMaxRounds;
+		if (parameterRound == null || parameterRound.length() == 0) {
+			parameterRound = (String) request.getAttribute(RequestCst.REQ_PARAM_ROUND);
+
+			if (LOG.isDebugEnabled())
+				LOG.debug("parameterRound2 =" + parameterRound);
+		}
+
 		if (parameterRound != null && parameterRound.length() != 0)
 			nbMaxRounds = Integer.parseInt(parameterRound);
 		else
