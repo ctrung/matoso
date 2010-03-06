@@ -12,17 +12,19 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.mahjong.matoso.util.NumberUtils;
+
 /**
  * Player bean
- *
+ * 
  * @author ctrung
  * @date 21 oct. 2009
  */
 public class Player {
-	
+
 	private Integer id;
 	private Set<Tournament> tournaments;
-	
+
 	private String firstname;
 	private String lastname;
 	private String email;
@@ -39,7 +41,7 @@ public class Player {
 	private String cp;
 	private String details;
 	private String club;
-	
+
 	transient Integer rank;
 	transient Integer nbGames;
 	transient Integer nbVictory;
@@ -50,7 +52,7 @@ public class Player {
 	transient Integer nbDraw;
 	transient Integer score;
 	transient Double points;
-	
+
 	transient List<Table> tables;
 
 	public Player() {
@@ -65,7 +67,6 @@ public class Player {
 		points = 0D;
 	}
 
-	
 	public Player(String firstname) {
 		this.firstname = firstname;
 	}
@@ -74,11 +75,9 @@ public class Player {
 		return this.firstname + " " + this.lastname;
 	}
 
-	public Player(String firstname, String lastname, String email,
-			String country, String ema, String team, String pseudo,
-			Date dateArrival, Date dateDeparture, Date dateFormular,
-			Date datePayment, String paymentMode, boolean hasPhoto, String cj,
-			String cp, String details, String club) {
+	public Player(String firstname, String lastname, String email, String country, String ema, String team, String pseudo, Date dateArrival,
+			Date dateDeparture, Date dateFormular, Date datePayment, String paymentMode, boolean hasPhoto, String cj, String cp, String details,
+			String club) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -98,8 +97,7 @@ public class Player {
 		this.club = club;
 	}
 
-	public Player(String firstname, String lastname, String country,
-			String ema, String pseudo) {
+	public Player(String firstname, String lastname, String country, String ema, String pseudo) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -107,7 +105,6 @@ public class Player {
 		this.ema = ema;
 		this.pseudo = pseudo;
 	}
-
 
 	/**
 	 * @return the id
@@ -117,12 +114,13 @@ public class Player {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the firstname
 	 */
@@ -131,7 +129,8 @@ public class Player {
 	}
 
 	/**
-	 * @param firstname the firstname to set
+	 * @param firstname
+	 *            the firstname to set
 	 */
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
@@ -145,7 +144,8 @@ public class Player {
 	}
 
 	/**
-	 * @param lastname the lastname to set
+	 * @param lastname
+	 *            the lastname to set
 	 */
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
@@ -159,7 +159,8 @@ public class Player {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -173,7 +174,8 @@ public class Player {
 	}
 
 	/**
-	 * @param country the country to set
+	 * @param country
+	 *            the country to set
 	 */
 	public void setCountry(String country) {
 		this.country = country;
@@ -187,7 +189,8 @@ public class Player {
 	}
 
 	/**
-	 * @param ema the ema to set
+	 * @param ema
+	 *            the ema to set
 	 */
 	public void setEma(String ema) {
 		this.ema = ema;
@@ -201,7 +204,8 @@ public class Player {
 	}
 
 	/**
-	 * @param pseudo the pseudo to set
+	 * @param pseudo
+	 *            the pseudo to set
 	 */
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
@@ -215,7 +219,8 @@ public class Player {
 	}
 
 	/**
-	 * @param dateArrival the dateArrival to set
+	 * @param dateArrival
+	 *            the dateArrival to set
 	 */
 	public void setDateArrival(Date dateArrival) {
 		this.dateArrival = dateArrival;
@@ -229,7 +234,8 @@ public class Player {
 	}
 
 	/**
-	 * @param dateDeparture the dateDeparture to set
+	 * @param dateDeparture
+	 *            the dateDeparture to set
 	 */
 	public void setDateDeparture(Date dateDeparture) {
 		this.dateDeparture = dateDeparture;
@@ -243,7 +249,8 @@ public class Player {
 	}
 
 	/**
-	 * @param dateFormular the dateFormular to set
+	 * @param dateFormular
+	 *            the dateFormular to set
 	 */
 	public void setDateFormular(Date dateFormular) {
 		this.dateFormular = dateFormular;
@@ -257,7 +264,8 @@ public class Player {
 	}
 
 	/**
-	 * @param datePayment the datePayment to set
+	 * @param datePayment
+	 *            the datePayment to set
 	 */
 	public void setDatePayment(Date datePayment) {
 		this.datePayment = datePayment;
@@ -271,7 +279,8 @@ public class Player {
 	}
 
 	/**
-	 * @param paymentMode the paymentMode to set
+	 * @param paymentMode
+	 *            the paymentMode to set
 	 */
 	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
@@ -285,7 +294,8 @@ public class Player {
 	}
 
 	/**
-	 * @param hasPhoto the hasPhoto to set
+	 * @param hasPhoto
+	 *            the hasPhoto to set
 	 */
 	public void setHasPhoto(boolean hasPhoto) {
 		this.hasPhoto = hasPhoto;
@@ -299,7 +309,8 @@ public class Player {
 	}
 
 	/**
-	 * @param cj the cj to set
+	 * @param cj
+	 *            the cj to set
 	 */
 	public void setCj(String cj) {
 		this.cj = cj;
@@ -313,7 +324,8 @@ public class Player {
 	}
 
 	/**
-	 * @param cp the cp to set
+	 * @param cp
+	 *            the cp to set
 	 */
 	public void setCp(String cp) {
 		this.cp = cp;
@@ -327,7 +339,8 @@ public class Player {
 	}
 
 	/**
-	 * @param details the details to set
+	 * @param details
+	 *            the details to set
 	 */
 	public void setDetails(String details) {
 		this.details = details;
@@ -341,7 +354,8 @@ public class Player {
 	}
 
 	/**
-	 * @param club the club to set
+	 * @param club
+	 *            the club to set
 	 */
 	public void setClub(String club) {
 		this.club = club;
@@ -354,22 +368,22 @@ public class Player {
 	public void setTournaments(Set<Tournament> tournaments) {
 		this.tournaments = tournaments;
 	}
-	
+
 	/*
 	 * Other methods
 	 */
-	
+
 	/**
 	 * Get a pretty print form of the player's name.
 	 * 
 	 * @return the firstname and the name separated by a space.
 	 */
-	public String getPrettyPrintName(){
-		
-		String res = this.firstname==null ? "" : this.firstname + " ";
-		
-		res += this.lastname==null ? "" : this.lastname;
-		
+	public String getPrettyPrintName() {
+
+		String res = this.firstname == null ? "" : this.firstname + " ";
+
+		res += this.lastname == null ? "" : this.lastname;
+
 		return res;
 	}
 
@@ -381,7 +395,8 @@ public class Player {
 	}
 
 	/**
-	 * @param rank the rank to set
+	 * @param rank
+	 *            the rank to set
 	 */
 	public void setRank(Integer rank) {
 		this.rank = rank;
@@ -395,7 +410,8 @@ public class Player {
 	}
 
 	/**
-	 * @param nbGames the nbGames to set
+	 * @param nbGames
+	 *            the nbGames to set
 	 */
 	public void setNbGames(Integer nbGames) {
 		this.nbGames = nbGames;
@@ -408,14 +424,13 @@ public class Player {
 		return nbVictory;
 	}
 
-
 	/**
-	 * @param nbVictory the nbVictory to set
+	 * @param nbVictory
+	 *            the nbVictory to set
 	 */
 	public void setNbVictory(Integer nbVictory) {
 		this.nbVictory = nbVictory;
 	}
-
 
 	/**
 	 * @return the nbDefeat
@@ -424,14 +439,13 @@ public class Player {
 		return nbDefeat;
 	}
 
-
 	/**
-	 * @param nbDefeat the nbDefeat to set
+	 * @param nbDefeat
+	 *            the nbDefeat to set
 	 */
 	public void setNbDefeat(Integer nbDefeat) {
 		this.nbDefeat = nbDefeat;
 	}
-
 
 	/**
 	 * @return the nbGiven
@@ -440,14 +454,13 @@ public class Player {
 		return nbGiven;
 	}
 
-
 	/**
-	 * @param nbGiven the nbGiven to set
+	 * @param nbGiven
+	 *            the nbGiven to set
 	 */
 	public void setNbGiven(Integer nbGiven) {
 		this.nbGiven = nbGiven;
 	}
-
 
 	/**
 	 * @return the nbSelfpick
@@ -456,15 +469,14 @@ public class Player {
 		return nbSelfpick;
 	}
 
-
 	/**
-	 * @param nbSelfpick the nbSelfpick to set
+	 * @param nbSelfpick
+	 *            the nbSelfpick to set
 	 */
 	public void setNbSelfpick(Integer nbSelfpick) {
 		this.nbSelfpick = nbSelfpick;
 	}
 
-	
 	/**
 	 * @return the nbSustainSelfpick
 	 */
@@ -472,9 +484,9 @@ public class Player {
 		return nbSustainSelfpick;
 	}
 
-
 	/**
-	 * @param nbSustainSelfpick the nbSustainSelfpick to set
+	 * @param nbSustainSelfpick
+	 *            the nbSustainSelfpick to set
 	 */
 	public void setNbSustainSelfpick(Integer nbSustainSelfpick) {
 		this.nbSustainSelfpick = nbSustainSelfpick;
@@ -487,14 +499,14 @@ public class Player {
 		return nbDraw;
 	}
 
-
 	/**
-	 * @param nbDraw the nbDraw to set
+	 * @param nbDraw
+	 *            the nbDraw to set
 	 */
 	public void setNbDraw(Integer nbDraw) {
 		this.nbDraw = nbDraw;
 	}
-	
+
 	/**
 	 * @return the score
 	 */
@@ -502,14 +514,13 @@ public class Player {
 		return score;
 	}
 
-
 	/**
-	 * @param score the score to set
+	 * @param score
+	 *            the score to set
 	 */
 	public void setScore(Integer score) {
 		this.score = score;
 	}
-
 
 	/**
 	 * @return the points
@@ -519,86 +530,90 @@ public class Player {
 	}
 
 	/**
-	 * @param points the points to set
+	 * @param points
+	 *            the points to set
 	 */
 	public void setPoints(Double points) {
 		this.points = points;
 	}
 
 	/**
-	 * Return the the percentage of selfpick games.
-	 * <br> Unlike others getter methods, it directly returns a String type because 
-	 * it is calculated by dividing the number of selfpick games by the number 
+	 * Return the the percentage of selfpick games. <br>
+	 * Unlike others getter methods, it directly returns a String type because
+	 * it is calculated by dividing the number of selfpick games by the number
 	 * of total games.
 	 * 
 	 * @return the percentage of selfpick games.
 	 */
 	public Double getPercSelfpick() {
-		if(this.getNbGames()==null || this.getNbGames().intValue()==0) return null;
-		return ((double)this.getNbSelfpick().intValue()) / this.getNbGames().intValue() * 100;
+		if (this.getNbGames() == null || this.getNbGames().intValue() == 0)
+			return null;
+		return ((double) this.getNbSelfpick().intValue()) / this.getNbGames().intValue() * 100;
 	}
-	
+
 	/**
-	 * Return the percentage of won on discard games.
-	 * <br> Unlike others getter methods, it directly returns a String type because 
-	 * it is calculated by dividing the number of won on discard games by the number 
-	 * of total games.
+	 * Return the percentage of won on discard games. <br>
+	 * Unlike others getter methods, it directly returns a String type because
+	 * it is calculated by dividing the number of won on discard games by the
+	 * number of total games.
 	 * 
 	 * @return the percentage of won on discard games.
 	 */
 	public Double getPercVictory() {
-		if(this.getNbGames()==null || this.getNbGames().intValue()==0) return null;
-		return ((double)this.getNbVictory().intValue()) / this.getNbGames().intValue() * 100;
+		if (this.getNbGames() == null || this.getNbGames().intValue() == 0)
+			return null;
+		return ((double) this.getNbVictory().intValue()) / this.getNbGames().intValue() * 100;
 	}
-	
+
 	/**
-	 * Return a pretty print form of the percentage of given games.
-	 * <br> Unlike others getter methods, it directly returns a String type because 
-	 * it is calculated by dividing the number of given games by the number 
-	 * of total games.
+	 * Return a pretty print form of the percentage of given games. <br>
+	 * Unlike others getter methods, it directly returns a String type because
+	 * it is calculated by dividing the number of given games by the number of
+	 * total games.
 	 * 
 	 * @return the percentage of given games.
 	 */
 	public Double getPercGiven() {
-		if(this.getNbGames()==null || this.getNbGames().intValue()==0) return null;
-		return ((double)this.getNbGiven().intValue()) / this.getNbGames().intValue() * 100;
+		if (this.getNbGames() == null || this.getNbGames().intValue() == 0)
+			return null;
+		return ((double) this.getNbGiven().intValue()) / this.getNbGames().intValue() * 100;
 	}
-	
+
 	/**
 	 * Increment the selfpick number
 	 */
 	public void incrementNbSelfpick() {
 		nbSelfpick++;
 	}
-	
+
 	/**
 	 * Increment the games number
 	 */
 	public void incrementNbGames() {
 		nbGames++;
-	}	
-	
+	}
+
 	/**
 	 * Increment the victory number
 	 */
 	public void incrementNbVictory() {
 		nbVictory++;
 	}
-	
+
 	/**
 	 * Increment the defeat number
 	 */
 	public void incrementNbDefeat() {
 		nbDefeat++;
-	}	
-	
+	}
+
 	/**
 	 * Increment the given number
 	 */
 	public void incrementNbGiven() {
 		nbGiven++;
 	}
-	
+
 	/**
 	 * Increment the sustain selfpick number
 	 */
@@ -614,20 +629,24 @@ public class Player {
 	}
 
 	/**
-	 * Add to the score 
+	 * Add to the score
+	 * 
 	 * @param score
 	 */
 	public void addToScore(Integer score) {
-		if(score==null) score = 0;
+		if (score == null)
+			score = 0;
 		this.score += score;
 	}
-	
+
 	/**
-	 * Add to the points 
+	 * Add to the points
+	 * 
 	 * @param points
 	 */
 	public void addToPoints(Double points) {
-		if(points==null) points = 0D;
+		if (points == null)
+			points = 0D;
 		this.points += points;
 	}
 
@@ -638,5 +657,16 @@ public class Player {
 	public void setTables(List<Table> tables) {
 		this.tables = tables;
 	}
-	
+
+	public String getSelfDraw() {
+		return getNbSelfpick() + " (" + NumberUtils.getPrettyPrintForm(getPercSelfpick()) + " %)";
+	}
+
+	public String getWin() {
+		return getNbVictory() + " (" + NumberUtils.getPrettyPrintForm(getPercVictory()) + " %)";
+	}
+
+	public String getLose() {
+		return getNbGiven() + " (" + NumberUtils.getPrettyPrintForm(getPercGiven()) + " %)";
+	}
 }
