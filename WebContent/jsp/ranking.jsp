@@ -87,13 +87,13 @@ String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOU
 				<%= BundleCst.BUNDLE.getString("ranking.stats.player.text")%>
 			</p>
 			
-			<form action=<%=request.getContextPath() + "/servlet/ViewRanking?nbElementsByPage=redefine" %>" id="redefineNbElementsByPage">
+			<form action="<%=request.getContextPath()%>/servlet/ViewRanking?nbElementsByPage=redefine" id="redefineNbElementsByPage">
 				<label for="nbElementsByPageId"><%= BundleCst.BUNDLE.getString("ranking.nb.elements.by.page")%></label>
 				<input type="text" id="nbElementsByPageId" name="nbElementsByPage" />
 				<input type="submit" value="<%= BundleCst.BUNDLE.getString("ranking.nb.elements.by.page.define.button")%>" />
 			</form>
 			
-			<a href="<%=request.getContextPath() + "/servlet/ViewRanking" %>">
+			<a href="<%=request.getContextPath()%>/servlet/ViewRanking">
 				<%= BundleCst.BUNDLE.getString("general.reload.default") %></a>
 			<br/>
 			
@@ -105,7 +105,7 @@ String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOU
 						export="true">
 				
 				<display:column media="html" headerClass="edit">
-					<a href="<%="EditPlayer?id=" + ((Player)player).getId() %>">
+					<a href="<%=request.getContextPath()%>/servlet/EditPlayer?id=<%=((Player) player).getId() %>">
 						<img class="editUser" src="<%=request.getContextPath() + "/img/user_48.png"%>" title="<%= BundleCst.BUNDLE.getString("general.edit") %>" /></a>
 				</display:column>
 						
