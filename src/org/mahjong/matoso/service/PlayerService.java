@@ -148,6 +148,11 @@ public abstract class PlayerService {
 			        	importType = value;
 			        } else if(name.equals(RequestCst.REQ_PARAM_ROUND)) {
 			        	rounds = NumberUtils.getInteger(value);
+
+			    		if (LOGGER.isDebugEnabled())
+			    			LOGGER.debug("parameterRound =" + rounds);
+
+			    		request.setAttribute(RequestCst.REQ_PARAM_ROUND, value);
 			        }	
 			        
 			    } else {
