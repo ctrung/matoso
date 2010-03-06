@@ -53,27 +53,18 @@ String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOU
 						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK)%></td>
 						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_VICTORY)%></td>
 						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%></td>
-						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_SELFPICK)%></td>
-						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_VICTORY)%></td>
-						<td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_DRAW)%></td>
 					</tr>
 				</thead>
 				
 				<tbody>
-				
-					<% TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats"); %>
-						
-					<tr class="color0">
+<%
+TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
+%>					<tr class="color0">
 						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_GAMES)%>"><%=""+ts.getNbGames() %></td>
-						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK)%>"><%=""+ts.getNbSelfpick() %></td>
-						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_VICTORY)%>"><%=""+ts.getNbVictory() %></td>
-						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%>"><%=""+ts.getNbDraw() %></td>
-						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_SELFPICK)%>"><%=""+ts.getPercSelfpick() %></td>
-						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_VICTORY)%>"><%=""+ts.getPercVictory() %></td>
-						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_PERC_DRAW)%>"><%=""+ts.getPercDraw() %></td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK)%>"><%=""+ts.getNbSelfpick() %> (<%=ts.getPercSelfpick() %>)</td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_VICTORY)%>"><%=""+ts.getNbVictory() %> (<%=ts.getPercVictory() %>)</td>
+						<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%>"><%=""+ts.getNbDraw() %> (<%=ts.getPercDraw() %>)</td>
 					</tr>
-						
-	
 				</tbody>
 			</table>
 	
@@ -83,9 +74,7 @@ String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOU
 					
 			<h3><%=BundleCst.BUNDLE.getString("ranking.by.player")%></h3>
 			
-			<p class="info">
-				<%= BundleCst.BUNDLE.getString("ranking.stats.player.text")%>
-			</p>
+			<p class="info"><%= BundleCst.BUNDLE.getString("ranking.stats.player.text")%></p>
 			
 			<form action="<%=request.getContextPath()%>/servlet/ViewRanking?nbElementsByPage=redefine" id="redefineNbElementsByPage">
 				<label for="nbElementsByPageId"><%= BundleCst.BUNDLE.getString("ranking.nb.elements.by.page")%></label>
@@ -93,8 +82,7 @@ String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOU
 				<input type="submit" value="<%= BundleCst.BUNDLE.getString("ranking.nb.elements.by.page.define.button")%>" />
 			</form>
 			
-			<a href="<%=request.getContextPath()%>/servlet/ViewRanking">
-				<%= BundleCst.BUNDLE.getString("general.reload.default") %></a>
+			<a href="<%=request.getContextPath()%>/servlet/ViewRanking"><%= BundleCst.BUNDLE.getString("general.reload.default") %></a>
 			<br/>
 			
 			<display:table name="sessionScope.ranking" 
@@ -109,48 +97,33 @@ String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOU
 						<img class="editUser" src="<%=request.getContextPath() + "/img/user_48.png"%>" title="<%= BundleCst.BUNDLE.getString("general.edit") %>" /></a>
 				</display:column>
 						
-			 	<display:column headerClass="position" property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" 
-			 		sortable="true" defaultorder="ascending" />
+			 	<display:column headerClass="position" property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" sortable="true" />
 			 	
-			 	<display:column headerClass="name" property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" 
-			 		sortable="true" defaultorder="ascending" />
+			 	<display:column headerClass="name" property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" sortable="true" />
 			 		
-			    <display:column property="points" titleKey="<%=BundleCst.RANKING_POINTS%>" format="{0,number,###.##}" 
-			    	sortable="true" defaultorder="descending" />
+			    <display:column property="points" titleKey="<%=BundleCst.RANKING_POINTS%>" format="{0,number,###.##}" sortable="true" defaultorder="descending" />
 			    	
-			    <display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" 
-			    	sortable="true" defaultorder="descending" />
+			    <display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" sortable="true" defaultorder="descending" />
 			    	
-			    <display:column property="nbGames" titleKey="<%=BundleCst.RANKING_NB_GAMES%>" 
-			    	sortable="true" defaultorder="descending" />
+			    <display:column property="nbGames" titleKey="<%=BundleCst.RANKING_NB_GAMES%>" sortable="true" defaultorder="descending" />
 			    	
-			    <display:column property="nbSelfpick" titleKey="<%=BundleCst.RANKING_NB_SELFPICK%>" 
-			    	sortable="true" defaultorder="descending" />
+			    <display:column property="selfDraw" titleKey="<%=BundleCst.RANKING_NB_SELFPICK%>" 
+			    	sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			    	
-			 	<display:column property="nbVictory" titleKey="<%=BundleCst.RANKING_NB_VICTORY%>" 
-			 		sortable="true" defaultorder="descending" />
+			 	<display:column property="win" titleKey="<%=BundleCst.RANKING_NB_VICTORY%>" 
+			 		sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			 		
 			    <display:column property="nbDefeat" titleKey="<%=BundleCst.RANKING_NB_DEFEAT%>" 
 			    	sortable="true" defaultorder="descending" />
 			    	
-			    <display:column property="nbGiven" titleKey="<%=BundleCst.RANKING_NB_GIVEN%>" 
-			    	sortable="true" defaultorder="descending" />
+			    <display:column property="lose" titleKey="<%=BundleCst.RANKING_NB_GIVEN%>" 
+			    	sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			    	
 			    <display:column property="nbSustainSelfpick" titleKey="<%=BundleCst.RANKING_NB_SUSTAIN_SELFPICK%>" 
 			    	sortable="true" defaultorder="descending" />
 			    	
 			    <display:column property="nbDraw" titleKey="<%=BundleCst.RANKING_NB_DRAW%>" 
 			    	sortable="true" defaultorder="descending" />
-			    	
-			    <display:column property="percSelfpick" titleKey="<%=BundleCst.RANKING_PERC_SELFPICK%>" format="{0,number,##.##} %" 
-			    	sortable="true" defaultorder="descending" />
-			    	
-			    <display:column property="percVictory" titleKey="<%=BundleCst.RANKING_PERC_VICTORY%>" format="{0,number,##.##} %" 
-			    	sortable="true" defaultorder="descending" />
-			    	
-			    <display:column property="percGiven" titleKey="<%=BundleCst.RANKING_PERC_GIVEN%>" format="{0,number,##.##} %" 
-			    	sortable="true" defaultorder="descending" />
-			    	
 			</display:table>
 
 			<!-- --------------------- -->
