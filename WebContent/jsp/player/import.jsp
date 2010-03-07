@@ -33,7 +33,7 @@ org.mahjong.matoso.util.message.MatosoMessages"%>
 		<div id="import">
 
 			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+
-					RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT)%>">
+					RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID)%>">
 					<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%>
 			</a>
 				

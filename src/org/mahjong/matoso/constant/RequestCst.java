@@ -3,7 +3,7 @@ package org.mahjong.matoso.constant;
 public interface RequestCst {
 	String REQ_PARAM_LIST_TOURNAMENTS = "list-tournaments";
 
-	String REQ_PARAM_TOURNAMENT_NAME = "tournament-name";
+	String REQ_PARAM_TOURNAMENT_ID = "tournament-id";
 	String REQ_PARAM_TEAM_ACTIVATE = "team-activate";
 	String REQ_PARAM_ROUND = "round";
 	String REQ_PARAM_CHOSEN_TABLE = "chosen-table";

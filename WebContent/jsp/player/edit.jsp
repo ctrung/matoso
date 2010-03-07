@@ -1,8 +1,8 @@
 <%@page
 	import="org.mahjong.matoso.constant.*,org.mahjong.matoso.bean.*,org.mahjong.matoso.service.*"
 	language="java"
-	contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"
+	contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,7 +23,7 @@
 		<div id="edit">
 		
 			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+
-					RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT)%>">
+					RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID)%>">
 					<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%>
 			</a>
 				

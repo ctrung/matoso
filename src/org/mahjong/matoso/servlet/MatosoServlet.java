@@ -1,4 +1,14 @@
+/* MATOSO project - 2009
+ *
+ * This acronym stands for MAhjong TOurnament SOftware.
+ * Originally created by Nicolas Pochic and Clement Trung.
+ * Feel free to modify and redistribute this code wherever you want.
+ * Software is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
 package org.mahjong.matoso.servlet;
+
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,14 +18,16 @@ import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.TournamentService;
+import org.mahjong.matoso.util.NumberUtils;
 import org.mahjong.matoso.util.SessionUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 import org.mahjong.matoso.util.message.MatosoMessages;
 
 /**
  * Mother class to inherit from.<br>
- * It helps deal with exception by displaying a error page.
- * It updates the user's last visited url.
+ * It helps deal with exception by displaying an error page.<br>
+ * It updates the user's last visited url.<br>
+ * Daughter classes can easily get the session's tournament by calling a method.
  * 
  * @author ctrung
  * @date 2 Dec. 2009
@@ -29,6 +41,14 @@ public abstract class MatosoServlet extends HttpServlet {
 	 */
 	protected final void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			
+			// set encoding
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO : do something better ?
+				e.printStackTrace();
+			}			
 			
 			String forwardTo = serve(request, response);
 			
@@ -70,20 +90,23 @@ public abstract class MatosoServlet extends HttpServlet {
 	 */
 	public static Tournament getTournament(HttpServletRequest request) throws FatalException{
 		
-		// TODO : get the tournament by id, not by name (error prone)
+		// retrieve the tournament from an id in the session first...
+		Integer tournamentId = (Integer)request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID);
 		
-		String tournamentName = (String)request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-		if(tournamentName==null) {
-			throw new FatalException("Tournament ??? not found", null);
+		if(tournamentId == null) {
+			
+			// no id in the session ? retrieve it via the request...
+			String reqId = request.getParameter("tournament-id");
+			tournamentId = NumberUtils.getInteger(reqId);
+			
+			if(tournamentId == null) throw new FatalException("The tournament with id=" + reqId + " doesn't exist.");
 		}
 		
-		Tournament tournament	= TournamentService.getByName(tournamentName);
-		if(tournament==null) {
-			throw new FatalException("Tournament " + tournamentName + " not found", null);
-		}
+		Tournament tournament = TournamentService.getById(tournamentId);
+		if(tournament==null) 
+			throw new FatalException("The tournament with id=" + tournamentId + " doesn't exist.");
 		
 		return tournament;
-		
 	}
 
 	/**

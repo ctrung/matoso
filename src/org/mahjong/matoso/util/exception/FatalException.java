@@ -40,4 +40,13 @@ public class FatalException extends Exception {
 	public FatalException(String message, Exception e) {
 		super(message, e);
 	}
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param message 
+	 */
+	public FatalException(String message) {
+		super(message);
+	}	
 }

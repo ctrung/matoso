@@ -1,4 +1,11 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %><%@ page import="org.mahjong.matoso.constant.*" %><%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ page import="org.mahjong.matoso.constant.*" %>
+<%@ page import="org.mahjong.matoso.bean.Tournament" %>
+
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -8,10 +15,12 @@
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 	</head>
 	<body id="bodyDynamicRanking">
-<%
-String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-%><h2><%=name%></h2>
-		<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+name%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+	
+		<%
+			Tournament tournament = (Tournament) request.getAttribute("tournament");
+		%>
+		<h2><%=tournament.getName()%></h2>
+		<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 		<display:table name="sessionScope.ranking" pagesize="10" uid="dynamicRanking">
 			<display:column property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" />
 			<display:column property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" />

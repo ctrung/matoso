@@ -46,8 +46,7 @@ public class ViewRanking extends MatosoServlet {
 		HttpSession session  = request.getSession();
 		
 		Tournament tournament = super.getTournament(request);
-		
-		assert (tournament != null);
+		request.setAttribute("tournament", tournament);
 
 		/*
 		 * We use displaytag to render the ranking table. It has great functionalities :

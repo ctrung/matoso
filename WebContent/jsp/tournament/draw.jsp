@@ -11,6 +11,7 @@
 
 <%@page import="java.util.List"%>
 <%@page import="org.mahjong.matoso.bean.Player"%>
+<%@page import="org.mahjong.matoso.bean.Tournament"%>
 <%@page import="org.mahjong.matoso.constant.SessionCst"%>
 
 
@@ -30,12 +31,12 @@
 	
 			<%@include file="../include/head.jsp"%>
 			
-			<% String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT); %>
-			<h2><%=name %></h2>
+			<% Tournament tournament = (Tournament) request.getAttribute("tournament"); %>
+			<h2><%=tournament.getName() %></h2>
 			
 			<div class="left">		
 				<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+
-						RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+name%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+						RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 				<br/>
 				<%-- iterate over each player to display its rounds --%>
 		
@@ -54,7 +55,6 @@
 		%>
 		
 			<div class="player">
-				<%=session.getAttribute(SessionCst.SES_ATTR_TOURNAMENT) %>
 				<p><%=p.getPrettyPrintName()%></p>
 				<table>
 					<thead>

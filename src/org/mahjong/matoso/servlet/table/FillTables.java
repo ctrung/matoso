@@ -1,3 +1,11 @@
+/* MATOSO project - 2009
+ *
+ * This acronym stands for MAhjong TOurnament SOftware.
+ * Originally created by Nicolas Pochic and Clement Trung.
+ * Feel free to modify and redistribute this code wherever you want.
+ * Software is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
 package org.mahjong.matoso.servlet.table;
 
 import java.util.List;
@@ -40,7 +48,7 @@ public final class FillTables extends MatosoServlet {
 
 		// Get the tournament
 		Tournament tournament = super.getTournament(request);
-
+		
 		// Get the number of wanted rounds
 		String parameterRound = request.getParameter(RequestCst.REQ_PARAM_ROUND);
 
@@ -89,6 +97,6 @@ public final class FillTables extends MatosoServlet {
 		if (LOG.isDebugEnabled())
 			LOG.debug("<=serve");
 
-		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD;
+		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?tournament-id=" + tournament.getId();
 	}
 }

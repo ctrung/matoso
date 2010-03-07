@@ -12,7 +12,7 @@
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 		<script>
 			function checkInputs() {
-				elt = document.getElementsByName("<%=RequestCst.REQ_PARAM_TOURNAMENT_NAME%>");
+				elt = document.getElementsByName('tournament-name');
 				if (elt && elt.length == 1) {
 					if (elt[0] && elt[0].value == "") {
 						alert("<%=BundleCst.BUNDLE.getString(BundleCst.ERROR_NAME_MISSING)%>");
@@ -27,8 +27,8 @@
 		<h2><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TITLE)%></h2>
 		<div id="listTournament">
 			<form  action="<%=request.getContextPath()%>/servlet/CreateTournament" method="post" onsubmit="return checkInputs();">
-				<div class="label"><label for="<%=RequestCst.REQ_PARAM_TOURNAMENT_NAME%>"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NAME)%></label></div>
-				<input type="text" name="<%=RequestCst.REQ_PARAM_TOURNAMENT_NAME%>" /><br/>
+				<div class="label"><label for="tournament-name"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NAME)%></label></div>
+				<input type="text" name="tournament-name" /><br/>
 				<div class="label"><label for="teamActivate"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TEAM_ACTIVATE)%></label></div>
 				<input type="checkBox" name="team-activate" id="teamActivate"/><br/>
 				<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_CREATE)%>" />
@@ -51,10 +51,10 @@ if (tournaments != null && !tournaments.isEmpty()) {
 	for (int i=0; i<tournaments.size(); i++) { 
 		t = tournaments.get(i);
 %>							<tr class="<%="color"+(i%2)%>">
-								<td><a href="<%=request.getContextPath()+"/servlet/LoadTournament?tournament-name="+t.getName()%>">
+								<td><a href="<%=request.getContextPath()+"/servlet/LoadTournament?tournament-id="+t.getId()%>">
 									<%=t.getName()%></a></td>
 								<td><%=t.getTeamActivateStr()%></td>
-								<td><a href="<%=request.getContextPath()+"/servlet/DeleteTournament?tournament-name="+t.getName()%>">
+								<td><a href="<%=request.getContextPath()+"/servlet/DeleteTournament?tournament-id="+t.getId()%>">
 									<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
 							</tr>
 <%

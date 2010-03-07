@@ -25,14 +25,23 @@ import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.NumberUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
+/**
+ * Display an dynamic view of the ranking by shifting the page every N seconds.
+ * 
+ * @author ctrung
+ * @date 7 mars 2010
+ */
 public class DynamicViewRanking extends MatosoServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
 	@Override
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
+		
 		HttpSession session  = request.getSession();
-		// which tournament ?
+		
 		Tournament tournament = super.getTournament(request);
-		assert (tournament != null);
+		request.setAttribute("tournament", tournament);
 		
 		// The players ranking 
 		List<Player> orderedPlayers = RankingService.getByTournament(tournament);

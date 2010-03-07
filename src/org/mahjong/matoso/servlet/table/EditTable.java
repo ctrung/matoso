@@ -1,3 +1,11 @@
+/* MATOSO project - 2009
+ *
+ * This acronym stands for MAhjong TOurnament SOftware.
+ * Originally created by Nicolas Pochic and Clement Trung.
+ * Feel free to modify and redistribute this code wherever you want.
+ * Software is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
 package org.mahjong.matoso.servlet.table;
 
 import java.util.List;
@@ -12,20 +20,21 @@ import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.display.DisplayTableGame;
 import org.mahjong.matoso.form.EditTableForm;
 import org.mahjong.matoso.service.GameResultService;
 import org.mahjong.matoso.service.GameService;
 import org.mahjong.matoso.service.TableService;
 import org.mahjong.matoso.service.TeamService;
-import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.NumberUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
- * Servlet implementation class EditTable
+ * Show the table's form to input games results.
+ * 
+ * @author ctrung
+ * @date 7 mars 2010
  */
 public final class EditTable extends MatosoServlet {
 	
@@ -67,8 +76,10 @@ public final class EditTable extends MatosoServlet {
 		
 
 		// Get the tournament
-		String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-		Tournament tournament = TournamentService.getByName(name);
+		Tournament tournament = super.getTournament(request);
+		request.setAttribute("tournament", tournament);
+		
+		
 		EditTableForm form = new EditTableForm();
 		// Player names
 		form.setPlayer1Name(table.getPlayer1().getPrettyPrintName());

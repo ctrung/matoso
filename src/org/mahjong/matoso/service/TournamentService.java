@@ -258,37 +258,30 @@ public abstract class TournamentService {
 	}
 
 	/**
-	 * Return a tournament by its name (should be unique).
+	 * Return a tournament by its ID.
 	 * 
-	 * @param tournamentName
+	 * @param id
 	 * @return A tournament or <code>null</code> if not found.
 	 * @throws FatalException
 	 */
-	public static Tournament getByName(String name) throws FatalException {
-		try {
-			return (Tournament) HibernateUtil.getSession().createCriteria(Tournament.class).add(Restrictions.eq("name", name))
-					.list().get(0);
-		} catch (HibernateException e) {
-			throw new FatalException(e);
-		}
+	public static Tournament getById(Integer id) throws FatalException {
+		return (Tournament) HibernateUtil.getSession().load(Tournament.class, id);
 	}
 
 	/**
-	 * Delete a given tournament
+	 * Delete a tournament
 	 * 
-	 * @param name
-	 *            the name of the tournament
+	 * @param tournament
 	 * @throws FatalException
 	 */
-	public static void deleteTournament(String name) throws FatalException {
-		HibernateUtil.delete(getByName(name));
+	public static void deleteTournament(Tournament tournament) throws FatalException {
+		HibernateUtil.delete(tournament);
 	}
 
 	/**
 	 * Count the number of rounds of a tournament
 	 * 
-	 * @param tournament
-	 *            the current tournament
+	 * @param tournament 
 	 * @return the number of round
 	 * @throws HibernateException
 	 *             error to get the list of tables of the tournament
@@ -296,11 +289,9 @@ public abstract class TournamentService {
 	 *             error to get the session
 	 */
 	@SuppressWarnings("unchecked")
-	public static int countRounds(String name) throws HibernateException, FatalException {
+	public static int countRounds(Tournament tournament) throws HibernateException, FatalException {
 		if (LOG.isDebugEnabled())
-			LOG.debug("countRounds(" + name + ")");
-
-		Tournament tournament = getByName(name);
+			LOG.debug("countRounds(" + tournament.getName() + ")");
 
 		List<Table> tables = HibernateUtil.getSession().createCriteria(Table.class)
 				.add(Restrictions.eq("tournament", tournament)).addOrder(Order.desc("round")).list();

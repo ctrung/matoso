@@ -13,9 +13,11 @@
 	language="java"
 	contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-%><%
-String name = (String) session.getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-int nbRounds = TournamentService.countRounds(name);
+%>
+
+<%
+	Tournament tournament = (Tournament) request.getAttribute("tournament");
+	Integer nbRounds = (Integer)request.getAttribute("nbRounds");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -27,7 +29,7 @@ int nbRounds = TournamentService.countRounds(name);
 	</head>
 	<body>
 		<%@include file="../include/head.jsp"%>
-		<h2><%=request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT) %></h2>
+		<h2><%=tournament.getName() %></h2>
 		<div id="loadTournament">
 			<a href="<%=request.getContextPath()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 			<br/><br/>

@@ -39,6 +39,7 @@ public class ViewTournamentDraw extends MatosoServlet {
 		
 		// load all players 
 		List<Player> ps = PlayerService.getListFromTournament(tournament);
+		request.setAttribute("tournament", tournament);
 		request.setAttribute("players", ps);
 		
 		// for each player, load its draw

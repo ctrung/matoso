@@ -6,7 +6,6 @@
 <%@page import="org.mahjong.matoso.bean.*"%>
 <%@page import="org.mahjong.matoso.constant.*"%>
 <%@page import="java.util.List"%>
-<%@page import="org.mahjong.matoso.bean.Player"%>
 <%@page import="org.mahjong.matoso.display.TournamentStats"%>
 
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
@@ -26,17 +25,21 @@
 	<body>
 	
 		<!-- header -->
-<%@
-include file="include/head.jsp"
-%><%
-String name = (String) request.getSession().getAttribute(SessionCst.SES_ATTR_TOURNAMENT);
-
-%>		<h2><%=name + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
+		<%@include file="include/head.jsp"%>
+		<%
+			Tournament tournament = (Tournament) request.getAttribute("tournament");
+			if(tournament != null) {
+				// because displaytag calls JSP during pagination we exceptionally put the tournament name in session
+				request.getSession().setAttribute("tournamentName", tournament.getName());
+			}
+		%>
+		
+		<h2><%=request.getSession().getAttribute("tournamentName") + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
 		
 		<div id="ranking">
 		
 			<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+
-				RequestCst.REQ_PARAM_TOURNAMENT_NAME+"="+name%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
+				RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID)%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
 			
 			<!-- ---------------- -->
 			<!-- Tournament stats -->
@@ -133,7 +136,7 @@ TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
 			<h3><%=BundleCst.BUNDLE.getString("ranking.by.team")%></h3>
 			<table border="1" cellpadding="0" cellspacing="0">
 				<thead>
-					<tr><td></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POINTS)%></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE)%></td></tr>
+					<tr><td><%=BundleCst.BUNDLE.getString("ranking.team")%></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POINTS)%></td><td><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE)%></td></tr>
 				</thead>
 				<tbody>
 <%
