@@ -138,40 +138,5 @@ public abstract class PenaltyService {
 		
 		HibernateUtil.save(table);
 	}
-
-	/**
-	 * Test if penalties are all valid, i.e sum is equal to 0.
-	 * 
-	 * @param penalties
-	 * @return
-	 */
-	public static boolean isPenaltiesValid(List<Penalty> penalties) {
-		
-		if(penalties==null || penalties.size()==0) return true;
-		
-		for (Iterator<Penalty> iterator = penalties.iterator(); iterator.hasNext();) {
-			Penalty penalty = (Penalty) iterator.next();
-			
-			// skip empty lines
-			if(penalty.getPenaltyPlayer1()==null && penalty.getPenaltyPlayer2()==null 
-					&& penalty.getPenaltyPlayer3()==null && penalty.getPenaltyPlayer4()==null) {
-				continue;
-			}
-			
-			// one of the input is null
-			if(penalty.getPenaltyPlayer1()==null || penalty.getPenaltyPlayer2()==null 
-					|| penalty.getPenaltyPlayer3()==null || penalty.getPenaltyPlayer4()==null) {
-				return false;
-			}
-			
-			// sum is not equal to zero
-			if(penalty.getPenaltyPlayer1() + penalty.getPenaltyPlayer2()
-					+ penalty.getPenaltyPlayer3() + penalty.getPenaltyPlayer4() != 0) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
 	
 }

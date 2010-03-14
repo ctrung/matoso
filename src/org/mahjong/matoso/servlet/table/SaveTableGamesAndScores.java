@@ -123,11 +123,6 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 		MatosoMessages userMsgs = new MatosoMessages();
 		request.setAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES, userMsgs);
 		
-		// penalties
-		if(!PenaltyService.isPenaltiesValid(table.getPenalties())) {
-			userMsgs.addMessage(MatosoMessage.ERROR, BundleCst.BUNDLE.getString("table.errors.penalties.not.valid"));
-		}
-		
 		// tables scores
 		if(!autoCalculate && !GameResultService.isEmpty(results) && !GameResultService.isTableScoresValid(results)) {
 			userMsgs.addMessage(MatosoMessage.ERROR, BundleCst.BUNDLE.getString("table.errors.scores.not.valid"));
