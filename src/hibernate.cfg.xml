@@ -38,6 +38,7 @@
 		<mapping resource="org/mahjong/matoso/bean/Player.hbm.xml"/>
 		<mapping resource="org/mahjong/matoso/bean/Tournament.hbm.xml"/>
 		<mapping resource="org/mahjong/matoso/bean/Team.hbm.xml"/>
+		<mapping resource="org/mahjong/matoso/bean/Round.hbm.xml"/>
 		<mapping resource="org/mahjong/matoso/bean/Table.hbm.xml"/>
 		<mapping resource="org/mahjong/matoso/bean/Game.hbm.xml"/>
 		<mapping resource="org/mahjong/matoso/bean/GameResult.hbm.xml"/>

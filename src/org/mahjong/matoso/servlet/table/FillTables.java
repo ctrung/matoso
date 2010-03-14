@@ -8,19 +8,20 @@
  */
 package org.mahjong.matoso.servlet.table;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
 import org.mahjong.matoso.service.RoundService;
-import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.HibernateUtil;
 import org.mahjong.matoso.util.exception.FatalException;
@@ -77,7 +78,8 @@ public final class FillTables extends MatosoServlet {
 		if (LOG.isDebugEnabled())
 			LOG.debug("tables=" + tables.size());
 
-		// Save the tables
+		// Save tables
+		Map<Integer, List<Table>> mapRoundTables = new HashMap<Integer, List<Table>>();
 		for (Table table : tables) {
 			table.setTournament(tournament);
 			try {
@@ -85,18 +87,22 @@ public final class FillTables extends MatosoServlet {
 			} catch (FatalException e) {
 				LOG.error("save error table : " + table, e);
 			}
+			
+			// filling the round map
+			int round = table.getRoundNbr();
+			if(mapRoundTables.get(round) == null) mapRoundTables.put(round, new ArrayList<Table>());
+			mapRoundTables.get(round).add(table);
 		}
 
-		// Add the rounds to the request for the JSP
-		try {
-			request.setAttribute("rounds", TournamentService.getTables(tournament));
-		} catch (HibernateException e) {
-			throw new FatalException(e);
+		// Save the rounds
+		for(Integer roundInt : mapRoundTables.keySet()) {
+			List<Table> roundTables = mapRoundTables.get(roundInt);
+			RoundService.create(tournament, roundInt, roundTables);
 		}
-
+		
 		if (LOG.isDebugEnabled())
 			LOG.debug("<=serve");
 
-		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?tournament-id=" + tournament.getId();
+		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET;
 	}
 }

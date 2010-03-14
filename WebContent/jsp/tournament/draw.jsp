@@ -5,8 +5,8 @@
 <%@page
 	import="org.mahjong.matoso.constant.*"
 	language="java"
-	contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"
+	contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"
 %>
 
 <%@page import="java.util.List"%>
@@ -15,7 +15,8 @@
 <%@page import="org.mahjong.matoso.constant.SessionCst"%>
 
 
-<%@page import="org.mahjong.matoso.bean.Table"%><html>
+<%@page import="org.mahjong.matoso.bean.Table"%>
+<%@page import="org.mahjong.matoso.util.DateUtils"%><html>
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -67,9 +68,11 @@
 							if(ts!=null) {
 								for(int j=0; j<ts.size(); j++) {
 									Table t = ts.get(j);
+									String date = DateUtils.formatSQLDate(t.getRound().getDate());
+									String startTime = DateUtils.formatSQLTime(t.getRound().getStartTime());
+									String finishTime = DateUtils.formatSQLTime(t.getRound().getFinishTime());
 						%>						
-					
-							<tr><td><%=t.getRound()%></td><td>-</td><td><%=t.getName()%></td><td></td><td></td></tr>
+							<tr><td><%=t.getRound().getNumber()%></td><td><%= date + " " + startTime + "-" + finishTime %></td><td><%=t.getName()%></td><td></td><td></td></tr>
 						
 						<%		}
 							} %>

@@ -11,7 +11,8 @@
 		</id>
 		
 		<property name="name" type="string" column="NAME" />
-		<property name="round" type="integer" column="ROUND" />
+		
+		<many-to-one name="round" class="org.mahjong.matoso.bean.Round" column="ID_ROUND" />
 		
 		<many-to-one name="tournament" class="org.mahjong.matoso.bean.Tournament" column="ID_TOURNAMENT" />
 		

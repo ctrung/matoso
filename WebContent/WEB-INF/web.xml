@@ -98,6 +98,18 @@
 		<servlet-class>org.mahjong.matoso.servlet.table.EditTable</servlet-class>
 	</servlet>
 	<servlet>
+		<description>Edit a round</description>
+		<display-name>EditRound</display-name>
+		<servlet-name>EditRound</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.round.EditRound</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Save a round</description>
+		<display-name>SaveRound</display-name>
+		<servlet-name>SaveRound</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.round.SaveRound</servlet-class>
+	</servlet>	
+	<servlet>
 		<description>Save a player</description>
 		<display-name>SavePlayer</display-name>
 		<servlet-name>SavePlayer</servlet-name>
@@ -184,6 +196,14 @@
 		<servlet-name>EditTable</servlet-name>
 		<url-pattern>/servlet/EditTable</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditRound</servlet-name>
+		<url-pattern>/servlet/EditRound</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SaveRound</servlet-name>
+		<url-pattern>/servlet/SaveRound</url-pattern>
+	</servlet-mapping>	
 	<servlet-mapping>
 		<servlet-name>SavePlayer</servlet-name>
 		<url-pattern>/servlet/SavePlayer</url-pattern>

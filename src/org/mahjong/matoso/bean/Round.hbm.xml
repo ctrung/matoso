@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.mahjong.matoso.bean.Round" table="ROUND">
+		<id name="id">
+			<generator class="increment"/>
+		</id>
+		
+		<many-to-one name="tournament" class="org.mahjong.matoso.bean.Tournament" 
+			column="ID_TOURNAMENT" />
+		
+		<property name="number" 		type="integer" 		column="NUMBER" />
+		<property name="date" 			type="date" 		column="DATE" />
+		<property name="startTime" 		type="time" 		column="START_TIME" />
+		<property name="finishTime" 	type="time" 		column="FINISH_TIME" />
+		
+		<list name="tables" fetch="join">
+			<key column="ID_ROUND"/>
+			<list-index column="number" />
+			<one-to-many class="org.mahjong.matoso.bean.Table" />
+		</list>
+		
+	</class>
+</hibernate-mapping>

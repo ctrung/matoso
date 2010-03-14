@@ -6,13 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ServletCst;
 import org.mahjong.matoso.service.RoundService;
 import org.mahjong.matoso.service.TableService;
-import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.HibernateUtil;
 import org.mahjong.matoso.util.exception.FatalException;
@@ -47,12 +45,6 @@ public class AddMoreRounds extends MatosoServlet {
 
 		LOG.debug("TournamentService.getTables");
 
-		try {
-			request.setAttribute("rounds", TournamentService.getTables(tournament));
-		} catch (HibernateException e) {
-			throw new FatalException(e);
-		} 
-
-		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD;
+		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET;
 	}
 }

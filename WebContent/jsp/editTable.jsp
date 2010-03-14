@@ -44,7 +44,7 @@ Table table = (Table) request.getAttribute(RequestCst.REQ_ATTR_TABLE);
 			<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 			<div id="tableInfos">
 				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_TABLE)%> : <%= table.getName() %><br/>
-				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_ROUND)%> : <%=table.getRound() %>
+				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_ROUND)%> : <%=table.getRound().getNumber() %>
 			</div>
 <%
 //Messages

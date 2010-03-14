@@ -16,16 +16,10 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.mahjong.matoso.bean.Player;
-import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.display.TournamentStats;
@@ -276,66 +270,6 @@ public abstract class TournamentService {
 	 */
 	public static void deleteTournament(Tournament tournament) throws FatalException {
 		HibernateUtil.delete(tournament);
-	}
-
-	/**
-	 * Count the number of rounds of a tournament
-	 * 
-	 * @param tournament 
-	 * @return the number of round
-	 * @throws HibernateException
-	 *             error to get the list of tables of the tournament
-	 * @throws FatalException
-	 *             error to get the session
-	 */
-	@SuppressWarnings("unchecked")
-	public static int countRounds(Tournament tournament) throws HibernateException, FatalException {
-		if (LOG.isDebugEnabled())
-			LOG.debug("countRounds(" + tournament.getName() + ")");
-
-		List<Table> tables = HibernateUtil.getSession().createCriteria(Table.class)
-				.add(Restrictions.eq("tournament", tournament)).addOrder(Order.desc("round")).list();
-
-		if (LOG.isDebugEnabled())
-			LOG.debug("countRounds-table=" + (tables != null ? tables.size() : 0));
-
-		if (tables != null && tables.size() != 0) {
-			return tables.get(0).getRound();
-		}
-		return 0;
-	}
-
-	/**
-	 * @param tournament
-	 *            the current tournament
-	 * @return the tables for each round
-	 * @throws HibernateException
-	 * @throws FatalException
-	 */
-	@SuppressWarnings("unchecked")
-	public static TreeMap<Integer, List<Table>> getTables(Tournament tournament) throws HibernateException, FatalException {
-		TreeMap<Integer, List<Table>> result = new TreeMap<Integer, List<Table>>();
-		
-		// Fetching the players to avoid n+1 queries
-		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from Table as t left join fetch t.tournament " +
-				"left join fetch t.player1 " + 
-				"left join fetch t.player2 " + 
-				"left join fetch t.player3 " + 
-				"left join fetch t.player4 " +
-				"left join fetch t.result where t.tournament = :tournament");
-		query.setParameter("tournament", tournament);
-		List<Table> lst = query.list();
-
-		if (lst != null && lst.size() != 0) {
-			for (Table table : lst) {
-				if (!result.containsKey(table.getRound())) {
-					result.put(table.getRound(), new ArrayList<Table>());
-				}
-				result.get(table.getRound()).add(table);
-			}
-		}
-		return result;
 	}
 
 	/**

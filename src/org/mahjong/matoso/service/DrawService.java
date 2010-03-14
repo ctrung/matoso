@@ -18,7 +18,7 @@ import org.mahjong.matoso.util.HibernateUtil;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
- * Methods for draw.
+ * Methods for draw.<br>
  * 
  * @author ctrung
  * @date 04 Dec. 2009
@@ -30,8 +30,7 @@ public abstract class DrawService {
 	 * 
 	 * Actually, it's just initializing the tables for each player.<br>
 	 * 
-	 * But in the future, you may want other informations like the opponents names, 
-	 * that's why a draw service layer was specifically created instead of using TableService.
+	 * But 
 	 * 
 	 * @param players A list of players.
 	 * 
@@ -43,9 +42,9 @@ public abstract class DrawService {
 		
 		try {
 			Session s = HibernateUtil.getSession();
-			Query q = s.createQuery("from Table t left join fetch t.player1 p1 left join fetch t.player2 p2 " + 
+			Query q = s.createQuery("from Table t left join fetch t.round left join fetch t.player1 p1 left join fetch t.player2 p2 " + 
 					"left join fetch t.player3 p3 left join fetch t.player4 p4 where :p = p1 or " +
-					":p = p2 or :p = p3 or :p = p4 order by t.round asc");
+					":p = p2 or :p = p3 or :p = p4 order by t.round.number asc");
 			List<Table> tables = null;
 			
 			for(int i=0; i<players.size(); i++){

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ServletCst;
 import org.mahjong.matoso.constant.SessionCst;
-import org.mahjong.matoso.service.TournamentService;
+import org.mahjong.matoso.service.RoundService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.exception.FatalException;
 
@@ -35,8 +35,7 @@ public class LoadTournament extends MatosoServlet {
 		request.getSession().setAttribute(SessionCst.SESSION_TOURNAMENT_ID, tournament.getId());
 		
 		request.setAttribute("tournament", tournament);
-		request.setAttribute("nbRounds", TournamentService.countRounds(tournament));
-		request.setAttribute("rounds", TournamentService.getTables(tournament));
+		request.setAttribute("rounds", RoundService.getRounds(tournament));
 		
 		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD;
 	}

@@ -9,6 +9,7 @@
 package org.mahjong.matoso.util;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,8 @@ public class DateUtils {
 	private static Logger LOGGER = Logger.getLogger(DateUtils.class);
 	
 	private static DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	
+	private static DateFormat tf = new SimpleDateFormat("HH:mm");
 
 	/**
 	 * Return a date object based on its string representation.
@@ -46,5 +49,50 @@ public class DateUtils {
 		return d;
 	}
 
+	/**
+	 * Return a time object based on its time string representation.
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static Time parseSQLTime(String time) {
+		
+		Time t = null;
+		
+		try {
+			t = new Time(tf.parse(time).getTime());
+		} catch (ParseException e) {
+			LOGGER.warn("Trying to parse a non time string : " + time + ", please verify the format : " + tf.toString());
+		}
+		
+		return t;
+	}	
 	
+	/**
+	 * Format a date to string.
+	 * 
+	 * @param date
+	 * @param format
+	 * @return
+	 */
+	public static String formatSQLDate(Date date) {
+		
+		if(date==null) return "";
+		
+		return df.format(date);
+	}
+	
+	/**
+	 * Format a time to string.
+	 * 
+	 * @param time
+	 * @param format
+	 * @return
+	 */
+	public static String formatSQLTime(Time time) {
+		
+		if(time==null) return "";
+		
+		return tf.format(time);
+	}	
 }

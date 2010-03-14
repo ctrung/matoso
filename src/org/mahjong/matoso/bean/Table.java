@@ -43,7 +43,9 @@ public class Table {
 	 * The round.
 	 * The triplet (idTable, tournament, round) is unique.
 	 */
-	private Integer round;
+	private Round round;
+	
+	transient int roundNbr; 
 	
 	private Player player1;
 	private Player player2;
@@ -98,15 +100,23 @@ public class Table {
 	/**
 	 * @return the round
 	 */
-	public Integer getRound() {
+	public Round getRound() {
 		return round;
 	}
 
 	/**
 	 * @param round the round to set
 	 */
-	public void setRound(Integer round) {
+	public void setRound(Round round) {
 		this.round = round;
+	}
+
+	public int getRoundNbr() {
+		return roundNbr;
+	}
+
+	public void setRoundNbr(int roundNbr) {
+		this.roundNbr = roundNbr;
 	}
 
 	public Player getPlayer1() {

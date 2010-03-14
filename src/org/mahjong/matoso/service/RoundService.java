@@ -8,18 +8,27 @@
  */
 package org.mahjong.matoso.service;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.mahjong.matoso.bean.Player;
+import org.mahjong.matoso.bean.Round;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Team;
+import org.mahjong.matoso.bean.Tournament;
+import org.mahjong.matoso.util.HibernateUtil;
+import org.mahjong.matoso.util.exception.FatalException;
 
 /**
- * Layer to mainly deal with the drawing of tables.
+ * Round layer.<br>
+ * Methods to fill tables too.
  * 
  * @author npochic
  * @date 14 mars 2010
@@ -56,7 +65,7 @@ public abstract class RoundService {
 				if (current.size() * 4 / players.size() > nbMaxRounds) {
 					// Delete some tables
 					for (Table tableI : current)
-						if (tableI.getRound() <= nbMaxRounds)
+						if (tableI.getRoundNbr() <= nbMaxRounds)
 							max.add(tableI);
 
 				} else
@@ -105,7 +114,7 @@ public abstract class RoundService {
 			for (int countTable = 1; countTable <= numberTables; countTable++) {
 				// Add a new table
 				table = new Table();
-				table.setRound(roundNumber);
+				table.setRoundNbr(roundNumber);
 				table.setName(Integer.toString(countTable));
 
 				// Find 4 players
@@ -158,7 +167,7 @@ public abstract class RoundService {
 		
 		Set<Table> lastRound = new LinkedHashSet<Table>();
 		for (Table tableI : tables) {
-			if (tableI.getRound() == roundNumber) {
+			if (tableI.getRoundNbr() == roundNumber) {
 				lastRound.add(tableI);
 			}
 		}
@@ -233,5 +242,71 @@ public abstract class RoundService {
 		LOG.debug("FINAL nbTry=" + nbTries);
 		LOG.debug("FINAL minRepeat=" + minRepeat);
 		LOG.debug("FINAL nbrounds=" + best.size() * 4 / players.size());
+	}
+
+	/**
+	 * Get all rounds of the tournament ordered by number with tables inside.
+	 * 
+	 * @param tournament
+	 * @return
+	 * @throws FatalException 
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<Round> getRounds(Tournament tournament) throws FatalException {
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from Round where tournament = :t order by number");
+		query.setParameter("t", tournament);
+		
+		return (List<Round>)query.list();
+	}
+
+	/**
+	 * Save a round.
+	 * 
+	 * @param tournament
+	 * @param number
+	 * @param tables
+	 * @throws FatalException
+	 */
+	public static void create(Tournament tournament, Integer number,
+			List<Table> tables) throws FatalException {
+		
+		Round round = new Round();
+		round.setNumber(number);
+		round.setTables(tables);
+		round.setTournament(tournament);
+		
+		HibernateUtil.save(round);
+	}
+
+	/**
+	 * Get a round by its id.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws FatalException
+	 */
+	public static Round getById(Integer id) throws FatalException {
+		return (Round) HibernateUtil.getSession().load(Round.class, id);
+	}
+	
+	/**
+	 * Update a round.
+	 * 
+	 * @param id
+	 * @param date
+	 * @param startTime
+	 * @param finishTime
+	 * 
+	 * @throws FatalException
+	 */
+	public static void update(Integer id, Date date, Time startTime, Time finishTime) throws FatalException {
+		
+		Round round = getById(id);
+		round.setDate(date);
+		round.setStartTime(startTime);
+		round.setFinishTime(finishTime);
+		HibernateUtil.save(round);
+		
 	}
 }
