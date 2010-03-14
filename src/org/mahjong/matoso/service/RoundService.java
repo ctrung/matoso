@@ -1,3 +1,11 @@
+/* MATOSO project - 2009
+ *
+ * This acronym stands for MAhjong TOurnament SOftware.
+ * Originally created by Nicolas Pochic and Clement Trung.
+ * Feel free to modify and redistribute this code wherever you want.
+ * Software is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
 package org.mahjong.matoso.service;
 
 import java.util.ArrayList;
@@ -10,11 +18,19 @@ import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Team;
 
+/**
+ * Layer to mainly deal with the drawing of tables.
+ * 
+ * @author npochic
+ * @date 14 mars 2010
+ */
 public abstract class RoundService {
+	
 	private static final Logger LOG = Logger.getLogger(RoundService.class);
 
 	/**
-	 * Fill the rounds.
+	 * Get the rounds up and running by filling all the tables. <br>
+	 * The algorithm is a brutal force calculating one.
 	 * 
 	 * @param players
 	 *            the list of players
@@ -24,7 +40,9 @@ public abstract class RoundService {
 	 *            number of tries (a high number could slow the execution)
 	 * @param maxTimeToWait
 	 *            the number of seconds to wait if the number of tries is too high
-	 * @return the list of rounds
+	 * @param nbMaxRounds the max. rounds 
+	 * 
+	 * @return the list tables for the specified rounds
 	 */
 	public static List<Table> fillTables(Set<Player> players, Set<Team> teams, int nbTries, int maxTimeToWait, int nbMaxRounds) {
 		LOG.debug("nbTries=" + nbTries);
@@ -63,11 +81,9 @@ public abstract class RoundService {
 	public static int fillTables(List<Table> tables, Set<Player> playersSet, Set<Team> teams, int addMoreRounds, int nbRoundMax) {
 		Player[] players = playersSet.toArray(new Player[] {});
 		int cptRepeat = 0;
-		// Round round;
 		Table table;
 		int numberTables = players.length / 4;
 		int indexPlayer, cptLoop, roundNumber = 0;
-		// "List" is used because the method get(int) is needed in the algorithme
 		List<Player> playersToAdd = new ArrayList<Player>();
 		Player player = null;
 
@@ -139,6 +155,7 @@ public abstract class RoundService {
 				}
 			}
 		} while (tables.size() == numberTables * roundNumber && (addMoreRounds == -1 || --addMoreRounds > 0));
+		
 		Set<Table> lastRound = new LinkedHashSet<Table>();
 		for (Table tableI : tables) {
 			if (tableI.getRound() == roundNumber) {
@@ -153,6 +170,15 @@ public abstract class RoundService {
 		return cptRepeat;
 	}
 
+	/**
+	 * Test if a player is playing with another player of his team at the table.
+	 * 
+	 * @param listTeams the list of all the teams 
+	 * @param table
+	 * @param player
+	 * 
+	 * @return true if another player of the team is at this table, false otherwise.
+	 */
 	private static boolean checkTeam(Set<Team> listTeams, Table table, Player player) {
 		Team team = TeamService.getTeamForPlayer(listTeams, player);
 		if (team != null)
@@ -163,6 +189,15 @@ public abstract class RoundService {
 		return false;
 	}
 
+	/**
+	 * Test if a player has already played with one of the player of this table.
+	 * 
+	 * @param listTables the list of all the tables filled until now.
+	 * @param table
+	 * @param player
+	 * 
+	 * @return true if the player has already played with one of the player of this table, false otherwise.
+	 */
 	private static boolean checkAlreadyPlayed(List<Table> listTables, Table table, Player player) {
 		for (Table tableI : listTables)
 			for (Player playerTable : table.getListPlayers())
