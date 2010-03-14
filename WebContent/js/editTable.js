@@ -71,20 +71,20 @@ function blankAllFields(msg){
 		document.getElementById(i+'_handValue').value = '';
 		document.getElementById(i+'_selfpick').checked = false;
 
-		cancelPlayerRadioInput(i+'_winner1');
-		cancelPlayerRadioInput(i+'_loser1');
+		cancelPlayerRadioInput(i+'_winner1', i+'_lbl-winner1');
+		cancelPlayerRadioInput(i+'_loser1', i+'_lbl-loser1');
 		document.getElementById(i+'_scr1').value = '';
 		
-		cancelPlayerRadioInput(i+'_winner2');
-		cancelPlayerRadioInput(i+'_loser2');
+		cancelPlayerRadioInput(i+'_winner2', i+'_lbl-winner2');
+		cancelPlayerRadioInput(i+'_loser2', i+'_lbl-loser2');
 		document.getElementById(i+'_scr2').value = '';
 		
-		cancelPlayerRadioInput(i+'_winner3');
-		cancelPlayerRadioInput(i+'_loser3');
+		cancelPlayerRadioInput(i+'_winner3', i+'_lbl-winner3');
+		cancelPlayerRadioInput(i+'_loser3', i+'_lbl-loser3');
 		document.getElementById(i+'_scr3').value = '';
 		
-		cancelPlayerRadioInput(i+'_winner4');
-		cancelPlayerRadioInput(i+'_loser4');
+		cancelPlayerRadioInput(i+'_winner4', i+'_lbl-winner4');
+		cancelPlayerRadioInput(i+'_loser4', i+'_lbl-loser4');
 		document.getElementById(i+'_scr4').value = '';
 	}
 
