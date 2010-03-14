@@ -94,15 +94,15 @@ org.mahjong.matoso.util.message.MatosoMessages"%>
 						
 						<br/>
 						
-						<input type="radio" id="xlsImportRadioB" name="importType" value="XLS" onclick="updateField('xls');"/>
+						<!-- Experimental, not to be used now -->
+						<input type="radio" id="xlsImportRadioB" name="importType" value="XLS" onclick="updateField('xls');" disabled="disabled"/>
 						<label for="xlsImportRadioB">
-							<%= BundleCst.BUNDLE.getString("player.mass.import.xls.type") %>
+							<%= BundleCst.BUNDLE.getString("player.mass.import.xls.type") %> (en cours d'implémentation / still in development)
 						</label>
 						
 						<div id="xlsField">
-							<input type="file" accept="text/xls" name="xlsfile"/>
+							<input type="file" accept="text/xls" name="xlsfile" disabled="disabled"/>
 						</div>
-						
 					</div>
 				</div>			
 				
