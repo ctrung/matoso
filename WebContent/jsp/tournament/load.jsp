@@ -61,10 +61,13 @@ if (rounds.size() == 0) {
 				<input type="text" name="nbrounds" value="" />&nbsp;<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_ADD)%>" />
 			</form>
 			<table>
+				<tr><td><a href="javascript:show(0)">+++</a></td></tr>
 <%
 	for (Round round : rounds) {
 %>				<tr>
-					<th><a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a></th>
+					<td colspan="<%=round.getTables().size()%>"><a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a> <a href="javascript:show(<%=round.getNumber()%>)">+</a></td>
+				</tr>
+				<tr id="round<%=round.getNumber()%>" style="display:none">
 <%
 		for (Table table : round.getTables()) {
 			boolean notEmpty = !GameResultService.isEmpty(table.getResult());
@@ -89,6 +92,16 @@ if (rounds.size() == 0) {
 <%
 	}
 %>			</table>
+<script type="text/javascript">
+function show(number){
+	var i = 0;
+	while (document.getElementById("round" + ++i)) {
+		if (i == number || 0 == number) {document.getElementById("round" + i).style.display="block";}
+		else {document.getElementById("round" + i).style.display="none";}
+	}
+}
+show(1);
+</script>
 <%
 }
 %>		</div>
