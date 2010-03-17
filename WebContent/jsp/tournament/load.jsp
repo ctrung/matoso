@@ -13,9 +13,7 @@
 	language="java"
 	contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-%>
-
-<%
+%><%
 	Tournament tournament = (Tournament) request.getAttribute("tournament");
 	List<Round> rounds = (List<Round>) request.getAttribute("rounds");
 %>
@@ -50,57 +48,49 @@ if (rounds.size() == 0) {
 				</div>
 				<div class="field"><input type="submit" /></div>
 			</form>
-<%} else {%>
-				<a href="<%=request.getContextPath()%>/servlet/DynamicViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_DYNAMIC_VIEW)%></a>
-				<br/>
-				<a href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
-				<br/>
-				<a href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
-				<br/>
-				<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER)%> : <%= rounds.size() %>
-				<form id="addRound" action="<%=request.getContextPath()%>/servlet/AddMoreRounds" method="post">
-					<input type="text" name="nbrounds" value="" />&nbsp;<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_ADD)%>" />
-				</form>
-					
-				<ul class="round">
-					<%
-						
-						for (Round round : rounds) {
-					%>			
-						<li class="round">
-							
-							<a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>">
-								<%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %>
-							</a>
-							
-							<ul class="table">
-								<%
-									for (Table table : round.getTables()) {
-								%>					
-									<li>
-										<a href="<%=request.getContextPath()%>/servlet/EditTable?<%= RequestCst.REQ_PARAM_TABLE_ID %>=<%=table.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.table") + " "  + table.getName() %></a>
-										
-										<% if(!GameResultService.isEmpty(table.getResult())) { %>
-											<img class="resultPresent" src="../img/star_48.png" title="<%=BundleCst.BUNDLE.getString("round.table.result.not.empty") %>" />
-										<% } %>
-										
-										<ul class="player">
-										<%
-											for (Player player : table.getListPlayers()) {
-										%>
-											<li>
-												<a href="<%=request.getContextPath() + "/servlet/EditPlayer?id=" + player.getId() %>">
-												<%= player.getPrettyPrintName() %></a>
-											</li>
-										<%}%>
-										</ul>
-									</li>
-								<%}%>
-							</ul><!-- table -->
-						</li><!-- round -->
-					<%}%>
-				</ul><!-- round -->
-			<%}%>
-		</div>
+<%
+} else {
+%>			<a href="<%=request.getContextPath()%>/servlet/DynamicViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_DYNAMIC_VIEW)%></a>
+			<br/>
+			<a href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
+			<br/>
+			<a href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
+			<br/>
+			<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER)%> : <%= rounds.size() %>
+			<form id="addRound" action="<%=request.getContextPath()%>/servlet/AddMoreRounds" method="post">
+				<input type="text" name="nbrounds" value="" />&nbsp;<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_ADD)%>" />
+			</form>
+			<table>
+<%
+	for (Round round : rounds) {
+%>				<tr>
+					<th><a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a></th>
+<%
+		for (Table table : round.getTables()) {
+			boolean notEmpty = !GameResultService.isEmpty(table.getResult());
+%>					<td <%=notEmpty?" class=\"resultPresent\"":"" %>>
+						<a href="<%=request.getContextPath()%>/servlet/EditTable?<%= RequestCst.REQ_PARAM_TABLE_ID %>=<%=table.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.table") + " "  + table.getName() %></a>
+<%
+			if(notEmpty) {
+%>						<img width="12px" height="12px" src="../img/star_48.png" title="<%=BundleCst.BUNDLE.getString("round.table.result.not.empty") %>" />
+<%
+			}
+%>						<ul class="player">
+<%
+			for (Player player : table.getListPlayers()) {
+%>							<li><a href="<%=request.getContextPath() + "/servlet/EditPlayer?id=" + player.getId() %>"><%= player.getPrettyPrintName() %></a></li>
+<%
+			}
+%>						</ul>
+					</td>
+<%
+		}
+%>				</tr>
+<%
+	}
+%>			</table>
+<%
+}
+%>		</div>
 	</body>
 </html>

@@ -76,6 +76,7 @@ public abstract class BundleCst {
 	public static final String RANKING_NB_DRAW = "ranking.nb.draw";
 	public static final String RANKING_NB_DEFEAT = "ranking.nb.defeat";
 	public static final String RANKING_DYNAMIC_VIEW = "ranking.dynamic.view";
+	public static final String RANKING_TEAM = "ranking.team";
 	
 	public static final String RANKING_PERC_SELFPICK = "ranking.perc.selfpick";	
 	public static final String RANKING_PERC_VICTORY = "ranking.perc.victory";	

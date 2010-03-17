@@ -1,11 +1,8 @@
 /* General */
-* {
-	font-family: sans-serif;
+body {
 	margin: 0px;
 	padding: 0px;
-	background-repeat: no-repeat;
-}
-body {
+	font-family: sans-serif;
 	font-size : 12px;
 	background-color: #EFEFEF;
 }
@@ -21,19 +18,20 @@ h2 {
 	margin-left: 20px;
 }
 table {
-	margin-top : 20px;
-	border : 1px solid black;
-	color : black;
-	border-collapse: collapse;
+	margin-top:20px;
+	margin-bottom:20px;
+	border:3px ridge #4B72BE;
+	border-collapse:collapse;
 }
 thead {
 	font-weight : bold;
 	color : #4B72BE; /* blue */
 }
-td {
+td, th {
 	padding : 5px;
 	margin : 0;
-	border: 1px solid black;
+	border:2px ridge #4B72BE;
+	border-collapse:collapse;
 }
 img {
 	border: none;	
@@ -81,18 +79,21 @@ tr.odd {
 th.sorted a {
 	color: #C40016; /* red dragon */
 } 
-th.sorted a, th.sortable a {
-	background-position:right center; 
-	display:block; 
+th.sorted a, th.sortable a { 
+	display:block;
 	width:100%;
 }
-th.sortable a {
+th.sortable,th.order1,th.order2 {
+	background-position:bottom right;
+	background-repeat:no-repeat;
+}
+th.sortable {
 	background-image:url(../img/arrow_off.png);
 }
-th.order1 a {
+th.order1 {
 	background-image:url(../img/arrow_down.png);
 }
-th.order2 a {
+th.order2 {
 	background-image:url(../img/arrow_up.png);
 }
 div.exportlinks {
@@ -116,15 +117,19 @@ span.export {
 }
 span.csv {
 	background-image:url(../img/ico_file_csv.png);
+	background-repeat: no-repeat;
 	}
 span.excel {
 	background-image:url(../img/ico_file_excel.png);
+	background-repeat: no-repeat;
 }
 span.xml {
 	background-image:url(../img/ico_file_xml.png);
+	background-repeat: no-repeat;
 }
 span.pdf {
 	background-image:url(../img/ico_file_pdf.png);
+	background-repeat: no-repeat;
 }
 
 .matosoMesgs {
@@ -179,40 +184,30 @@ span.pdf {
 
 /*Load tournament page */
 #loadTournament {
-	padding-left: 20px; 
+	padding-left: 20px;
 }
-#loadTournament ul {
-	list-style : none;
-	margin-top: 40px;
+#loadTournament table a {
+	font-style:italic;
+	font-weight:bold;
 }
-#loadTournament li {
-	padding : 0 5px 0 5px;
-	font-weight: bold;
+#loadTournament table li a {
+	font-weight:normal;
 }
-#loadTournament ul ul {
-	margin-top: 5px;
+#loadTournament ul.player {
+	margin:0;
+	padding:0 0 0 10px;
+	list-style:none;
+	background-color:#DDDDEE;
 }
-#loadTournament ul ul ul {
-	margin-top: 10px;
-	margin-bottom: 20px;
-}
-#loadTournament li li {
-	background-color : #F7FFEF;
-	border: 1px solid black;
-	margin-bottom: 20px;	
-}
-#loadTournament li li li {
-	background-color : #FFEFF0;
+#loadTournament ul.player li {
+	background-color:#DDDDEE;
 	border: none;
-	margin-bottom: 0px;	
+	margin-bottom: 0px;
+	padding:2px 5px;
 }
-#loadTournament li.round {
-	float:left;
-	margin-left : 5px;
-}
-#loadTournament img.resultPresent {
-	width: 20px;
-	height: 20px;
+#loadTournament .resultPresent a {
+	font-style:normal;
+	font-weight:normal;
 }
 	
 /* Edit table page */
@@ -238,15 +233,23 @@ span.pdf {
 
 /* Ranking */
 #ranking {padding-left: 20px;}
-#ranking h3 {margin-top: 20px; margin-bottom: 10px;}
-#ranking table th {width: 120px;}
-#ranking table th.name {width: 150px}
-#ranking table th.position {width: 80px;}
-#ranking table th.edit {width: 50px;}
-#ranking table td {padding-left: 10px; padding-right: 10px}
-#ranking p.info {font-style: italic; margin-bottom: 10px;}
-#ranking form#redefineNbElementsByPage {margin-bottom: 10px;}
+#ranking h3 {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding:5px;
+	border:3px ridge #4B72BE;
+	width:300px;
+}
+#player th {width: 120px;}
+#player th.name {width: 150px}
+#player th.position {width: 80px;}
+#player th.edit {width: 50px;}
+#ranking p.info {font-style: italic}
 #ranking .editUser {width: 15px; height: 15px;}
+
+#teamRanking th {width:120px}
+#teamRanking {text-align:center}
+#teamRanking .nameAndPlayers {text-align:left;white-space:nowrap}
 
 /* Players draw */
 #draw hr {

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ApplicationCst;
@@ -39,49 +40,48 @@ import org.mahjong.matoso.util.exception.FatalException;
  */
 public class ViewRanking extends MatosoServlet {
 
+	private static Logger LOGGER = Logger.getLogger(ViewRanking.class);
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
-		HttpSession session  = request.getSession();
-		
+		LOGGER.debug("start");
+		HttpSession session = request.getSession();
+
 		Tournament tournament = super.getTournament(request);
 		request.setAttribute("tournament", tournament);
 
 		/*
-		 * We use displaytag to render the ranking table. It has great functionalities :
-		 *  - auto paging and sorting
-		 *  - dynamic link
-		 *  - decorators
-		 *  - export (csv, excel, pdf)
-		 *  - i18n
-		 *  
-		 * Drawback is our processed data should be in session scope for displaytag to work/scale 
-		 * correctly.
+		 * We use displaytag to render the ranking table. It has great
+		 * functionalities : - auto paging and sorting - dynamic link -
+		 * decorators - export (csv, excel, pdf) - i18n
+		 * 
+		 * Drawback is our processed data should be in session scope for
+		 * displaytag to work/scale correctly.
 		 */
-		
-		// The players ranking 
+
+		// The players ranking
 		List<Player> orderedPlayers = RankingService.getByTournament(tournament);
 		session.setAttribute("ranking", orderedPlayers);
 
 		// The tournament stats.
-		session.setAttribute("tournamentStats", TournamentService.getTournamentStats(orderedPlayers));		
-		
-		// The teams ranking 
+		session.setAttribute("tournamentStats", TournamentService.getTournamentStats(orderedPlayers));
+
+		// The teams ranking
 		session.setAttribute("rankingTeam", RankingService.getTeamsForTournament(tournament));
 
-		
 		// Redefine the nb. of elements by page
 		Integer newValue = NumberUtils.getInteger(request.getParameter("nbElementsByPage"));
 		Integer inSessionValue = (Integer) session.getAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE);
-		if(newValue!=null) {
+		if (newValue != null) {
 			session.setAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE, newValue);
-		} else if(inSessionValue==null) {
+		} else if (inSessionValue == null) {
 			session.setAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE, ApplicationCst.NB_ELEMENTS_BY_PAGE_DEFAULT);
 		}
-		
+
+		LOGGER.debug("end");
 		// go to jsp
 		return ServletCst.REDIRECT_TO_RANKING;
 	}
-
 }

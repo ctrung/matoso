@@ -66,6 +66,8 @@ public class TeamService {
 		else if (teamFound.getPlayer4() == null)
 			teamFound.setPlayer4(player);
 
+		// Save the link between the tournament and the team
+		teamFound.setTournament(tournament);
 		HibernateUtil.save(teamFound);
 		if (LOG.isDebugEnabled())
 			LOG.debug("<=addPlayerToTeam(" + player + ", " + tournament.getName() + ')');

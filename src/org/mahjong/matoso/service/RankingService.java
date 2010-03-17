@@ -10,6 +10,7 @@ package org.mahjong.matoso.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -54,24 +55,26 @@ public class RankingService {
 		// 1. Get all tables (games, result, and players initialized within)
 		allTables = TableService.getAllByTournament(tournament);
 
-		// 2. Calculate the final score / points, number of victories, defeats, given and selpick for each player
+		// 2. Calculate the final score / points, number of victories, defeats,
+		// given and selpick for each player
 		// by still iterating on each table
 		players = getPlayersWithRankingProps(allTables);
 
 		// 3. Order list
 		Collections.sort(players, new RankingComparator());
-		
-		// 4. Allocate integer ranks to allow displaytag to sort correctly 
+
+		// 4. Allocate integer ranks to allow displaytag to sort correctly
 		// (pageContext.getAttribute("<id>_rowNum") is considered as String)
 		for (int i = 0; i < players.size(); i++) {
-			players.get(i).setRank(i+1);
+			players.get(i).setRank(i + 1);
 		}
-		
+
 		return players;
 	}
 
 	/**
-	 * Get a list of players (not ordered) with all properties needed for ranking loaded :
+	 * Get a list of players (not ordered) with all properties needed for
+	 * ranking loaded :
 	 * <ul>
 	 * <li>nb victories</li>
 	 * <li>nb defeats</li>
@@ -117,7 +120,8 @@ public class RankingService {
 			assert (p1 != null && p2 != null && p3 != null && p4 != null);
 
 			// to update the same instance of a player, we use a map
-			// not elegant but we can't assume Hibernate return the same instance of a player...
+			// not elegant but we can't assume Hibernate return the same
+			// instance of a player...
 
 			if (mapPlayers.get(p1.getId()) == null)
 				mapPlayers.put(p1.getId(), p1);
@@ -135,7 +139,8 @@ public class RankingService {
 				mapPlayers.put(p4.getId(), p4);
 			p4 = mapPlayers.get(p4.getId());
 
-			// looping on each game to have victories, defeats, given, sustain selfpick and selfpick
+			// looping on each game to have victories, defeats, given, sustain
+			// selfpick and selfpick
 			// properties updated for a player...
 
 			gIt = table.getGames().iterator();
@@ -179,7 +184,8 @@ public class RankingService {
 	}
 
 	/**
-	 * Update the victories, defeats, given, sustain selfpick and selfpick figures of 4 players by looking at a game.
+	 * Update the victories, defeats, given, sustain selfpick and selfpick
+	 * figures of 4 players by looking at a game.
 	 * 
 	 * @param player1
 	 * @param player2
@@ -192,19 +198,16 @@ public class RankingService {
 		if (game == null)
 			return;
 
-		updateGamePropsForOnePlayer(player1, game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3(), game
-				.getScorePlayer4());
-		updateGamePropsForOnePlayer(player2, game.getScorePlayer2(), game.getScorePlayer1(), game.getScorePlayer3(), game
-				.getScorePlayer4());
-		updateGamePropsForOnePlayer(player3, game.getScorePlayer3(), game.getScorePlayer1(), game.getScorePlayer2(), game
-				.getScorePlayer4());
-		updateGamePropsForOnePlayer(player4, game.getScorePlayer4(), game.getScorePlayer1(), game.getScorePlayer2(), game
-				.getScorePlayer3());
+		updateGamePropsForOnePlayer(player1, game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3(), game.getScorePlayer4());
+		updateGamePropsForOnePlayer(player2, game.getScorePlayer2(), game.getScorePlayer1(), game.getScorePlayer3(), game.getScorePlayer4());
+		updateGamePropsForOnePlayer(player3, game.getScorePlayer3(), game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer4());
+		updateGamePropsForOnePlayer(player4, game.getScorePlayer4(), game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3());
 
 	}
 
 	/**
-	 * Update the victories, defeats, given, sustain selfpick and selfpick figures of one player
+	 * Update the victories, defeats, given, sustain selfpick and selfpick
+	 * figures of one player
 	 * 
 	 * @param player
 	 * @param scorePlayer
@@ -213,18 +216,17 @@ public class RankingService {
 	 * @param scoreOtherPlayer2
 	 * @param scoreOtherPlayer3
 	 */
-	private static void updateGamePropsForOnePlayer(Player player, Integer scorePlayer, Integer scoreOtherPlayer1,
-			Integer scoreOtherPlayer2, Integer scoreOtherPlayer3) {
+	private static void updateGamePropsForOnePlayer(Player player, Integer scorePlayer, Integer scoreOtherPlayer1, Integer scoreOtherPlayer2,
+			Integer scoreOtherPlayer3) {
 
 		player.incrementNbGames();
-		
+
 		if (scorePlayer.intValue() > 0) {
 
 			if (LOGGER.isDebugEnabled())
 				LOGGER.debug(player + " won with score=" + scorePlayer);
 
-			if (scoreOtherPlayer1.intValue() == scoreOtherPlayer2.intValue()
-					&& scoreOtherPlayer1.intValue() == scoreOtherPlayer3.intValue()
+			if (scoreOtherPlayer1.intValue() == scoreOtherPlayer2.intValue() && scoreOtherPlayer1.intValue() == scoreOtherPlayer3.intValue()
 					&& scoreOtherPlayer2.intValue() == scoreOtherPlayer3.intValue()) {
 				// 1. selfpick figure : one must have a positive score
 				// and others have the same negative score
@@ -240,13 +242,12 @@ public class RankingService {
 					LOGGER.debug("it was a normal victory");
 			}
 
-		} else if(scorePlayer.intValue() == 0) {
+		} else if (scorePlayer.intValue() == 0) {
 			player.incrementNbDraw();
 		} else {
 
 			boolean selfpickAppeared = scorePlayer.intValue() * 3 == -scoreOtherPlayer1.intValue()
-					|| scorePlayer.intValue() * 3 == -scoreOtherPlayer2.intValue()
-					|| scorePlayer.intValue() * 3 == -scoreOtherPlayer3.intValue();
+					|| scorePlayer.intValue() * 3 == -scoreOtherPlayer2.intValue() || scorePlayer.intValue() * 3 == -scoreOtherPlayer3.intValue();
 
 			if (scorePlayer.intValue() == -8 && !selfpickAppeared) {
 				// 3. defeats figure : one must have a score of -8
@@ -255,11 +256,13 @@ public class RankingService {
 
 				if (selfpickAppeared) {
 
-					// 4. sustain selfpick figure : one must have a score inferior to -8
+					// 4. sustain selfpick figure : one must have a score
+					// inferior to -8
 					// AND at least another player has the same score
 					player.incrementNbSustainSelfpick();
 				} else {
-					// 5. given figure : one must be the only one with a score inferior to -8 and
+					// 5. given figure : one must be the only one with a score
+					// inferior to -8 and
 					player.incrementNbGiven();
 				}
 			}
@@ -267,26 +270,26 @@ public class RankingService {
 	}
 
 	public static Object getTeamsForTournament(Tournament tournament) {
+		LOGGER.debug("start getTeamsForTournament => nb teams in tournament=" + tournament.getTeams().size());
 		ArrayList<Team> teams = new ArrayList<Team>();
-		Team team2;
-		for (Team team : tournament.getTeams()) {
-			team.setPoints(0D);
-			team.setScore(0);
-			for (Player player : team.getPlayers()) {
-				team.setPoints(team.getPoints() + player.getPoints());
-				team.setScore(team.getScore() + player.getScore());
+		teams.addAll(tournament.getTeams());
+		Collections.sort(teams, new Comparator<Team>() {
+			public int compare(Team o2, Team o1) {
+				if (o1.getPoints() == null && o2.getPoints() == null)
+					return 0;
+				else if (o1.getPoints() != null && o2.getPoints() == null)
+					return 1;
+				else if (o1.getPoints() == null && o2.getPoints() != null)
+					return -1;
+				else if (o1.getPoints() > o2.getPoints())
+					return 1;
+				else if (o1.getPoints() < o2.getPoints())
+					return -1;
+				else
+					return o1.getScore() - o2.getScore();
 			}
-			for (int i = 0; i < teams.size(); i++) {
-				team2 = teams.get(i);
-				if (team.getPoints() > team2.getPoints()
-						|| (team.getPoints() == team2.getPoints() && team.getScore() > team2.getScore())) {
-					teams.add(i, team);
-					break;
-				}
-			}
-			if (!teams.contains(team))
-				teams.add(team);
-		}
+		});
+		LOGGER.debug("end getTeamsForTournament");
 		return teams;
 	}
 }

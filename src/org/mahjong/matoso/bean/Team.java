@@ -25,34 +25,18 @@ public class Team {
 	private Player player3;
 	private Player player4;
 
-	private Integer score;
-
 	Tournament tournament;
-	
-	public Integer getScore() {
-		return score;
-	}
 
-	public void setScore(Integer score) {
-		this.score = score;
+	public Integer getScore() {
+		return player1.getScore() + player2.getScore() + player3.getScore() + player4.getScore();
 	}
 
 	public Double getPoints() {
-		return points;
+		return player1.getPoints() + player2.getPoints() + player3.getPoints() + player4.getPoints();
 	}
-	
+
 	public String getPrettyPrintPoints() {
-		return NumberUtils.getPrettyPrintForm(points);
-	}
-
-	public void setPoints(Double points) {
-		this.points = points;
-	}
-
-	private Double points;
-
-	public Team() {
-		super();
+		return NumberUtils.getPrettyPrintForm(getPoints());
 	}
 
 	/**
@@ -72,6 +56,11 @@ public class Team {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getNameAndPlayers() {
+		return name + " (" + this.player1.getPrettyPrintName() + ", " + this.player2.getPrettyPrintName() + ", "
+				+ this.player3.getPrettyPrintName() + ", " + this.player4.getPrettyPrintName() + ')';
 	}
 
 	public void setName(String name) {
@@ -167,7 +156,8 @@ public class Team {
 	}
 
 	/**
-	 * @param tournament the tournament to set
+	 * @param tournament
+	 *            the tournament to set
 	 */
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
