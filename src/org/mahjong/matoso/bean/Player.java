@@ -52,6 +52,9 @@ public class Player {
 	transient Integer nbDraw;
 	transient Integer score;
 	transient Double points;
+	
+	// TODO add a proper persistent mapping to Team
+	transient Team team;
 
 	transient List<Table> tables;
 
@@ -669,4 +672,19 @@ public class Player {
 	public String getLose() {
 		return getNbGiven() + " (" + NumberUtils.getPrettyPrintForm(getPercGiven()) + " %)";
 	}
+
+	/**
+	 * @return the team
+	 */
+	public Team getTeam() {
+		return team;
+	}
+
+	/**
+	 * @param team the team to set
+	 */
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+	
 }

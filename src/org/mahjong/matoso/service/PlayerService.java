@@ -64,8 +64,14 @@ public abstract class PlayerService {
 					"from Player p inner join fetch p.tournaments ts where :t in ts order by p.lastname");
 			q.setParameter("t", tournament);
 
-			return q.list();
+			List<Player> players = q.list();
 			
+			// iterate to add team in player
+			// TODO : add a proper mapping for Team property on Player
+			for(Player p : players) {
+				p.setTeam(TeamService.getTeamForPlayer(p, tournament));
+			}
+			return players;
 		} catch (HibernateException e) {
 			throw new FatalException(e);
 		}

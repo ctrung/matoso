@@ -19,6 +19,7 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	width: 400px;
+	height: 210px;
 	margin-left: 20%;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -31,13 +32,17 @@ body {
 	margin-bottom: 5px;
 	margin-top: 5px;
 }
+#draw div.player p.team {
+	font-size: 10px;
+	font-style: italic;
+}
 #draw div.player table {
 	margin-left: 20px;
 	font-size: 10px;
 	border-collapse: collapse;
 	border: 2px solid black;
 	width: 360px;
-	height: 150px;
+	height: 65%;
 	margin-top: 10px;
 	margin-bottom: 15px;
 }

@@ -57,9 +57,17 @@
 		
 			<div class="player">
 				<p><%=p.getPrettyPrintName()%></p>
+				<%if(p.getTeam() != null) { %>
+					<p class="team"><%="(" + BundleCst.BUNDLE.getString("draw.player.team.lbl") + " " + p.getTeam().getName() + ")"%></p>
+				<%} %>
 				<table>
 					<thead>
-						<tr><td colspan="2">Session</td><td>Table</td><td>Table points</td><td>Scoring points</td></tr>
+						<tr>
+							<td colspan="2"><%=BundleCst.BUNDLE.getString("draw.player.session.lbl")%></td>
+							<td><%=BundleCst.BUNDLE.getString("draw.player.table.lbl")%></td>
+							<td><%=BundleCst.BUNDLE.getString("draw.player.table.points.lbl")%></td>
+							<td><%=BundleCst.BUNDLE.getString("draw.player.score.lbl")%></td>
+						</tr>
 					</thead>
 					<tbody>
 						
@@ -77,7 +85,12 @@
 						<%		}
 							} %>
 						
-						<tr><td colspan="2" class="invisible"></td><td>Total</td><td></td><td></td></tr>
+						<tr>
+							<td colspan="2" class="invisible"></td>
+							<td><%=BundleCst.BUNDLE.getString("draw.player.total.lbl")%></td>
+							<td></td>
+							<td></td>
+						</tr>
 					
 					</tbody>
 				</table>				

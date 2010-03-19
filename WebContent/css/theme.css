@@ -279,6 +279,10 @@ span.pdf {
 	margin-bottom: 5px;
 	margin-top: 5px;
 }
+#draw div.player p.team {
+	font-size: 10px;
+	font-style: italic;
+}
 #draw div.player table {
 	margin-left: 20px;
 	font-size: 10px;

@@ -38,6 +38,7 @@ public class EditPlayer extends MatosoServlet {
 		Player player = PlayerService.getById(id);
 		request.setAttribute("player", player);
 		
+		// TODO : add a proper mapping for Team property on Player
 		Tournament tournament = super.getTournament(request);
 		request.setAttribute("team", TeamService.getTeamForPlayer(player, tournament));
 		
