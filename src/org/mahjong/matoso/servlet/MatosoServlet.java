@@ -85,21 +85,25 @@ public abstract class MatosoServlet extends HttpServlet {
 	 * Return the tournament whose name is in the user's session.
 	 * 
 	 * @param request 
+	 * @param reload used to reload the tournament in the session. 
+	 * 
 	 * @return
 	 * @throws FatalException 
 	 */
-	public static Tournament getTournament(HttpServletRequest request) throws FatalException{
+	public static Tournament getTournament(HttpServletRequest request, boolean reload) throws FatalException{
 		
-		// retrieve the tournament from an id in the session first...
-		Integer tournamentId = (Integer)request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID);
+		Integer tournamentId = null;
 		
-		if(tournamentId == null) {
+		if(reload) {
 			
 			// no id in the session ? retrieve it via the request...
 			String reqId = request.getParameter("tournament-id");
 			tournamentId = NumberUtils.getInteger(reqId);
 			
 			if(tournamentId == null) throw new FatalException("The tournament with id=" + reqId + " doesn't exist.");
+
+		} else {
+			tournamentId = (Integer)request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID);
 		}
 		
 		Tournament tournament = TournamentService.getById(tournamentId);
@@ -109,6 +113,18 @@ public abstract class MatosoServlet extends HttpServlet {
 		return tournament;
 	}
 
+	
+	/**
+	 * Return the tournament whose name is in the user's session.
+	 * 
+	 * @param request 
+	 * @return
+	 * @throws FatalException 
+	 */
+	public static Tournament getTournament(HttpServletRequest request) throws FatalException{
+		return getTournament(request, false);
+	}
+	
 	/**
 	 * Get the MatosoMessages object in the request if exists or create a new one otherwise.
 	 * 

@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.exception.FatalException;
@@ -43,12 +42,10 @@ public class CreateTournament extends MatosoServlet {
 		
 		Tournament tournament = TournamentService.createNewTournament(tournamentName, isTeam);
 		
-		request.getSession().setAttribute(SessionCst.SESSION_TOURNAMENT_ID, tournament.getId());
-		
 		if (LOGGER.isDebugEnabled())
 			LOGGER.debug("A new tournament with name=" + tournamentName + " id=" + tournament.getId() + 
 					" has been created.");
 		
-		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET;
+		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?tournament-id=" + tournament.getId();
 	}
 }

@@ -107,6 +107,7 @@ public abstract class PlayerService {
 	 * 
 	 * @param request
 	 * @param msgs The validation messages.
+	 * @param teamActive team mode is active or not ?
 	 * 
 	 * @return List<String[]> object or null if there is an error.
 	 * 
@@ -114,7 +115,7 @@ public abstract class PlayerService {
 	 * @throws FatalException 
 	 */
 	public static List<String[]> getRawDataFromRequest(HttpServletRequest request,
-			MatosoMessages msgs) throws ImportException, FatalException {
+			MatosoMessages msgs, boolean teamActive) throws ImportException, FatalException {
 		
 		FileItemIterator iter 	= null;
 		FileItemStream item 	= null;
@@ -242,7 +243,7 @@ public abstract class PlayerService {
 		} 
 		
 		// team validation
-		TeamService.validate(res, msgs);
+		if(teamActive)	TeamService.validate(res, msgs);
 		
 		return res;
 	}

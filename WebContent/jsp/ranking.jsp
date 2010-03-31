@@ -28,8 +28,7 @@ if(tournament != null) {
 }
 %>		<h2><%=request.getSession().getAttribute("tournamentName") + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
 		<div id="ranking">
-			<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+
-				RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID)%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
+			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
 			<!-- ---------------- -->
 			<!-- Tournament stats -->
 			<!-- ---------------- -->			

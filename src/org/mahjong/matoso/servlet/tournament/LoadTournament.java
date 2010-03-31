@@ -16,6 +16,7 @@ import org.mahjong.matoso.constant.ServletCst;
 import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.RoundService;
 import org.mahjong.matoso.servlet.MatosoServlet;
+import org.mahjong.matoso.util.NumberUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
@@ -30,7 +31,8 @@ public class LoadTournament extends MatosoServlet {
 
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
 		
-		Tournament tournament = super.getTournament(request);
+		Integer tournamentId = NumberUtils.getInteger(request.getParameter("tournament-id"));
+		Tournament tournament = super.getTournament(request, tournamentId!=null);
 		
 		request.getSession().setAttribute(SessionCst.SESSION_TOURNAMENT_ID, tournament.getId());
 		

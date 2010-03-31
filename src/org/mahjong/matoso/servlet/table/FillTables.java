@@ -103,6 +103,6 @@ public final class FillTables extends MatosoServlet {
 		if (LOG.isDebugEnabled())
 			LOG.debug("<=serve");
 
-		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET;
+		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?tournament-id=" + tournament.getId();
 	}
 }

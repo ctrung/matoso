@@ -20,7 +20,7 @@
 			Tournament tournament = (Tournament) request.getAttribute("tournament");
 		%>
 		<h2><%=tournament.getName()%></h2>
-		<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+		<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 		<display:table name="sessionScope.ranking" pagesize="10" uid="dynamicRanking">
 			<display:column property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" />
 			<display:column property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" />

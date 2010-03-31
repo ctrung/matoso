@@ -41,13 +41,13 @@ public class ImportPlayer extends MatosoServlet {
 		try {
 			
 			MatosoMessages msgs = super.getMatosoMessagesInRequest(request);
+			Tournament tournament = super.getTournament(request); 
 			
 			// get row data in array form
-			List<String[]> playersData = PlayerService.getRawDataFromRequest(request, msgs);
+			List<String[]> playersData = PlayerService.getRawDataFromRequest(request, msgs, tournament.isTeamActivate());
 			if(MatosoMessages.isNotEmpty(msgs)) return ServletCst.REDIRECT_TO_PLAYER_IMPORT_FORM;
 			
 			// mass save 
-			Tournament tournament = super.getTournament(request);			
 			TournamentService.addPlayers(tournament, playersData);
 			
 		} catch (ImportException e) {

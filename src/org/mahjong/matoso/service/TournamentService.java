@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.mahjong.matoso.bean.Player;
@@ -197,7 +198,7 @@ public abstract class TournamentService {
 				
 				
 				// add player to team
-				if(team !=null) {
+				if(tournament.isTeamActivate() && team != null && !StringUtils.isBlank(team)) {
 					if(teams.get(team) == null) {
 						teams.put(team, new ArrayList<Player>());
 					}

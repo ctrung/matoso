@@ -41,7 +41,7 @@ Tournament tournament = (Tournament) request.getAttribute("tournament");
 Table table = (Table) request.getAttribute(RequestCst.REQ_ATTR_TABLE);
 %>		<h2><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_TITLE)%></h2>
 		<div id="editTable">
-			<a href="<%=request.getContextPath()+"/"+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 			<div id="tableInfos">
 				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_TABLE)%> : <%= table.getName() %><br/>
 				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_ROUND)%> : <%=table.getRound().getNumber() %>

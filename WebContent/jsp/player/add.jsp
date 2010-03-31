@@ -15,8 +15,7 @@
 	<body>
 		<%@include file="../include/head.jsp" %>
 		<h2><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_ADD)%></h2>
-		<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+
-				RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID)%>">
+		<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>">
 				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%>
 		</a>
 		<form action="/matoso/servlet/AddPlayer" method="post">
