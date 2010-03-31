@@ -231,6 +231,17 @@ span.pdf {
 #editTable .columnHandValue {width:10px}
 #editTable .columnPlayer {width:150px}
 
+#editTable div.innerScroll {height: 300px; overflow: auto;}
+#editTable div.innerScroll table {margin: 0;}
+#editTable .colWind {width: 60px;}
+#editTable .colGameNb {width: 10px;}
+#editTable .colScore {width: 60px;}
+#editTable .colSelf {width: 60px;}
+#editTable .colP1 {width: 160px;}
+#editTable .colP3 {width: 160px;}
+#editTable .colP2 {width: 160px;}
+#editTable .colP4 {width: 160px;}
+
 /* Ranking */
 #ranking {padding-left: 20px;}
 #ranking h3 {
