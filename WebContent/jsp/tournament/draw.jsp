@@ -56,7 +56,7 @@
 		%>
 		
 			<div class="player">
-				<p><%=p.getPrettyPrintName()%></p>
+				<p><%=p.getPrettyPrintName() + " (no " + p.getTournamentNumber() + ")" %></p>
 				<%if(p.getTeam() != null) { %>
 					<p class="team"><%="(" + BundleCst.BUNDLE.getString("draw.player.team.lbl") + " " + p.getTeam().getName() + ")"%></p>
 				<%} %>

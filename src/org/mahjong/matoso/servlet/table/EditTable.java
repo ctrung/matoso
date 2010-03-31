@@ -100,7 +100,12 @@ public final class EditTable extends MatosoServlet {
 		form.setPlayer3Team(team3 == null ? "" : team3.getName());
 		Team team4 = TeamService.getTeamForPlayer(table.getPlayer4(), tournament);
 		form.setPlayer4Team(team4 == null ? "" : team4.getName());
-
+		// Player numbers
+		form.setPlayer1TournamentNumber(table.getPlayer1().getTournamentNumber().toString());
+		form.setPlayer2TournamentNumber(table.getPlayer2().getTournamentNumber().toString());
+		form.setPlayer3TournamentNumber(table.getPlayer3().getTournamentNumber().toString());
+		form.setPlayer4TournamentNumber(table.getPlayer4().getTournamentNumber().toString());
+		
 		request.setAttribute("EditTableForm", form);
 		
 		return ServletCst.REDIRECT_TO_TABLE;

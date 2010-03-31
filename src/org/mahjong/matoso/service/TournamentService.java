@@ -136,8 +136,8 @@ public abstract class TournamentService {
 			return;
 
 		try {
-			for (Iterator<String[]> it = lines.iterator(); it.hasNext();) {
-				line = (String[]) it.next();
+			for (int i=0; i<lines.size(); i++) {
+				line = lines.get(i);
 
 				if (line == null) {
 					LOG.warn("found null line");
@@ -189,10 +189,10 @@ public abstract class TournamentService {
 				details = line[15];
 				club = line[16];
 				
-				// TODO : suppress team property ?
 				player = new Player(firstname, lastname, email, country, ema, null, pseudo, dateArrival, dateDeparture,
 						dateFormular, datePayment, paymentMode, hasPhoto, cj, cp, details, club);
-
+				player.setTournamentNumber(i+1);
+				
 				addPlayer(player, tournament);
 				
 				

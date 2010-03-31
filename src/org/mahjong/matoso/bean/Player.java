@@ -40,7 +40,8 @@ public class Player {
 	private String cj;
 	private String cp;
 	private String details;
-	private String club;
+	private String club; 
+	private Integer tournamentNumber; 
 
 	transient Integer rank;
 	transient Integer nbGames;
@@ -372,6 +373,20 @@ public class Player {
 		this.tournaments = tournaments;
 	}
 
+	/**
+	 * @return the tournamentNumber
+	 */
+	public Integer getTournamentNumber() {
+		return tournamentNumber;
+	}
+
+	/**
+	 * @param tournamentNumber the tournamentNumber to set
+	 */
+	public void setTournamentNumber(Integer tournamentNumber) {
+		this.tournamentNumber = tournamentNumber;
+	}
+	
 	/*
 	 * Other methods
 	 */

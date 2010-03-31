@@ -2,10 +2,10 @@ package org.mahjong.matoso.form;
 
 
 public class EditTableForm {
-	String player1Name, player1Ema, player1Team;
-	String player2Name, player2Ema, player2Team;
-	String player3Name, player3Ema, player3Team;
-	String player4Name, player4Ema, player4Team;
+	String player1Name, player1Ema, player1Team, player1TournamentNumber;
+	String player2Name, player2Ema, player2Team, player2TournamentNumber;
+	String player3Name, player3Ema, player3Team, player3TournamentNumber;
+	String player4Name, player4Ema, player4Team, player4TournamentNumber;
 
 	public String getPlayer1Name() {
 		return player1Name;
@@ -102,4 +102,37 @@ public class EditTableForm {
 	public void setPlayer4Team(String player4Team) {
 		this.player4Team = player4Team;
 	}
+
+	public String getPlayer1TournamentNumber() {
+		return player1TournamentNumber;
+	}
+
+	public void setPlayer1TournamentNumber(String player1TournamentNumber) {
+		this.player1TournamentNumber = player1TournamentNumber;
+	}
+
+	public String getPlayer2TournamentNumber() {
+		return player2TournamentNumber;
+	}
+
+	public void setPlayer2TournamentNumber(String player2TournamentNumber) {
+		this.player2TournamentNumber = player2TournamentNumber;
+	}
+
+	public String getPlayer3TournamentNumber() {
+		return player3TournamentNumber;
+	}
+
+	public void setPlayer3TournamentNumber(String player3TournamentNumber) {
+		this.player3TournamentNumber = player3TournamentNumber;
+	}
+
+	public String getPlayer4TournamentNumber() {
+		return player4TournamentNumber;
+	}
+
+	public void setPlayer4TournamentNumber(String player4TournamentNumber) {
+		this.player4TournamentNumber = player4TournamentNumber;
+	}
+	
 }

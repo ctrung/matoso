@@ -70,28 +70,28 @@ if(MatosoMessages.isNotEmpty(mm)) {
 						<tr class="separate">
 							<td colspan="4"></td>
 							<td>
-								<jsp:getProperty property="player1Name" name="EditTableForm"/>
+								<jsp:getProperty property="player1Name" name="EditTableForm"/> (no <jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/>)
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player1Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player1Team" name="EditTableForm"/></li>
 								</ul>
 							</td>
 							<td>
-								<jsp:getProperty property="player2Name" name="EditTableForm"/>
+								<jsp:getProperty property="player2Name" name="EditTableForm"/> (no <jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/>)
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player2Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player2Team" name="EditTableForm"/></li>
 								</ul>
 							</td>
 							<td>
-								<jsp:getProperty property="player3Name" name="EditTableForm"/>
+								<jsp:getProperty property="player3Name" name="EditTableForm"/> (no <jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/>)
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player3Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player3Team" name="EditTableForm"/></li>
 								</ul>
 							</td>
 							<td>
-								<jsp:getProperty property="player4Name" name="EditTableForm"/>
+								<jsp:getProperty property="player4Name" name="EditTableForm"/> (no <jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/>)
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player4Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player4Team" name="EditTableForm"/></li>

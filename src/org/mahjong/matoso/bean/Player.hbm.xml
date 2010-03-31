@@ -28,7 +28,7 @@
 		<property name="details" 			type="string"  column="DETAILS" length="1000" />
 		<property name="club" 				type="string"  column="CLUB"/>
 		
-		
+		<property name="tournamentNumber" 	type="integer"  column="TOURNAMENT_NUMBER"/>
 		
 		<set name="tournaments" table="TOURNAMENT_PLAYER">
 			<key column="ID_PLAYER"/>
