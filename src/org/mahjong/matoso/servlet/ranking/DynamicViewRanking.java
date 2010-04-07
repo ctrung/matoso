@@ -41,7 +41,7 @@ public class DynamicViewRanking extends MatosoServlet {
 		HttpSession session  = request.getSession();
 		
 		Tournament tournament = super.getTournament(request);
-		request.setAttribute("tournament", tournament);
+		session.setAttribute("tournament", tournament);
 		
 		// The players ranking 
 		List<Player> orderedPlayers = RankingService.getByTournament(tournament);

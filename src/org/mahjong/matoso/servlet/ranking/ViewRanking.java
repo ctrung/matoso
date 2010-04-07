@@ -79,6 +79,8 @@ public class ViewRanking extends MatosoServlet {
 		} else if (inSessionValue == null) {
 			session.setAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE, ApplicationCst.NB_ELEMENTS_BY_PAGE_DEFAULT);
 		}
+		
+		request.setAttribute("rankingForm", RankingService.getRankingForm(tournament));
 
 		LOGGER.debug("end");
 		// go to jsp

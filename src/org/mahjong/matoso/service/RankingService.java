@@ -20,9 +20,11 @@ import org.apache.log4j.Logger;
 import org.mahjong.matoso.bean.Game;
 import org.mahjong.matoso.bean.GameResult;
 import org.mahjong.matoso.bean.Player;
+import org.mahjong.matoso.bean.Round;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
+import org.mahjong.matoso.form.RankingForm;
 import org.mahjong.matoso.util.comparator.RankingComparator;
 import org.mahjong.matoso.util.exception.FatalException;
 
@@ -291,5 +293,64 @@ public class RankingService {
 		});
 		LOGGER.debug("end getTeamsForTournament");
 		return teams;
+	}
+
+	/**
+	 * Builds the form for the ranking page
+	 * 
+	 * @param tournament
+	 *            the current tournament
+	 * @return the form
+	 * @throws FatalException
+	 */
+	public static RankingForm getRankingForm(Tournament tournament) throws FatalException {
+		RankingForm rankingForm = new RankingForm();
+		int score1, score2, score3, score4, score, scoreMax;
+		Player player;
+		String playerMax = null;
+		for (Round round : RoundService.getRounds(tournament)) {
+
+			if (LOGGER.isDebugEnabled())
+				LOGGER.debug("round=" + round.getNumber());
+
+			scoreMax = 0;
+			for (Table table : round.getTables()) {
+				// Gets the best player for this table
+				score1 = table.getResult().getScorePlayer1();
+				score2 = table.getResult().getScorePlayer2();
+				score3 = table.getResult().getScorePlayer3();
+				score4 = table.getResult().getScorePlayer4();
+
+				if (LOGGER.isDebugEnabled())
+					LOGGER.debug("1=" + score1 + "/2=" + score2 + "/3=" + score3 + "/4=" + score4);
+
+				score = Math.max(score1, score2);
+				if (score == score1)
+					player = table.getPlayer1();
+				else
+					player = table.getPlayer2();
+				score = Math.max(score, score3);
+				if (score == score3)
+					player = table.getPlayer3();
+				score = Math.max(score, score4);
+				if (score == score4)
+					player = table.getPlayer4();
+
+				if (LOGGER.isDebugEnabled())
+					LOGGER.debug("best player=" + player + "/score=" + player.getScore());
+
+				// Compares with the current best player
+				if (scoreMax < score) {
+					playerMax = player.getPrettyPrintName();
+					scoreMax = score;
+				}
+
+				if (LOGGER.isDebugEnabled())
+					LOGGER.debug("max player=" + playerMax + "/score=" + scoreMax);
+			}
+			// Adds the best player for the current round
+			rankingForm.addBestPlayerRound(String.valueOf(round.getNumber()), playerMax, scoreMax);
+		}
+		return rankingForm;
 	}
 }

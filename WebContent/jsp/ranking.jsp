@@ -9,24 +9,24 @@
 	org.mahjong.matoso.display.TournamentStats
 "%><%@
 	taglib uri="http://displaytag.sf.net" prefix="display"
+%><%
+Tournament tournament = (Tournament) request.getAttribute("tournament");
+if(tournament != null) {
+	// because displaytag calls JSP during pagination we exceptionally put the tournament name in session
+	request.getSession().setAttribute("tournamentName", tournament.getName());
+}
 %><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>MaToSo</title>
+		<title>MaToSo - <%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></title>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 	</head>
 	<body>
 		<!-- header -->
 <%@include file="include/head.jsp"%>
-<%
-Tournament tournament = (Tournament) request.getAttribute("tournament");
-if(tournament != null) {
-	// because displaytag calls JSP during pagination we exceptionally put the tournament name in session
-	request.getSession().setAttribute("tournamentName", tournament.getName());
-}
-%>		<h2><%=request.getSession().getAttribute("tournamentName") + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
+		<h2><%=request.getSession().getAttribute("tournamentName") + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
 		<div id="ranking">
 			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
 			<!-- ---------------- -->
@@ -88,6 +88,12 @@ TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
 				<display:column property="nameAndPlayers" sortable="true" titleKey="<%=BundleCst.RANKING_TEAM%>" class="nameAndPlayers" />
 				<display:column property="prettyPrintPoints" titleKey="<%=BundleCst.RANKING_POINTS%>" sortable="true" />
 				<display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" sortable="true" />
+			</display:table>
+			<h3><%= BundleCst.BUNDLE.getString("ranking.best.score.by.session") %></h3>
+			<display:table name="requestScope.rankingForm.bestPlayerRoundList" sort="list" id="bestPlayerRoundList">
+				<display:column property="round" titleKey="ranking.session" />
+				<display:column property="player" titleKey="ranking.player" />
+				<display:column property="score" titleKey="ranking.score" />
 			</display:table>
 		</div>
 	</body>

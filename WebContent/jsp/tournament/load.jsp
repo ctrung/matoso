@@ -21,7 +21,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>MaToSo</title>
+		<title>MaToSo - <%=rounds.size() == 0 ? BundleCst.BUNDLE.getString(BundleCst.PLAYER_FILL_METHOD) : BundleCst.BUNDLE.getString("round.label.round")%></title>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 	</head>
@@ -67,7 +67,7 @@ if (rounds.size() == 0) {
 %>				<tr>
 					<td colspan="<%=round.getTables().size()%>"><a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a> <a href="javascript:show(<%=round.getNumber()%>)">+</a></td>
 				</tr>
-				<tr id="round<%=round.getNumber()%>" style="display:none">
+				<tr id="round<%=round.getNumber()%>">
 <%
 		for (Table table : round.getTables()) {
 			boolean notEmpty = !GameResultService.isEmpty(table.getResult());
@@ -100,7 +100,6 @@ function show(number){
 		else {document.getElementById("round" + i).style.display="none";}
 	}
 }
-show(1);
 </script>
 <%
 }

@@ -18,7 +18,7 @@ org.mahjong.matoso.util.message.MatosoMessages"%>
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>MaToSo</title>
+		<title>MaToSo - <%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></title>
 		<link rel="stylesheet" type="text/css" href="/matoso/css/theme.css" />
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 	</head>
