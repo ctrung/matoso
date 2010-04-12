@@ -307,19 +307,24 @@ public class RankingService {
 		RankingForm rankingForm = new RankingForm();
 		int score1, score2, score3, score4, score, scoreMax;
 		Player player;
-		String playerMax = null;
+		String playerMax;
+		GameResult gameResult;
 		for (Round round : RoundService.getRounds(tournament)) {
-
 			if (LOGGER.isDebugEnabled())
 				LOGGER.debug("round=" + round.getNumber());
 
+			playerMax = null;
 			scoreMax = 0;
 			for (Table table : round.getTables()) {
 				// Gets the best player for this table
-				score1 = table.getResult().getScorePlayer1();
-				score2 = table.getResult().getScorePlayer2();
-				score3 = table.getResult().getScorePlayer3();
-				score4 = table.getResult().getScorePlayer4();
+				gameResult = table.getResult();
+				if (gameResult == null)
+					continue;
+
+				score1 = gameResult.getScorePlayer1();
+				score2 = gameResult.getScorePlayer2();
+				score3 = gameResult.getScorePlayer3();
+				score4 = gameResult.getScorePlayer4();
 
 				if (LOGGER.isDebugEnabled())
 					LOGGER.debug("1=" + score1 + "/2=" + score2 + "/3=" + score3 + "/4=" + score4);
@@ -348,8 +353,9 @@ public class RankingService {
 				if (LOGGER.isDebugEnabled())
 					LOGGER.debug("max player=" + playerMax + "/score=" + scoreMax);
 			}
-			// Adds the best player for the current round
-			rankingForm.addBestPlayerRound(String.valueOf(round.getNumber()), playerMax, scoreMax);
+			if (playerMax != null)
+				// Adds the best player for the current round
+				rankingForm.addBestPlayerRound(String.valueOf(round.getNumber()), playerMax, scoreMax);
 		}
 		return rankingForm;
 	}
