@@ -40,8 +40,8 @@ public class Player {
 	private String cj;
 	private String cp;
 	private String details;
-	private String club; 
-	private Integer tournamentNumber; 
+	private String club;
+	private Integer tournamentNumber;
 
 	transient Integer rank;
 	transient Integer nbGames;
@@ -53,7 +53,7 @@ public class Player {
 	transient Integer nbDraw;
 	transient Integer score;
 	transient Double points;
-	
+
 	// TODO add a proper persistent mapping to Team
 	transient Team team;
 
@@ -381,12 +381,13 @@ public class Player {
 	}
 
 	/**
-	 * @param tournamentNumber the tournamentNumber to set
+	 * @param tournamentNumber
+	 *            the tournamentNumber to set
 	 */
 	public void setTournamentNumber(Integer tournamentNumber) {
 		this.tournamentNumber = tournamentNumber;
 	}
-	
+
 	/*
 	 * Other methods
 	 */
@@ -457,6 +458,13 @@ public class Player {
 		return nbDefeat;
 	}
 
+	public String getNbDefeatForRankingPage() {
+		if (this.nbDefeat == null || this.nbDefeat.intValue() == 0)
+			return "0 (0%)";
+		double percentage = ((double) this.nbDefeat.intValue()) / this.getNbGames().intValue() * 100;
+		return this.nbDefeat + " (" + NumberUtils.getPrettyPrintForm(percentage) + " %)";
+	}
+
 	/**
 	 * @param nbDefeat
 	 *            the nbDefeat to set
@@ -502,6 +510,13 @@ public class Player {
 		return nbSustainSelfpick;
 	}
 
+	public String getNbSustainSelfpickForRankingPage() {
+		if (this.nbSustainSelfpick == null || this.nbSustainSelfpick.intValue() == 0)
+			return "0 (0%)";
+		double percentage = ((double) this.nbSustainSelfpick.intValue()) / this.getNbGames().intValue() * 100;
+		return this.nbSustainSelfpick + " (" + NumberUtils.getPrettyPrintForm(percentage) + " %)";
+	}
+
 	/**
 	 * @param nbSustainSelfpick
 	 *            the nbSustainSelfpick to set
@@ -515,6 +530,13 @@ public class Player {
 	 */
 	public Integer getNbDraw() {
 		return nbDraw;
+	}
+
+	public String getNbDrawForRankingPage() {
+		if (this.nbDraw == null || this.nbDraw.intValue() == 0)
+			return "0 (0%)";
+		double percentage = ((double) this.nbDraw.intValue()) / this.getNbGames().intValue() * 100;
+		return this.nbDraw + " (" + NumberUtils.getPrettyPrintForm(percentage) + " %)";
 	}
 
 	/**
@@ -696,10 +718,11 @@ public class Player {
 	}
 
 	/**
-	 * @param team the team to set
+	 * @param team
+	 *            the team to set
 	 */
 	public void setTeam(Team team) {
 		this.team = team;
 	}
-	
+
 }

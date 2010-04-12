@@ -15,6 +15,11 @@ if(tournament != null) {
 	// because displaytag calls JSP during pagination we exceptionally put the tournament name in session
 	request.getSession().setAttribute("tournamentName", tournament.getName());
 }
+String hrefLoadTournament = request.getContextPath()
+	+ ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET
+	+ '?' + RequestCst.REQ_PARAM_TOURNAMENT_ID
+	+ '=' + request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID);
+
 %><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -28,7 +33,7 @@ if(tournament != null) {
 <%@include file="include/head.jsp"%>
 		<h2><%=request.getSession().getAttribute("tournamentName") + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
 		<div id="ranking">
-			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
+			<a href="<%=hrefLoadTournament%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
 			<!-- ---------------- -->
 			<!-- Tournament stats -->
 			<!-- ---------------- -->			
@@ -75,10 +80,10 @@ TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
 			    <display:column property="nbGames" titleKey="<%=BundleCst.RANKING_NB_GAMES%>" sortable="true" defaultorder="descending" />
 			    <display:column property="selfDraw" titleKey="<%=BundleCst.RANKING_NB_SELFPICK%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			 	<display:column property="win" titleKey="<%=BundleCst.RANKING_NB_VICTORY%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
-			    <display:column property="nbDefeat" titleKey="<%=BundleCst.RANKING_NB_DEFEAT%>" sortable="true" defaultorder="descending" />
+			    <display:column property="nbDefeatForRankingPage" titleKey="<%=BundleCst.RANKING_NB_DEFEAT%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			    <display:column property="lose" titleKey="<%=BundleCst.RANKING_NB_GIVEN%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
-			    <display:column property="nbSustainSelfpick" titleKey="<%=BundleCst.RANKING_NB_SUSTAIN_SELFPICK%>" sortable="true" defaultorder="descending" />
-			    <display:column property="nbDraw" titleKey="<%=BundleCst.RANKING_NB_DRAW%>" sortable="true" defaultorder="descending" />
+			    <display:column property="nbSustainSelfpickForRankingPage" titleKey="<%=BundleCst.RANKING_NB_SUSTAIN_SELFPICK%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
+			    <display:column property="nbDrawForRankingPage" titleKey="<%=BundleCst.RANKING_NB_DRAW%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			</display:table>
 			<!-- --------------------- -->
 			<!-- Teams ranking + stats -->
