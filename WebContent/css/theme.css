@@ -81,7 +81,6 @@ th.sorted a {
 } 
 th.sorted a, th.sortable a { 
 	display:block;
-	width:100%;
 }
 th.sortable,th.order1,th.order2 {
 	background-position:bottom right;
@@ -253,12 +252,11 @@ span.pdf {
 }
 #player th {width: 120px;}
 #player th.name {width: 150px}
-#player th.position {width: 80px;}
+#player th.position {width: 30px;}
 #player th.edit {width: 50px;}
 #ranking p.info {font-style: italic}
 #ranking .editUser {width: 15px; height: 15px;}
 
-#teamRanking th {width:120px}
 #teamRanking {text-align:center}
 #teamRanking .nameAndPlayers {text-align:left;white-space:nowrap}
 
