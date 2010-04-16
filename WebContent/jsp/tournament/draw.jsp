@@ -65,7 +65,7 @@
 							<td colspan="2"><%=BundleCst.BUNDLE.getString("draw.player.session.lbl")%></td>
 							<td><%=BundleCst.BUNDLE.getString("draw.player.table.lbl")%></td>
 							<td><%=BundleCst.BUNDLE.getString("draw.player.table.points.lbl")%></td>
-							<td><%=BundleCst.BUNDLE.getString("draw.player.score.lbl")%></td>
+							<td style="width:200px"><%=BundleCst.BUNDLE.getString("draw.player.score.lbl")%></td>
 						</tr>
 					</thead>
 					<tbody>
