@@ -34,6 +34,16 @@
         <!-- validate, update, create, create-drop -->
         <property name="hbm2ddl.auto">validate</property>
         
+		<!-- C3P0 connection pool -->
+		<property name="connection.pool_size">5</property>
+		<property name="hibernate.c3p0.acquireIncrement">1</property>
+		<property name="hibernate.c3p0.min_size">0</property>
+		<property name="hibernate.c3p0.max_size">10</property>
+		<property name="hibernate.c3p0.timeout">5</property> <!-- in seconds -->
+		<property name="hibernate.c3p0.max_statement">0</property>
+		<property name="hibernate.c3p0.idle_test_period">10</property>
+        
+        
 		<!-- Mappings -->
 		<mapping resource="org/mahjong/matoso/bean/Player.hbm.xml"/>
 		<mapping resource="org/mahjong/matoso/bean/Tournament.hbm.xml"/>
