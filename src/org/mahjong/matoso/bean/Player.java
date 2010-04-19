@@ -377,7 +377,10 @@ public class Player {
 	 * @return the tournamentNumber
 	 */
 	public Integer getTournamentNumber() {
-		return tournamentNumber;
+		if (this.tournamentNumber != null)
+			return tournamentNumber;
+		else
+			return -1;
 	}
 
 	/**
