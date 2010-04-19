@@ -20,27 +20,42 @@
 					}
 				}
 			}
+			function check() {
+				var pwd=prompt('Confirmer par le mot de passe ?');
+				if (pwd=="adminMatoso") {
+					alert("Mot de passe incorrect");
+					return false;
+				} else {
+					return true;
+				}
+			}
 		</script>
 	</head>
 	<body>
 		<%@include file="../include/head.jsp"%>
-		<h2><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TITLE)%></h2>
 		<div id="listTournament">
+			<h2><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TITLE)%></h2>
 			<form  action="<%=request.getContextPath()%>/servlet/CreateTournament" method="post" onsubmit="return checkInputs();">
-				<div class="label"><label for="tournament-name"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NAME)%></label></div>
-				<input type="text" name="tournament-name" /><br/>
-				<div class="label"><label for="teamActivate"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TEAM_ACTIVATE)%></label></div>
-				<input type="checkBox" name="team-activate" id="teamActivate"/><br/>
+				<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td class="left"><label for="tournament-name"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NAME)%></label></td>
+						<td class="left"><input type="text" name="tournament-name" /></td>
+					</tr>
+					<tr>
+						<td class="left"><label for="teamActivate"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TEAM_ACTIVATE)%></label></td>
+						<td class="left"><input type="checkBox" name="team-activate" id="teamActivate"/></td>
+					</tr>
+				</table>
 				<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_CREATE)%>" />
 			</form>
 <%
 List<Tournament> tournaments = (List<Tournament>) request.getAttribute(RequestCst.REQ_PARAM_LIST_TOURNAMENTS);
 if (tournaments != null && !tournaments.isEmpty()) {
-%>				<table>
+%>				<br/><br/>
+				<table cellpadding="0" cellspacing="0">
 					<thead>
-						<!-- header labels -->
 						<tr id="labels">
-							<td><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_NAME)%></td>
+							<td><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NAME)%></td>
 							<td><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TEAM_ACTIVATE)%></td>
 							<td><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></td>
 						</tr>
@@ -51,11 +66,10 @@ if (tournaments != null && !tournaments.isEmpty()) {
 	for (int i=0; i<tournaments.size(); i++) { 
 		t = tournaments.get(i);
 %>							<tr class="<%="color"+(i%2)%>">
-								<td><a href="<%=request.getContextPath()+"/servlet/LoadTournament?tournament-id="+t.getId()%>">
+								<td class="left"><a href="<%=request.getContextPath()+"/servlet/LoadTournament?tournament-id="+t.getId()%>">
 									<%=t.getName()%></a></td>
 								<td><%=t.getTeamActivateStr()%></td>
-								<td><a href="<%=request.getContextPath()+"/servlet/DeleteTournament?tournament-id="+t.getId()%>">
-									<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
+								<td><a href="<%=request.getContextPath()+"/servlet/DeleteTournament?tournament-id="+t.getId()%>" onclick="check();"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
 							</tr>
 <%
 	}
