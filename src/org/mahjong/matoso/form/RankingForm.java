@@ -4,6 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RankingForm {
+	private List<BestPlayerRound> bestPlayerRoundList = new ArrayList<BestPlayerRound>();
+	private BestScore bestScore = new BestScore();
+
+	public BestScore getBestScore() {
+		return bestScore;
+	}
+
+	public class BestScore {
+		private String namePlayer = "";
+		private int score = 0;
+
+		public String getNamePlayer() {
+			return namePlayer;
+		}
+
+		public void setNamePlayer(String namePlayer) {
+			this.namePlayer = namePlayer;
+		}
+
+		public int getScore() {
+			return score;
+		}
+
+		public void setScore(int number) {
+			this.score = number;
+		}
+	}
+
 	public class BestPlayerRound {
 		private String player, round;
 		private int score;
@@ -38,8 +66,6 @@ public class RankingForm {
 			this.score = score;
 		}
 	}
-
-	private List<BestPlayerRound> bestPlayerRoundList = new ArrayList<BestPlayerRound>();
 
 	public List<BestPlayerRound> getBestPlayerRoundList() {
 		return this.bestPlayerRoundList;
