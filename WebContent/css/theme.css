@@ -28,7 +28,7 @@ td, th {
 	border-bottom:1px solid #CCC;
 }
 th {
-	background-color:#DDD;
+	background-color:#EAEAEA;
 	border-left:1px solid #CCC;
 }
 .left {
@@ -70,6 +70,19 @@ ul {
 }
 #dynamicRanking{
 	width:500px;
+	margin:auto;
+	text-align:center;
+}
+#dynamicRanking #tableDynamicRanking {
+	width:500px;
+}
+#dynamicTeamRanking #tableDynamicRanking {
+	width:800px;
+}
+#dynamicTeamRanking {
+	width:800px;
+	margin:auto;
+	text-align:center;
 }
 #teamRanking {
 	width:800px;

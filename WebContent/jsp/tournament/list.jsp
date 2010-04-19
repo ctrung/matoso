@@ -53,28 +53,23 @@ List<Tournament> tournaments = (List<Tournament>) request.getAttribute(RequestCs
 if (tournaments != null && !tournaments.isEmpty()) {
 %>				<br/><br/>
 				<table cellpadding="0" cellspacing="0">
-					<thead>
-						<tr id="labels">
-							<td><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NAME)%></td>
-							<td><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TEAM_ACTIVATE)%></td>
-							<td><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></td>
-						</tr>
-					</thead>
-					<tbody>
+					<tr id="labels">
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NAME)%></th>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TEAM_ACTIVATE)%></th>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></th>
+					</tr>
 <%
 	Tournament t = null;
 	for (int i=0; i<tournaments.size(); i++) { 
 		t = tournaments.get(i);
-%>							<tr class="<%="color"+(i%2)%>">
-								<td class="left"><a href="<%=request.getContextPath()+"/servlet/LoadTournament?tournament-id="+t.getId()%>">
-									<%=t.getName()%></a></td>
-								<td><%=t.getTeamActivateStr()%></td>
-								<td><a href="<%=request.getContextPath()+"/servlet/DeleteTournament?tournament-id="+t.getId()%>" onclick="check();"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
-							</tr>
+%>						<tr class="<%="color"+(i%2)%>">
+							<td class="left"><a href="/matoso/servlet/LoadTournament?tournament-id="<%=t.getId()%>"><%=t.getName()%></a></td>
+							<td><%=t.getTeamActivateStr()%></td>
+							<td><a href="/matoso/servlet/DeleteTournament?tournament-id="<%=t.getId()%>" onclick="check();"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
+						</tr>
 <%
 	}
-%>					</tbody>
-				</table>
+%>				</table>
 <%
 }
 %>		</div>

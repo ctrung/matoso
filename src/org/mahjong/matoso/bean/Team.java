@@ -59,8 +59,8 @@ public class Team {
 	}
 
 	public String getNameAndPlayers() {
-		return name + " (" + this.player1.getPrettyPrintName() + ", " + this.player2.getPrettyPrintName() + ", "
-				+ this.player3.getPrettyPrintName() + ", " + this.player4.getPrettyPrintName() + ')';
+		return name + "<br/><small>" + this.player1.getPrettyPrintName() + ", " + this.player2.getPrettyPrintName() + ", "
+				+ this.player3.getPrettyPrintName() + ", " + this.player4.getPrettyPrintName() + "</small>";
 	}
 
 	public void setName(String name) {
