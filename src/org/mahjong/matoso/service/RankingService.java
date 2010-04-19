@@ -352,6 +352,28 @@ public class RankingService {
 
 				if (LOGGER.isDebugEnabled())
 					LOGGER.debug("max player=" + playerMax + "/score=" + scoreMax);
+
+				if (table.getGames() != null)
+					for (Game game : table.getGames()) {
+						score = game.getScorePlayer1();
+						player = table.getPlayer1();
+						if (Math.max(game.getScorePlayer1(), game.getScorePlayer2()) == game.getScorePlayer2()) {
+							score = game.getScorePlayer2();
+							player = table.getPlayer2();
+						}
+						if (Math.max(game.getScorePlayer3(), score) == game.getScorePlayer3()) {
+							score = game.getScorePlayer3();
+							player = table.getPlayer3();
+						}
+						if (Math.max(game.getScorePlayer4(), score) == game.getScorePlayer4()) {
+							score = game.getScorePlayer4();
+							player = table.getPlayer4();
+						}
+						if (Math.max(score, rankingForm.getBestScore().getScore()) == score) {
+							rankingForm.getBestScore().setNamePlayer(player.getPrettyPrintName());
+							rankingForm.getBestScore().setScore(score);
+						}
+					}
 			}
 			if (playerMax != null)
 				// Adds the best player for the current round
