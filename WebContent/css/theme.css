@@ -1,272 +1,84 @@
 /* General */
 body {
-	margin: 0px;
-	padding: 0px;
-	font-family: sans-serif;
+	padding:0;
+	margin:0;
+	font-family: verdana;
 	font-size : 12px;
-	background-color: #EFEFEF;
-}
-input {
-	border: 1px solid #4B72BE; /* blue */
+	background-color: #ffb06b;
+	color:#444;
+	white-space:nowrap;
 }
 a {
-	color: #4B72BE; /* blue */
-	text-decoration: none;
-}
-h2 {
-	color : #C40016; /* red dragon */
-	margin-left: 20px;
-}
-table {
-	margin-top:20px;
-	margin-bottom:20px;
-	border:3px ridge #4B72BE;
-	border-collapse:collapse;
-}
-thead {
-	font-weight : bold;
-	color : #4B72BE; /* blue */
-}
-td, th {
-	padding : 5px;
-	margin : 0;
-	border:2px ridge #4B72BE;
-	border-collapse:collapse;
+	color:#444;
 }
 img {
-	border: none;	
+	border:0;
 }
-
-#head, #footer {
-	background-color: #F8F1C5;
-	color : #098853; /* green dragon */
-	padding-top: 20px;
-	padding-left: 20px;
-	padding-bottom: 20px;	
+table {
+	background-color:white;
+	margin:0;
+	padding:10px;
+}
+div {
+	padding:10px;
+}
+td, th {
+	padding:5px;
+	text-align:center;
+	border-bottom:1px solid #CCC;
+}
+th {
+	background-color:#DDD;
+	border-left:1px solid #CCC;
+}
+.left {
+	text-align:left;
+}
+ul {
+	list-style:none;
+	padding:0;
+	margin:5px;
+	text-align:left;
 }
 #head {
-	margin-bottom: 30px;
-	border-bottom: 1px solid black;
-}
-#footer {
-	position: absolute;
-	bottom: 0;
-	font-weight: bold;
-	background-color: #EFEFEF;
+	border-bottom:2px ridge #444;
+	background-color:white;
 }
 #emalogo {
-	display: block;
-	float: right;	
-	width: 100px;
-	height: 100px;
+	float:right;
+	width:100px;
+	height:100px;
 }
-div.label {
-	width:200px;
-	float:left;
+#footer {
+	position:absolute;
+	bottom:10px;
+	right:10px;
 }
-div.field{clear:both;}
-
-.color0 {background-color: #F7FFEF;}
-.color1 {background-color: #FFEFF0;}
-
-/* special displaytag */
-tr.even {
-	background-color: #FFEFF0; /* pink */
-} 
-tr.odd {
-	background-color: #F7FFEF; /* light green */
-} 
-th.sorted a {
-	color: #C40016; /* red dragon */
-} 
-th.sorted a, th.sortable a { 
-	display:block;
+.color1, .even {
+	background-color:#EAEAEA;
 }
-th.sortable,th.order1,th.order2 {
-	background-position:bottom right;
-	background-repeat:no-repeat;
-}
-th.sortable {
-	background-image:url(../img/arrow_off.png);
-}
-th.order1 {
-	background-image:url(../img/arrow_down.png);
-}
-th.order2 {
-	background-image:url(../img/arrow_up.png);
-}
-div.exportlinks {
-	background-color:#EEEEEE;
-	border:1px dotted #999999;
-	margin:2px 0 10px;
-	padding:2px 4px;
-	width:79%;
-}
-div.exportlinks a {
-	text-decoration: none;
-}
-span.export {
-	cursor:pointer;
-	display:inline-block;
-	padding:0 4px 1px 20px;
-}
-span.export {
-	padding:0 4px 1px 20px; 
-	color : #098853; /* green dragon */
-}
-span.csv {
-	background-image:url(../img/ico_file_csv.png);
-	background-repeat: no-repeat;
-	}
-span.excel {
-	background-image:url(../img/ico_file_excel.png);
-	background-repeat: no-repeat;
-}
-span.xml {
-	background-image:url(../img/ico_file_xml.png);
-	background-repeat: no-repeat;
-}
-span.pdf {
-	background-image:url(../img/ico_file_pdf.png);
-	background-repeat: no-repeat;
-}
-
-.matosoMesgs {
-	border: 1px solid black;
-	width: 600px;
-	background-color: white;
-	padding: 10px;
-	font-weight: bold;
-}
-
-.matosoMesgs .s0 {
-	margin-left: 25px;
-	list-style-image: url(../img/info.png);
-	color: green;
-}
-.matosoMesgs .s1 {
-	margin-left: 25px;
-	list-style-image: url(../img/warning.png);
-	color: #FFA800; /* dark yellow */
-}
-.matosoMesgs .s2 {
-	margin-left: 25px;
-	list-style-image: url(../img/error.png);
-	color: red;
-}
-
-/* List tournament page */
-#listTournament {
-	padding: 20px;
-}
-#listTournament form {
-	width: 450px;
-	border: 1px solid black; 
-	padding: 10px;
-	margin-bottom: 20px;
-}
-#listTournament form input {
-	margin-bottom: 5px;
-}
-
-/* Import players */
-#import {padding-left: 20px;}
-#import form {margin-top: 20px; margin-bottom: 20px;}
-#import form label.label {float: left; text-align: left; width: 150px;}
-#import form #choice {float: left;}
-#import form hr {visibility: hidden; clear: both; margin-bottom: 20px;}
-
-
-/* Add, edit players */
-#add, #edit {padding-left: 20px;}
-#add form, #edit form {margin-top: 20px; margin-bottom: 20px;}
-
-/*Load tournament page */
-#loadTournament {
-	padding-left: 20px;
-}
-#loadTournament table a {
+.sorted a {
 	font-style:italic;
+	border-top:1px solid #ccc;
+}
+
+#loadTournament a.table {
 	font-weight:bold;
 }
-#loadTournament table li a {
-	font-weight:normal;
+#tableRounds td {
+	border-left:1px solid #CCC;
 }
-#loadTournament ul.player {
-	margin:0;
-	padding:0 0 0 10px;
-	list-style:none;
-	background-color:#DDDDEE;
+#dynamicRanking{
+	width:500px;
 }
-#loadTournament ul.player li {
-	background-color:#DDDDEE;
-	border: none;
-	margin-bottom: 0px;
-	padding:2px 5px;
+#teamRanking {
+	width:800px;
 }
-#loadTournament .resultPresent a {
-	font-style:normal;
-	font-weight:normal;
-}
-	
-/* Edit table page */
-#editTable {padding-left: 20px;}
-#editTable table * {
-	text-align:center;
-	border:none;
-}
-#editTable table input, #editTable td {
-	text-align:center;
-	border-width:1px;
-	border-style:solid;
-}
-#editTable table input {width:40px}
-#editTable #tableInfos {margin-top: 10px; width: 150px; border: 1px solid black; padding: 5px; margin-bottom: 20px;}
-#editTable ul.information {font-weight:normal;font-size:smaller;padding:0;margin:0;list-style:none}
-#editTable .color2 {background-color: #F7FFEF}
-#editTable .color3 {background-color: #FFEFF0}
-#editTable table tr#penalty {background-color: #C40016;}
-#editTable .columnGameNumber {width:10px}
-#editTable .columnHandValue {width:10px}
-#editTable .columnPlayer {width:150px}
-
-#editTable div.innerScroll {height: 300px; overflow: auto;}
-#editTable div.innerScroll table {margin: 0;}
-#editTable .colWind {width: 60px;}
-#editTable .colGameNb {width: 10px;}
-#editTable .colScore {width: 60px;}
-#editTable .colSelf {width: 60px;}
-#editTable .colP1 {width: 160px;}
-#editTable .colP3 {width: 160px;}
-#editTable .colP2 {width: 160px;}
-#editTable .colP4 {width: 160px;}
-
-/* Ranking */
-#ranking {padding-left: 20px;}
-#ranking h3 {
-	margin-top: 20px;
-	margin-bottom: 10px;
-	padding:5px;
-	border:3px ridge #4B72BE;
-	width:300px;
-}
-#player th {width: 120px;}
-#player th.name {width: 150px}
-#player th.position {width: 30px;}
-#player th.edit {width: 50px;}
-#ranking p.info {font-style: italic}
-#ranking .editUser {width: 15px; height: 15px;}
-
-#teamRanking {text-align:center}
-#teamRanking .nameAndPlayers {text-align:left;white-space:nowrap}
 
 /* Players draw */
 #draw hr {
 	clear: both;
 	visibility: hidden;
-}
-#draw .noprint .left {
-	padding-left: 20px;
 }
 #draw hr.print {
 	display: none;
@@ -275,15 +87,14 @@ span.pdf {
 	text-align: center;
 	font-size: 14px;
 	font-weight: bold;
-	width: 350px;
+	width: 300px;
 	float: left;
 	margin-left: 25px;
 	margin-bottom: 30px;
 	border: 1px solid black;
 }
 #draw div.player p {
-	border: 1px solid black;
-	width: 310px;
+	width: 260px;
 	margin-left: 20px;
 	margin-bottom: 5px;
 	margin-top: 5px;
@@ -293,11 +104,10 @@ span.pdf {
 	font-style: italic;
 }
 #draw div.player table {
-	margin-left: 20px;
 	font-size: 10px;
 	border-collapse: collapse;
 	border: 2px solid black;
-	width: 310px;
+	width: 260px;
 	margin-top: 10px;
 	margin-bottom: 15px;
 }
@@ -311,12 +121,4 @@ span.pdf {
 }
 #draw div.player p table tbody td.invisible {
 	border: 2px solid white;
-}
-
-#dynamicRanking {
-	width:90%;
-	padding:5px;
-}
-#bodyDynamicRanking {
-	padding:20px;
 }
