@@ -8,35 +8,19 @@ org.mahjong.matoso.constant.RequestCst,
 org.mahjong.matoso.constant.BundleCst, 
 org.mahjong.matoso.constant.ServletCst,
 org.mahjong.matoso.util.message.MatosoMessages"%>
-
-<%-- Simple formular to upload players with CSV --%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-
 <html>
-
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo - <%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></title>
 		<link rel="stylesheet" type="text/css" href="/matoso/css/theme.css" />
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 	</head>
-	
 	<body>
-	
-		<!-- header -->
-		<%@include file="../include/head.jsp"%>
-	
-		<h2><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></h2>
-				
+<%@include file="../include/head.jsp"%>
 		<div id="import">
-
-			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>">
-					<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%>
-			</a>
-				
-			<%-- Messages --%>
+			<h2><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></h2>
+			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 			<%
 				MatosoMessages mm = (MatosoMessages)request.getAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES);
 				if(MatosoMessages.isNotEmpty(mm)) { %>
@@ -47,9 +31,7 @@ org.mahjong.matoso.util.message.MatosoMessages"%>
 					<%} %>
 				</ul>
 			<%} %>
-				
 			<form action="<%="/matoso"+ServletCst.REDIRECT_TO_IMPORT_PLAYER_SERVLET%>" enctype="multipart/form-data" method="POST">
-				
 				<script type="text/javascript">
 					function updateField(type) {
 						var isCsvType = type=='csv';
