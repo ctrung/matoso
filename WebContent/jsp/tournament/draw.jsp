@@ -36,10 +36,13 @@
 		Player p = ps.get(i);
 %>
 			<div class="player">
-				<p><%=p.getPrettyPrintName() + " (N°" + p.getTournamentNumber() + ")" %></p>
-				<%if(p.getTeam() != null) { %>
-					<p class="team"><%="(" + BundleCst.BUNDLE.getString("draw.player.team.lbl") + " " + p.getTeam().getName() + ")"%></p>
-				<%} %>
+				<p>n°<%= p.getTournamentNumber()%> <%= p.getPrettyPrintName() %></p>
+<%
+if(p.getTeam() != null) {
+%>				<p class="team"><%= p.getTeam().getName() %></p>
+<%
+}
+%>
 				<table>
 					<thead>
 						<tr>
@@ -74,16 +77,16 @@
 						<%		}
 							} %>
 						<tr>
-							<td colspan="2" class="invisible"></td>
+							<td colspan="2" class="invisible">Powered by MaToSo</td>
 							<td><%=BundleCst.BUNDLE.getString("draw.player.total.lbl")%></td>
 							<td></td>
 							<td></td>
 						</tr>
 					</tbody>
-				</table>				
+				</table>
 			</div>
 			<hr class="print"/>
-		<%} %>		
-	</body>
+<%
+}
+%>	</body>
 </html>
-	
