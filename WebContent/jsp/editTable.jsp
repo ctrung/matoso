@@ -37,11 +37,10 @@
 <%@
 include file="include/head.jsp"
 %><%
-Tournament tournament = (Tournament) request.getAttribute("tournament");
 Table table = (Table) request.getAttribute(RequestCst.REQ_ATTR_TABLE);
 %>		<div id="editTable">
 			<h2><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_TITLE)%></h2>
-			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+session.getAttribute(SessionCst.SESSION_TOURNAMENT_ID)%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 			<div id="tableInfos">
 				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_TABLE)%> : <%= table.getName() %><br/>
 				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_ROUND)%> : <%=table.getRound().getNumber() %>
@@ -80,28 +79,28 @@ if(MatosoMessages.isNotEmpty(mm)) {
 						<tr class="separate">
 							<th colspan="4"></th>
 							<th>
-								<jsp:getProperty property="player1Name" name="EditTableForm"/> (N°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/>)
+								n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player1Name" name="EditTableForm"/>
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player1Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player1Team" name="EditTableForm"/></li>
 								</ul>
 							</th>
 							<th>
-								<jsp:getProperty property="player2Name" name="EditTableForm"/> (N° <jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/>)
+								n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player2Name" name="EditTableForm"/>
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player2Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player2Team" name="EditTableForm"/></li>
 								</ul>
 							</th>
 							<th>
-								<jsp:getProperty property="player3Name" name="EditTableForm"/> (N° <jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/>) 
+								n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player3Name" name="EditTableForm"/> 
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player3Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player3Team" name="EditTableForm"/></li>
 								</ul>
 							</th>
 							<th>
-								<jsp:getProperty property="player4Name" name="EditTableForm"/> (N° <jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/>) 
+								n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player4Name" name="EditTableForm"/> 
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player4Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player4Team" name="EditTableForm"/></li>
@@ -162,16 +161,16 @@ for(int i=0; i<dtgs.size(); i++) {
 							<th class="columnHandValue"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_HAND_VALUE)%></th>
 							<th class="columnHandValue"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_SELFPICK)%></th>
 							<th class="columnPlayer">
-								<jsp:getProperty property="player1Name" name="EditTableForm"/> (N°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/>)
+								n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player1Name" name="EditTableForm"/>
 							</th>
 							<th class="columnPlayer">
-								<jsp:getProperty property="player2Name" name="EditTableForm"/> (N°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/>)
+								n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player2Name" name="EditTableForm"/>
 							</th>
 							<th class="columnPlayer">
-								<jsp:getProperty property="player3Name" name="EditTableForm"/> (N°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/>)
+								n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player3Name" name="EditTableForm"/>
 							</th>
 							<th class="columnPlayer">
-								<jsp:getProperty property="player4Name" name="EditTableForm"/> (N°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/>)
+								n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player4Name" name="EditTableForm"/>
 							</th>
 						</tr>
 					</thead>
@@ -188,29 +187,29 @@ for(int i=0; i<dtgs.size(); i++) {
 %>							<td rowspan="2"><%=Integer.toString(i+1)%></td>
 							<td title="<%=BundleCst.BUNDLE.getString(BundleCst.TABLE_HAND_VALUE)%>"><input type="text" name="<%=i+"_handValue"%>" id="<%=i+"_handValue"%>" value="<%=dtg.getHandValuePrettyPrint()%>" class="handValue"/></td>
 							<td title="<%=BundleCst.BUNDLE.getString(BundleCst.TABLE_SELFPICK)%>"><input type="checkbox" name="<%=i+"_selfpick"%>" value="yes" id="<%=i+"_selfpick"%>" <%=dtg.getSelfpickCheckedAttribute() %> onclick="return actionSelfpickCheckbox(<%=i%>);"/></td>
-							<td title="<%=table.getPlayer1().getPrettyPrintName() %>">
+							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>">
 								<input type="radio" name="<%=i+"_winOrLose1"%>" value="win" id="<%=i+"_winner1"%>" <%=dtg.getPlayerWinCheckedAttribute(1) %> onclick="return actionWinnerRadioInput(<%=i%>, this, 1);"/> <label for="<%=i+"_winner1"%>" id="<%=i+"_lbl-winner1"%>" <%=dtg.hasWonStyle(1) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_WINNER)%></label><br/>
 								<input type="radio" name="<%=i+"_winOrLose1"%>" value="lose" id="<%=i+"_loser1"%>" <%=dtg.getPlayerLoseCheckedAttribute(1) %> onclick="return actionLoserRadioInput(<%=i%>, this, 1);"/> <label for="<%=i+"_loser1"%>" id="<%=i+"_lbl-loser1"%>" <%=dtg.hasLoseStyle(1) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_LOSER)%></label>
 							</td>
-							<td title="<%=table.getPlayer2().getPrettyPrintName() %>">
+							<td title="n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <%=table.getPlayer2().getPrettyPrintName() %>">
 								<input type="radio" name="<%=i+"_winOrLose2"%>" value="win" id="<%=i+"_winner2"%>" <%=dtg.getPlayerWinCheckedAttribute(2) %> onclick="return actionWinnerRadioInput(<%=i%>, this, 2);"/> <label for="<%=i+"_winner2"%>" id="<%=i+"_lbl-winner2"%>" <%=dtg.hasWonStyle(2) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_WINNER)%></label><br/>
 								<input type="radio" name="<%=i+"_winOrLose2"%>" value="lose" id="<%=i+"_loser2"%>" <%=dtg.getPlayerLoseCheckedAttribute(2) %> onclick="return actionLoserRadioInput(<%=i%>, this, 2);"/> <label for="<%=i+"_loser2"%>" id="<%=i+"_lbl-loser2"%>" <%=dtg.hasLoseStyle(2) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_LOSER)%></label>&nbsp;
 							</td>
-							<td title="<%=table.getPlayer3().getPrettyPrintName() %>">
+							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>">
 								<input type="radio" name="<%=i+"_winOrLose3"%>" value="win" id="<%=i+"_winner3"%>" <%=dtg.getPlayerWinCheckedAttribute(3) %> onclick="return actionWinnerRadioInput(<%=i%>, this, 3);"/> <label for="<%=i+"_winner3"%>" id="<%=i+"_lbl-winner3"%>" <%=dtg.hasWonStyle(3) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_WINNER)%></label><br/>
 								<input type="radio" name="<%=i+"_winOrLose3"%>" value="lose" id="<%=i+"_loser3"%>" <%=dtg.getPlayerLoseCheckedAttribute(3) %> onclick="return actionLoserRadioInput(<%=i%>, this, 3);"/> <label for="<%=i+"_loser3"%>" id="<%=i+"_lbl-loser3"%>" <%=dtg.hasLoseStyle(3) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_LOSER)%></label>&nbsp;
 							</td>
-							<td title="<%=table.getPlayer4().getPrettyPrintName() %>">
+							<td title="n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <%=table.getPlayer4().getPrettyPrintName() %>">
 								<input type="radio" name="<%=i+"_winOrLose4"%>" value="win" id="<%=i+"_winner4"%>" <%=dtg.getPlayerWinCheckedAttribute(4) %> onclick="return actionWinnerRadioInput(<%=i%>, this, 4);"/> <label for="<%=i+"_winner4"%>" id="<%=i+"_lbl-winner4"%>" <%=dtg.hasWonStyle(4) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_WINNER)%></label><br/>
 								<input type="radio" name="<%=i+"_winOrLose4"%>" value="lose" id="<%=i+"_loser4"%>" <%=dtg.getPlayerLoseCheckedAttribute(4) %> onclick="return actionLoserRadioInput(<%=i%>, this, 4);"/> <label for="<%=i+"_loser4"%>" id="<%=i+"_lbl-loser4"%>" <%=dtg.hasLoseStyle(4) %>><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_LOSER)%></label>&nbsp;
 							</td>
 						</tr>
 						<tr class="<%="game color"+(cssWindColorNo%2) %>">
 							<td colspan="2"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_SCORE)%></td>
-							<td title="<%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer1ScorePrettyPrint()%>" id="<%=i+"_scr1"%>"/></td>
-							<td title="<%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer2ScorePrettyPrint()%>" id="<%=i+"_scr2"%>"/></td>
-							<td title="<%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer3ScorePrettyPrint()%>" id="<%=i+"_scr3"%>"/></td>
-							<td title="<%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer4ScorePrettyPrint()%>" id="<%=i+"_scr4"%>"/></td>
+							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer1ScorePrettyPrint()%>" id="<%=i+"_scr1"%>"/></td>
+							<td title="n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer2ScorePrettyPrint()%>" id="<%=i+"_scr2"%>"/></td>
+							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer3ScorePrettyPrint()%>" id="<%=i+"_scr3"%>"/></td>
+							<td title="n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer4ScorePrettyPrint()%>" id="<%=i+"_scr4"%>"/></td>
 						</tr>
 <%
 	if (i % 4 == 3) {
@@ -224,10 +223,10 @@ if (penalties == null | penalties.size() == 0) {
 					<tbody>
 						<tr id="penalty">
 							<td colspan="4"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
-							<td title="<%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" /></td>
-							<td title="<%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" /></td>
-							<td title="<%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" /></td>
-							<td title="<%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" name="penalty4" id="penalty4" class="score" /></td>
+							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" /></td>
+							<td title="n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" /></td>
+							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" /></td>
+							<td title="n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" name="penalty4" id="penalty4" class="score" /></td>
 						</tr>
 					</tbody>
 <%
@@ -238,10 +237,10 @@ if (penalties == null | penalties.size() == 0) {
 		Penalty pen = penalties.get(j);
 %>						<tr id="penalty">
 							<td colspan="4"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
-							<td title="<%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" value="<%=pen.getPenaltyPlayer1PrettyPrint() %>"/></td>
-							<td title="<%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" value="<%=pen.getPenaltyPlayer2PrettyPrint() %>"/></td>
-							<td title="<%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" value="<%=pen.getPenaltyPlayer3PrettyPrint() %>"/></td>
-							<td title="<%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" name="penalty4" id="penalty4" class="score" value="<%=pen.getPenaltyPlayer4PrettyPrint() %>"/></td>
+							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" value="<%=pen.getPenaltyPlayer1PrettyPrint() %>"/></td>
+							<td title="n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" value="<%=pen.getPenaltyPlayer2PrettyPrint() %>"/></td>
+							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" value="<%=pen.getPenaltyPlayer3PrettyPrint() %>"/></td>
+							<td title="n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" name="penalty4" id="penalty4" class="score" value="<%=pen.getPenaltyPlayer4PrettyPrint() %>"/></td>
 						</tr>
 <%
 	}
