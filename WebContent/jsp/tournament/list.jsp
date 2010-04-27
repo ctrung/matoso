@@ -63,9 +63,9 @@ if (tournaments != null && !tournaments.isEmpty()) {
 	for (int i=0; i<tournaments.size(); i++) { 
 		t = tournaments.get(i);
 %>						<tr class="<%="color"+(i%2)%>">
-							<td class="left"><a href="/matoso/servlet/LoadTournament?tournament-id="<%=t.getId()%>"><%=t.getName()%></a></td>
+							<td class="left"><a href="/matoso/servlet/LoadTournament?tournament-id=<%=t.getId()%>"><%=t.getName()%></a></td>
 							<td><%=t.getTeamActivateStr()%></td>
-							<td><a href="/matoso/servlet/DeleteTournament?tournament-id="<%=t.getId()%>" onclick="check();"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
+							<td><a href="/matoso/servlet/DeleteTournament?tournament-id=<%=t.getId()%>" onclick="check();"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
 						</tr>
 <%
 	}
