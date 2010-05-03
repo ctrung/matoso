@@ -137,11 +137,12 @@ if(gr.isAutoCalculate()) checkedAttr = "checked=\"checked\"";
 					</tbody>
 <%
 //scoring inputs
-List<DisplayTableGame> dtgs = (List<DisplayTableGame>)request.getAttribute(RequestCst.REQ_ATTR_TABLE_DISPLAY_GAMES);
+List<DisplayTableGame> dtgs = (List<DisplayTableGame>) request.getAttribute(RequestCst.REQ_ATTR_TABLE_DISPLAY_GAMES);
 DisplayTableGame dtg = null;
 int cssWindColorNo = 0;
+Integer player1 = 0, player2 = 0, player3 = 0, player4 = 0;
 String wind;
-for(int i=0; i<dtgs.size(); i++) {
+for(int i = 0; i < dtgs.size(); i++) {
 	dtg = dtgs.get(i);
 	cssWindColorNo = (int) Math.ceil((i == 0 ? 1 : i) / 4);
 	if (cssWindColorNo == 0) {
@@ -177,14 +178,18 @@ for(int i=0; i<dtgs.size(); i++) {
 					<tbody>
 <%
 	}
+	player1 += (dtg.getPlayer1Score() == null ? 0 : dtg.getPlayer1Score());
+	player2 += (dtg.getPlayer2Score() == null ? 0 : dtg.getPlayer2Score());
+	player3 += (dtg.getPlayer3Score() == null ? 0 : dtg.getPlayer3Score());
+	player4 += (dtg.getPlayer4Score() == null ? 0 : dtg.getPlayer4Score());
 %>
 						<tr class="<%="game color"+(cssWindColorNo%2) %>">
 <%
 	if (i % 4 == 0) {
-%>							<td rowspan="8"><%=wind%></td>
+%>							<td rowspan="12"><%=wind%></td>
 <%
 	}
-%>							<td rowspan="2"><%=Integer.toString(i+1)%></td>
+%>							<td rowspan="3"><%=Integer.toString(i+1)%></td>
 							<td title="<%=BundleCst.BUNDLE.getString(BundleCst.TABLE_HAND_VALUE)%>"><input type="text" name="<%=i+"_handValue"%>" id="<%=i+"_handValue"%>" value="<%=dtg.getHandValuePrettyPrint()%>" class="handValue"/></td>
 							<td title="<%=BundleCst.BUNDLE.getString(BundleCst.TABLE_SELFPICK)%>"><input type="checkbox" name="<%=i+"_selfpick"%>" value="yes" id="<%=i+"_selfpick"%>" <%=dtg.getSelfpickCheckedAttribute() %> onclick="return actionSelfpickCheckbox(<%=i%>);"/></td>
 							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>">
@@ -211,9 +216,16 @@ for(int i=0; i<dtgs.size(); i++) {
 							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer3ScorePrettyPrint()%>" id="<%=i+"_scr3"%>"/></td>
 							<td title="n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <%=table.getPlayer4().getPrettyPrintName() %>"><input type="text" class="score" disabled="disabled" value="<%=dtg.getPlayer4ScorePrettyPrint()%>" id="<%=i+"_scr4"%>"/></td>
 						</tr>
+						<tr class="<%="game color"+(cssWindColorNo%2) %>">
+							<td colspan="2">TOTAL</td>
+							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>"><%=player1%></td>
+							<td title="n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <%=table.getPlayer2().getPrettyPrintName() %>"><%=player2%></td>
+							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>"><%=player3%></td>
+							<td title="n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <%=table.getPlayer4().getPrettyPrintName() %>"><%=player4%></td>
+						</tr>
 <%
 	if (i % 4 == 3) {
-%>					</tbody>
+%>						</tbody>
 <%
 	}
 }
