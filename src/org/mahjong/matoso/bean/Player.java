@@ -701,6 +701,10 @@ public class Player {
 		this.tables = tables;
 	}
 
+	public String getNbWinAndSelfDraw() {
+		return (getNbSelfpick() + getNbVictory()) + " (" + NumberUtils.getPrettyPrintForm(getPercSelfpick() + getPercVictory()) + " %)";
+	}
+
 	public String getSelfDraw() {
 		return getNbSelfpick() + " (" + NumberUtils.getPrettyPrintForm(getPercSelfpick()) + " %)";
 	}
