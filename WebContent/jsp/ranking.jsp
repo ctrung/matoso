@@ -74,6 +74,7 @@ TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
 			    <display:column style="width:1%" property="points" titleKey="<%=BundleCst.RANKING_POINTS%>" format="{0,number,###.##}" sortable="true" defaultorder="descending" />
 			    <display:column style="width:1%" property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" sortable="true" defaultorder="descending" />
 			    <display:column style="width:1%" property="nbGames" titleKey="<%=BundleCst.RANKING_NB_GAMES%>" sortable="true" defaultorder="descending" />
+			    <display:column style="width:10%" property="nbWinAndSelfDraw" titleKey="<%=BundleCst.RANKING_NB_SELFPICK_VICTORY%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			    <display:column style="width:10%" property="selfDraw" titleKey="<%=BundleCst.RANKING_NB_SELFPICK%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			 	<display:column style="width:10%" property="win" titleKey="<%=BundleCst.RANKING_NB_VICTORY%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			    <display:column style="width:10%" property="nbDefeatForRankingPage" titleKey="<%=BundleCst.RANKING_NB_DEFEAT%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
