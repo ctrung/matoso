@@ -69,6 +69,7 @@ public abstract class BundleCst {
 	public static final String RANKING_POINTS = "ranking.points";
 	public static final String RANKING_SCORE = "ranking.score";
 	public static final String RANKING_NB_GAMES = "ranking.nb.games";
+	public static final String RANKING_NB_SELFPICK_VICTORY = "ranking.nb.selfpick.victory";
 	public static final String RANKING_NB_VICTORY = "ranking.nb.victory";
 	public static final String RANKING_NB_SELFPICK = "ranking.nb.selfpick";
 	public static final String RANKING_NB_GIVEN = "ranking.nb.given";
