@@ -19,7 +19,7 @@ if (request.getParameter("team") == null) {
 		<h2><a href="/matoso/<%=ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=tournament.getName()%></a></h2>
 		<display:table name="sessionScope.ranking" pagesize="20" cellpadding="0" cellspacing="0" id="tableDynamicRanking">
 			<display:column property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" style="width:10%" />
-			<display:column titleKey="<%=BundleCst.PLAYER_NATIONALITY%>" style="width:10%"><img src="/matoso/img/<%=((Player) tableDynamicRanking).getCountry()%>.gif" /></display:column>
+			<display:column titleKey="<%=BundleCst.PLAYER_NATIONALITY%>" style="width:10%"><img src="/matoso/img/flag/<%=((Player) tableDynamicRanking).getCountry()%>.gif" /></display:column>
 			<display:column property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" class="left" style="width:60%" />
 			<display:column property="points" titleKey="<%=BundleCst.RANKING_POINTS%>" format="{0,number,###.##}" style="width:10%" />
 			<display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" style="width:10%" />
