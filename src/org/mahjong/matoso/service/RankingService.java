@@ -271,7 +271,7 @@ public class RankingService {
 		}
 	}
 
-	public static Object getTeamsForTournament(Tournament tournament) {
+	public static List<Team> getTeamsForTournament(Tournament tournament) {
 		LOGGER.debug("start getTeamsForTournament => nb teams in tournament=" + tournament.getTeams().size());
 		ArrayList<Team> teams = new ArrayList<Team>();
 		teams.addAll(tournament.getTeams());
