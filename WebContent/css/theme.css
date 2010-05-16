@@ -135,3 +135,15 @@ ul {
 #draw div.player p table tbody td.invisible {
 	border: 2px solid white;
 }
+#edit table {
+	width:700px;
+}
+.filledWithGames {
+	background-image : url("/matoso/img/star_gold.png");
+	background-repeat :  no-repeat;
+	background-position : top right;
+}
+th.filledWithTotal, .filledWithTotal .table {
+	border : 1px dashed blue;
+	text-decoration : none;
+}
