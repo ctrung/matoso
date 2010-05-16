@@ -42,12 +42,12 @@ public class AddPlayer extends MatosoServlet {
 		String playerTeam = "team ";
 		String team = "";
 		Player player;
-		
+
 		Tournament tournament = super.getTournament(request);
 		boolean isTeam = tournament.isTeamActivate();
 		for (int i = 1; i < nbPlayers + 1; i++) {
-			player = new Player("player", "" + i, "fr", "", "");
-			player.setTournamentNumber(i+1);
+			player = new Player("player", "" + i, "fr", "ema" + i, "");
+			player.setTournamentNumber(i + 1);
 			if (isTeam)
 				if ((i - 1) % 4 == 0)
 					team = playerTeam + ((i + 3) / 4);
