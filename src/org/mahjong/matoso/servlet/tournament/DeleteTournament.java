@@ -11,7 +11,9 @@ package org.mahjong.matoso.servlet.tournament;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.mahjong.matoso.bean.Tournament;
+import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
 import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
@@ -24,15 +26,17 @@ import org.mahjong.matoso.util.exception.FatalException;
  * @date 7 mars 2010
  */
 public final class DeleteTournament extends MatosoServlet {
-	
+	private static final Logger LOG = Logger.getLogger(DeleteTournament.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	public String serve (HttpServletRequest request, HttpServletResponse response) throws FatalException {
-
-		Tournament tournament = super.getTournament(request);
+	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
+		String paramTournamentId = request.getParameter(RequestCst.REQ_PARAM_TOURNAMENT_ID);
+		if (LOG.isDebugEnabled())
+			LOG.debug("paramTournamentId=" + paramTournamentId);
+		assert (paramTournamentId != null);
+		Tournament tournament = TournamentService.getById(Integer.decode(paramTournamentId));
+		assert (tournament != null);
 		TournamentService.deleteTournament(tournament);
-		
 		return ServletCst.REDIRECT_TO_TOURNAMENT_LIST_SERVLET;
 	}
-	
 }
