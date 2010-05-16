@@ -30,14 +30,14 @@ String hrefLoadTournament = request.getContextPath()
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 	</head>
 	<body>
-		<!-- header -->
 <%@include file="include/head.jsp"%>
 		<div id="ranking">
 			<h2><%=request.getSession().getAttribute("tournamentName") + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
-			<a href="<%=hrefLoadTournament%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a><br/><br/>
-			<!-- ---------------- -->
-			<!-- Tournament stats -->
-			<!-- ---------------- -->			
+			<a href="<%=hrefLoadTournament%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+			| <a href="/matoso/servlet/GamesExport"><%=BundleCst.BUNDLE.getString("ranking.export.games")%></a>
+			| <a href="/matoso/servlet/RankingExport"><%=BundleCst.BUNDLE.getString("ranking.export.ranks")%></a>
+			| <a href="/matoso/servlet/FinalSession"><%=BundleCst.BUNDLE.getString("ranking.final.session")%></a>
+			<br/><br/>
 			<h3><%=BundleCst.BUNDLE.getString("ranking.stats.tournament")%></h3>
 			<table cellpadding="0" cellspacing="0">
 				<tr>
@@ -55,9 +55,6 @@ TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
 					<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%>"><%=""+ts.getNbDraw() %> (<%=ts.getPercDraw() %>)</td>
 				</tr>
 			</table>
-			<!-- ----------------------- -->
-			<!-- Players ranking + stats -->
-			<!-- ----------------------- -->
 			<h3><%=BundleCst.BUNDLE.getString("ranking.by.player")%></h3>
 			<p class="info"><%= BundleCst.BUNDLE.getString("ranking.stats.player.text")%></p>
 			<form action="<%=request.getContextPath()%>/servlet/ViewRanking?nbElementsByPage=redefine" id="redefineNbElementsByPage">
@@ -82,9 +79,6 @@ TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
 			    <display:column style="width:10%" property="nbSustainSelfpickForRankingPage" titleKey="<%=BundleCst.RANKING_NB_SUSTAIN_SELFPICK%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			    <display:column style="width:10%" property="nbDrawForRankingPage" titleKey="<%=BundleCst.RANKING_NB_DRAW%>" sortable="true" comparator="org.mahjong.matoso.util.comparator.NumberPercComparator" defaultorder="descending" />
 			</display:table>
-			<!-- --------------------- -->
-			<!-- Teams ranking + stats -->
-			<!-- --------------------- -->
 			<h3><%=BundleCst.BUNDLE.getString("ranking.by.team")%></h3>
 			<% int indexrankingTeam = 1; %>
 			<display:table name="sessionScope.rankingTeam" sort="list" id="teamRanking" cellpadding="0" cellspacing="0">
