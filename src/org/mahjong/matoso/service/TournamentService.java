@@ -20,7 +20,10 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.mahjong.matoso.bean.Game;
 import org.mahjong.matoso.bean.Player;
+import org.mahjong.matoso.bean.Round;
+import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.display.TournamentStats;
@@ -44,7 +47,8 @@ public abstract class TournamentService {
 	 * @param name
 	 *            The tournament name given.
 	 * @param teamActivate
-	 *            <code>true</code> if the tournament allows teams, else <code>false</code>.
+	 *            <code>true</code> if the tournament allows teams, else
+	 *            <code>false</code>.
 	 * @return The newly persisted tournament ID.
 	 * @throws FatalException
 	 */
@@ -83,25 +87,24 @@ public abstract class TournamentService {
 	}
 
 	/**
-	 * Import data obtained from a CSV file.
-	 * 
-	 * 0  -> firstname
-	 * 1  -> lastname
-	 * 2  -> email
-	 * 3  -> country
-	 * 4  -> No EMA
-	 * 5  -> Team
-	 * 6  -> Pseudo
-	 * 7  -> Arrival (DD/MM/YYYY)
-	 * 8  -> Departure (DD/MM/YYYY)
-	 * 9  -> Formular (DD/MM/YYYY)
-	 * 10 -> Payment (DD/MM/YYYY)
-	 * 11 -> Payment mode
-	 * 12 -> Photo
-	 * 13 -> CJ
-	 * 14 -> CP
-	 * 15 -> Details
-	 * 16 -> Club
+	 * Import data obtained from a CSV file. <br/>
+	 * 0 -> firstname<br/>
+	 * 1 -> lastname<br/>
+	 * 2 -> email<br/>
+	 * 3 -> country<br/>
+	 * 4 -> No EMA<br/>
+	 * 5 -> Team<br/>
+	 * 6 -> Pseudo<br/>
+	 * 7 -> Arrival (DD/MM/YYYY)<br/>
+	 * 8 -> Departure (DD/MM/YYYY)<br/>
+	 * 9 -> Formular (DD/MM/YYYY)<br/>
+	 * 10 -> Payment (DD/MM/YYYY)<br/>
+	 * 11 -> Payment mode<br/>
+	 * 12 -> Photo<br/>
+	 * 13 -> CJ<br/>
+	 * 14 -> CP<br/>
+	 * 15 -> Details<br/>
+	 * 16 -> Club<br/>
 	 * 
 	 * @param tournament
 	 * @param lines
@@ -114,7 +117,7 @@ public abstract class TournamentService {
 		String[] line = null;
 		Player player = null;
 		Map<String, List<Player>> teams = new HashMap<String, List<Player>>();
-		
+
 		String firstname = null;
 		String lastname = null;
 		String email = null;
@@ -137,7 +140,7 @@ public abstract class TournamentService {
 			return;
 
 		try {
-			for (int i=0; i<lines.size(); i++) {
+			for (int i = 0; i < lines.size(); i++) {
 				line = lines.get(i);
 
 				if (line == null) {
@@ -146,27 +149,25 @@ public abstract class TournamentService {
 				}
 
 				LOG.info("Found player : " + Arrays.toString(line));
-				
-				/*
-				 * 0  -> firstname
-				 * 1  -> lastname
-				 * 2  -> email
-				 * 3  -> country
-				 * 4  -> No EMA
-				 * 5  -> Team
-				 * 6  -> Pseudo
-				 * 7  -> Arrival (DD/MM/YYYY)
-				 * 8  -> Departure (DD/MM/YYYY)
-				 * 9  -> Formular (DD/MM/YYYY)
-				 * 10 -> Payment (DD/MM/YYYY)
-				 * 11 -> Payment mode
-				 * 12 -> Photo
-				 * 13 -> CJ
-				 * 14 -> CP
-				 * 15 -> Details
-				 * 16 -> Club
-				 */
-				
+
+				// 0 -> firstname
+				// 1 -> lastname
+				// 2 -> email
+				// 3 -> country
+				// 4 -> No EMA
+				// 5 -> Team
+				// 6 -> Pseudo
+				// 7 -> Arrival (DD/MM/YYYY)
+				// 8 -> Departure (DD/MM/YYYY)
+				// 9 -> Formular (DD/MM/YYYY)
+				// 10 -> Payment (DD/MM/YYYY)
+				// 11 -> Payment mode
+				// 12 -> Photo
+				// 13 -> CJ
+				// 14 -> CP
+				// 15 -> Details
+				// 16 -> Club
+
 				firstname = line[0];
 				lastname = line[1];
 
@@ -184,52 +185,55 @@ public abstract class TournamentService {
 				dateFormular = DateUtils.parseSQLDate(line[9]);
 				datePayment = DateUtils.parseSQLDate(line[10]);
 				paymentMode = line[11];
-				hasPhoto = line[12]!=null && (line[12].equals("x") || line[12].equals("X"));
+				hasPhoto = line[12] != null && (line[12].equals("x") || line[12].equals("X"));
 				cj = line[13];
 				cp = line[14];
 				details = line[15];
 				club = line[16];
-				
-				player = new Player(firstname, lastname, email, country, ema, null, pseudo, dateArrival, dateDeparture,
-						dateFormular, datePayment, paymentMode, hasPhoto, cj, cp, details, club);
-				player.setTournamentNumber(i+1);
-				
+
+				player = new Player(firstname, lastname, email, country, ema, null, pseudo, dateArrival, dateDeparture, dateFormular, datePayment,
+						paymentMode, hasPhoto, cj, cp, details, club);
+				player.setTournamentNumber(i + 1);
+
 				addPlayer(player, tournament);
-				
-				
+
 				// add player to team
-				if(tournament.isTeamActivate() && team != null && !StringUtils.isBlank(team)) {
-					if(teams.get(team) == null) {
+				if (tournament.isTeamActivate() && team != null && !StringUtils.isBlank(team)) {
+					if (teams.get(team) == null) {
 						teams.put(team, new ArrayList<Player>());
 					}
 					List<Player> players = teams.get(team);
 					players.add(player);
 				}
 			}
-			
+
 			// Teams
-			if(teams.keySet() != null) {
+			if (teams.keySet() != null) {
 				for (Iterator<String> iterator = teams.keySet().iterator(); iterator.hasNext();) {
 					String tn = (String) iterator.next();
-					
+
 					List<Player> players = teams.get(tn);
-					if(players.size() > 4) {
+					if (players.size() > 4) {
 						LOG.warn("Validation let team [" + tn + "] have more than 4 players : " + players.toString());
 					}
-					
+
 					Team teamObj = new Team();
 					teamObj.setName(tn);
 					teamObj.setTournament(tournament);
-					
-					if(players.get(0) != null) teamObj.setPlayer1(players.get(0));
-					if(players.get(1) != null) teamObj.setPlayer2(players.get(1));
-					if(players.get(2) != null) teamObj.setPlayer3(players.get(2));
-					if(players.get(3) != null) teamObj.setPlayer4(players.get(3));
-					
+
+					if (players.get(0) != null)
+						teamObj.setPlayer1(players.get(0));
+					if (players.get(1) != null)
+						teamObj.setPlayer2(players.get(1));
+					if (players.get(2) != null)
+						teamObj.setPlayer3(players.get(2));
+					if (players.get(3) != null)
+						teamObj.setPlayer4(players.get(3));
+
 					HibernateUtil.save(teamObj);
 				}
 			}
-			
+
 		} catch (FatalException e) {
 			throw new FatalException("Can't add player " + player.getPrettyPrintName(), e);
 		}
@@ -270,21 +274,60 @@ public abstract class TournamentService {
 	 * @throws FatalException
 	 */
 	public static void deleteTournament(Tournament tournament) throws FatalException {
+		if (LOG.isDebugEnabled())
+			LOG.debug("deleteTournament start");
+
+		// Delete tables of the tournament
+		List<Table> tables = TableService.getAllByTournament(tournament);
+		List<Game> games;
+		for (Table table : tables) {
+			// Delete games of the current table
+			games = GameService.getOrderedListFromTable(table);
+			for (Game game : games)
+				HibernateUtil.delete(game);
+			HibernateUtil.delete(table);
+		}
+		if (LOG.isDebugEnabled())
+			LOG.debug("deleteTournament tables OK");
+
+		// Delete rounds of the tournament
+		List<Round> rounds = RoundService.getRounds(tournament);
+		for (Round round : rounds)
+			HibernateUtil.delete(round);
+		if (LOG.isDebugEnabled())
+			LOG.debug("deleteTournament rounds OK");
+
+		// Delete teams of the tournament
+		for (Team team : tournament.getTeams())
+			HibernateUtil.delete(team);
+		if (LOG.isDebugEnabled())
+			LOG.debug("deleteTournament teams OK");
+
+		// Delete players of the tournament
+		for (Player player : tournament.getPlayers())
+			HibernateUtil.delete(player);
+		if (LOG.isDebugEnabled())
+			LOG.debug("deleteTournament players OK");
+
+		// Delete the tournament
 		HibernateUtil.delete(tournament);
+		LOG.debug("deleteTournament tournament OK");
 	}
 
 	/**
 	 * Calculate the tournament statitics based on the players statistics.
 	 * 
-	 * @param players The players of the tournament.
+	 * @param players
+	 *            The players of the tournament.
 	 * 
-	 * @return A never null object TournamentStats encapsulating the tournaments stats. 
+	 * @return A never null object TournamentStats encapsulating the tournaments
+	 *         stats.
 	 */
 	public static TournamentStats getTournamentStats(List<Player> players) {
 		TournamentStats ts = new TournamentStats();
-		
-		if(players!=null && players.size()>0) {
-			
+
+		if (players != null && players.size() > 0) {
+
 			int nbGames = 0;
 			int nbVictory = 0;
 			int nbSelfpick = 0;
@@ -292,12 +335,12 @@ public abstract class TournamentService {
 			int nbGiven = 0;
 			int nbSustainSelpick = 0;
 			int nbDraw = 0;
-			
+
 			// Iterates over all players to increment each stats values.
-			
+
 			for (Iterator<Player> it = players.iterator(); it.hasNext();) {
 				Player p = it.next();
-				
+
 				nbGames += NumberUtils.getIntDefaultValue(p.getNbGames());
 				nbVictory += NumberUtils.getIntDefaultValue(p.getNbVictory());
 				nbSelfpick += NumberUtils.getIntDefaultValue(p.getNbSelfpick());
@@ -306,23 +349,26 @@ public abstract class TournamentService {
 				nbSustainSelpick += NumberUtils.getIntDefaultValue(p.getNbSustainSelfpick());
 				nbDraw += NumberUtils.getIntDefaultValue(p.getNbDraw());
 			}
-			
-			// Time to initialize the TournamentStats object with the collected values.
+
+			// Time to initialize the TournamentStats object with the collected
+			// values.
 			ts.setNbVictory(nbVictory);
 			ts.setNbSelfpick(nbSelfpick);
 			ts.setNbDefeat(nbDefeat);
 			ts.setNbGiven(nbGiven);
 			ts.setNbSustainSelfpick(nbSustainSelpick);
-			
-			assert(nbDraw%4 ==0); // we added all the players draw games, 
-			// that's 4 times the total number of draw games played in the tournament !
-			ts.setNbDraw(nbDraw/4);
-			
-			assert(nbGames%4 ==0); // we added all the players games, 
-			// that's 4 times the total number of games played in the tournament !
-			ts.setNbGames(nbGames/4);
+
+			assert (nbDraw % 4 == 0); // we added all the players draw games,
+			// that's 4 times the total number of draw games played in the
+			// tournament !
+			ts.setNbDraw(nbDraw / 4);
+
+			assert (nbGames % 4 == 0); // we added all the players games,
+			// that's 4 times the total number of games played in the tournament
+			// !
+			ts.setNbGames(nbGames / 4);
 		}
-		
+
 		return ts;
 	}
 }
