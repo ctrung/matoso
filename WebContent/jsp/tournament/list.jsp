@@ -23,10 +23,10 @@
 			function check() {
 				var pwd=prompt('Confirmer par le mot de passe ?');
 				if (pwd=="adminMatoso") {
+					return true;
+				} else {
 					alert("Mot de passe incorrect");
 					return false;
-				} else {
-					return true;
 				}
 			}
 		</script>
@@ -65,7 +65,7 @@ if (tournaments != null && !tournaments.isEmpty()) {
 %>						<tr class="<%="color"+(i%2)%>">
 							<td class="left"><a href="/matoso/servlet/LoadTournament?tournament-id=<%=t.getId()%>"><%=t.getName()%></a></td>
 							<td><%=t.getTeamActivateStr()%></td>
-							<td><a href="/matoso/servlet/DeleteTournament?tournament-id=<%=t.getId()%>" onclick="check();"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
+							<td><a href="/matoso/servlet/DeleteTournament?tournament-id=<%=t.getId()%>" onclick="return check();"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_DELETE)%></a></td>
 						</tr>
 <%
 	}
