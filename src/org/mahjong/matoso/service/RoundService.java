@@ -34,7 +34,7 @@ import org.mahjong.matoso.util.exception.FatalException;
  * @date 14 mars 2010
  */
 public abstract class RoundService {
-	
+
 	private static final Logger LOG = Logger.getLogger(RoundService.class);
 
 	/**
@@ -48,8 +48,10 @@ public abstract class RoundService {
 	 * @param nbTries
 	 *            number of tries (a high number could slow the execution)
 	 * @param maxTimeToWait
-	 *            the number of seconds to wait if the number of tries is too high
-	 * @param nbMaxRounds the max. rounds 
+	 *            the number of seconds to wait if the number of tries is too
+	 *            high
+	 * @param nbMaxRounds
+	 *            the max. rounds
 	 * 
 	 * @return the list tables for the specified rounds
 	 */
@@ -164,7 +166,7 @@ public abstract class RoundService {
 				}
 			}
 		} while (tables.size() == numberTables * roundNumber && (addMoreRounds == -1 || --addMoreRounds > 0));
-		
+
 		Set<Table> lastRound = new LinkedHashSet<Table>();
 		for (Table tableI : tables) {
 			if (tableI.getRoundNbr() == roundNumber) {
@@ -182,11 +184,13 @@ public abstract class RoundService {
 	/**
 	 * Test if a player is playing with another player of his team at the table.
 	 * 
-	 * @param listTeams the list of all the teams 
+	 * @param listTeams
+	 *            the list of all the teams
 	 * @param table
 	 * @param player
 	 * 
-	 * @return true if another player of the team is at this table, false otherwise.
+	 * @return true if another player of the team is at this table, false
+	 *         otherwise.
 	 */
 	private static boolean checkTeam(Set<Team> listTeams, Table table, Player player) {
 		Team team = TeamService.getTeamForPlayer(listTeams, player);
@@ -201,11 +205,13 @@ public abstract class RoundService {
 	/**
 	 * Test if a player has already played with one of the player of this table.
 	 * 
-	 * @param listTables the list of all the tables filled until now.
+	 * @param listTables
+	 *            the list of all the tables filled until now.
 	 * @param table
 	 * @param player
 	 * 
-	 * @return true if the player has already played with one of the player of this table, false otherwise.
+	 * @return true if the player has already played with one of the player of
+	 *         this table, false otherwise.
 	 */
 	private static boolean checkAlreadyPlayed(List<Table> listTables, Table table, Player player) {
 		for (Table tableI : listTables)
@@ -228,8 +234,7 @@ public abstract class RoundService {
 				best.addAll(currentTables);
 			}
 			if (nbTries % 100 == 0) {
-				LOG.debug("time=" + ((System.currentTimeMillis() - t0) / 1000) + "\tnbTry=" + nbTries + "\tminRepeat="
-						+ minRepeat);
+				LOG.debug("time=" + ((System.currentTimeMillis() - t0) / 1000) + "\tnbTry=" + nbTries + "\tminRepeat=" + minRepeat);
 			}
 
 			// Remove the added rounds
@@ -249,15 +254,15 @@ public abstract class RoundService {
 	 * 
 	 * @param tournament
 	 * @return
-	 * @throws FatalException 
+	 * @throws FatalException
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Round> getRounds(Tournament tournament) throws FatalException {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from Round where tournament = :t order by number");
 		query.setParameter("t", tournament);
-		
-		return (List<Round>)query.list();
+
+		return (List<Round>) query.list();
 	}
 
 	/**
@@ -268,14 +273,13 @@ public abstract class RoundService {
 	 * @param tables
 	 * @throws FatalException
 	 */
-	public static void create(Tournament tournament, Integer number,
-			List<Table> tables) throws FatalException {
-		
+	public static void create(Tournament tournament, Integer number, List<Table> tables) throws FatalException {
+
 		Round round = new Round();
 		round.setNumber(number);
 		round.setTables(tables);
 		round.setTournament(tournament);
-		
+
 		HibernateUtil.save(round);
 	}
 
@@ -289,7 +293,7 @@ public abstract class RoundService {
 	public static Round getById(Integer id) throws FatalException {
 		return (Round) HibernateUtil.getSession().load(Round.class, id);
 	}
-	
+
 	/**
 	 * Update a round.
 	 * 
@@ -301,12 +305,36 @@ public abstract class RoundService {
 	 * @throws FatalException
 	 */
 	public static void update(Integer id, Date date, Time startTime, Time finishTime) throws FatalException {
-		
+
 		Round round = getById(id);
 		round.setDate(date);
 		round.setStartTime(startTime);
 		round.setFinishTime(finishTime);
 		HibernateUtil.save(round);
-		
+
+	}
+
+	public static boolean isFilledWithTotal(int id) {
+		try {
+			Round round = getById(id);
+			for (Table table : round.getTables())
+				if (GameResultService.isEmpty(table.getResult()))
+					return false;
+		} catch (FatalException e) {
+			LOG.error("error to find the round " + id, e);
+		}
+		return true;
+	}
+
+	public static boolean isFilledWithGames(int id) {
+		try {
+			Round round = getById(id);
+			for (Table table : round.getTables())
+				if (table.getGames() == null || table.getGames().isEmpty())
+					return false;
+		} catch (FatalException e) {
+			LOG.error("error to find the round " + id, e);
+		}
+		return true;
 	}
 }
