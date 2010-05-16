@@ -94,7 +94,7 @@ public class TeamService {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get the team of a player in a tournament by querying the database.
 	 * 
@@ -104,12 +104,13 @@ public class TeamService {
 	 * @throws FatalException
 	 */
 	public static Team getTeamForPlayer(Player player, Tournament tournament) throws FatalException {
-		
+
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from Team as t where t.tournament = :t and (t.player1 = :p or t.player2 = :p or t.player3 = :p or t.player4 = :p)");
+		Query query = session
+				.createQuery("from Team as t where t.tournament = :t and (t.player1 = :p or t.player2 = :p or t.player3 = :p or t.player4 = :p)");
 		query.setParameter("t", tournament);
 		query.setParameter("p", player);
-		
+
 		return (Team) query.uniqueResult();
 	}
 
@@ -144,47 +145,58 @@ public class TeamService {
 	/**
 	 * Check teams consistency :
 	 * <ul>
-	 * 	<li>max. 4 players per team</li>
+	 * <li>max. 4 players per team</li>
 	 * </ul>
+	 * 
 	 * @param players
-	 * @param msgs Can't be null.
+	 * @param msgs
+	 *            Can't be null.
 	 */
 	public static void validate(List<String[]> players, MatosoMessages msgs) {
-		
-		if(players == null) return;
+
+		if (players == null)
+			return;
 		assert msgs != null;
-		
+
 		Map<String, Integer> teamCount = new HashMap<String, Integer>();
 		String badTeams = "";
-		
+
 		for (Iterator<String[]> iterator = players.iterator(); iterator.hasNext();) {
-			
+
 			String[] player = (String[]) iterator.next();
-			if(player == null) continue;
-			
-				
+			if (player == null)
+				continue;
+
 			String team = player[5]; // team property is at position 5
-			
-			if(team!=null) {
-				if(teamCount.get(team) == null) {
+
+			if (team != null) {
+				if (teamCount.get(team) == null) {
 					teamCount.put(team, 0);
 				}
-				
+
 				Integer count = teamCount.get(team);
 				count++;
 				teamCount.put(team, count);
-				
-				if(count > 4) {
+
+				if (count > 4) {
 					badTeams += ", " + team;
 				}
 			}
-			
+
 		}
-		
+
 		badTeams = badTeams.replaceFirst(", ", "");
 		if (badTeams.length() > 0) {
 			msgs.addMessage(MatosoMessage.ERROR, I18nUtils.getMessage("player.mass.import.error.team.too.many.players", badTeams));
 		}
 	}
 
+	public static int getIndexInList(Team t, List<Team> teams) {
+		if (t == null || teams == null | teams.size() == 0)
+			return -1;
+		for (Team team : teams)
+			if (team.getId().equals(t.getId()))
+				return teams.indexOf(team);
+		return -1;
+	}
 }
