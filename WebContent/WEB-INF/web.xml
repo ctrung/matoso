@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 	<display-name>matoso</display-name>
-
-	<!-- Filters -->
 	
 	<filter>
 		<filter-name>HibernateFilter</filter-name>
@@ -14,16 +12,12 @@
 		<url-pattern>/servlet/*</url-pattern>
 	</filter-mapping>
 
-	<!-- Startup Servlets -->
-
 	<servlet>
 		<description>Servlet initialisation on start-up system</description>
 		<servlet-name>ServletInit</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.init.ServletInit</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
-	<!-- Servlets -->
 	
 	<servlet>
 		<description>List the tournaments</description>
@@ -145,8 +139,24 @@
 		<servlet-name>DynamicViewRanking</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.ranking.DynamicViewRanking</servlet-class>
 	</servlet>
-	
-	<!-- Servlets mappings -->
+	<servlet>
+		<description>Export games</description>
+		<display-name>GamesExport</display-name>
+		<servlet-name>GamesExport</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.export.GamesExport</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Export ranks</description>
+		<display-name>RankingExport</display-name>
+		<servlet-name>RankingExport</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.export.RankingExport</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Final session</description>
+		<display-name>FinalSession</display-name>
+		<servlet-name>FinalSession</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.round.FinalSession</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>ListTournament</servlet-name>
@@ -224,8 +234,15 @@
 		<servlet-name>DynamicViewRanking</servlet-name>
 		<url-pattern>/servlet/DynamicViewRanking</url-pattern>
 	</servlet-mapping>
-	
-	<!-- Welcome file -->
+	<servlet-mapping>
+		<servlet-name>GamesExport</servlet-name>
+		<url-pattern>/servlet/GamesExport</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RankingExport</servlet-name>
+		<url-pattern>/servlet/RankingExport</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping><servlet-name>FinalSession</servlet-name><url-pattern>/servlet/FinalSession</url-pattern></servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
@@ -237,5 +254,4 @@
 	        <taglib-location>/WEB-INF/tld/displaytag.tld</taglib-location>
 	    </taglib>	
 	</jsp-config>
-
 </web-app>
