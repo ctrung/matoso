@@ -41,28 +41,29 @@ public abstract class MatosoServlet extends HttpServlet {
 	 */
 	protected final void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			
+
 			// set encoding
 			try {
 				request.setCharacterEncoding("UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO : do something better ?
 				e.printStackTrace();
-			}			
-			
+			}
+
 			String forwardTo = serve(request, response);
-			
+
 			/* memorize last url in user's session */
 			SessionUtils.saveLastVisitedUrl(request);
 
-			request.getRequestDispatcher(forwardTo).forward(request, response);
+			if (forwardTo != null)
+				request.getRequestDispatcher(forwardTo).forward(request, response);
 
 		} catch (Exception e) {
 			// TODO contain and deal with exception
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Http POST method servicing.
 	 */
@@ -73,68 +74,72 @@ public abstract class MatosoServlet extends HttpServlet {
 	/**
 	 * To be implemented by inherited servlets.
 	 * 
-	 * @param request 
+	 * @param request
 	 * @param response
 	 * @return The servlet to dispatch to.
 	 * 
 	 * @throws FatalException
 	 */
 	public abstract String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException;
-	
+
 	/**
 	 * Return the tournament whose name is in the user's session.
 	 * 
-	 * @param request 
-	 * @param reload used to reload the tournament in the session. 
+	 * @param request
+	 * @param reload
+	 *            used to reload the tournament in the session.
 	 * 
 	 * @return
-	 * @throws FatalException 
+	 * @throws FatalException
 	 */
-	public static Tournament getTournament(HttpServletRequest request, boolean reload) throws FatalException{
-		
+	public static Tournament getTournament(HttpServletRequest request, boolean reload) throws FatalException {
+
 		Integer tournamentId = null;
-		
-		if(reload) {
-			
+
+		if (reload) {
+
 			// no id in the session ? retrieve it via the request...
 			String reqId = request.getParameter("tournament-id");
 			tournamentId = NumberUtils.getInteger(reqId);
-			
-			if(tournamentId == null) throw new FatalException("The tournament with id=" + reqId + " doesn't exist.");
+
+			if (tournamentId == null)
+				throw new FatalException("The tournament with id=" + reqId + " doesn't exist.");
 
 		} else {
-			tournamentId = (Integer)request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID);
+			tournamentId = (Integer) request.getSession().getAttribute(SessionCst.SESSION_TOURNAMENT_ID);
 		}
-		
+
 		Tournament tournament = TournamentService.getById(tournamentId);
-		if(tournament==null) 
+		if (tournament == null)
 			throw new FatalException("The tournament with id=" + tournamentId + " doesn't exist.");
-		
+
 		return tournament;
 	}
 
-	
 	/**
 	 * Return the tournament whose name is in the user's session.
 	 * 
-	 * @param request 
+	 * @param request
 	 * @return
-	 * @throws FatalException 
+	 * @throws FatalException
 	 */
-	public static Tournament getTournament(HttpServletRequest request) throws FatalException{
+	public static Tournament getTournament(HttpServletRequest request) throws FatalException {
 		return getTournament(request, false);
 	}
-	
+
 	/**
-	 * Get the MatosoMessages object in the request if exists or create a new one otherwise.
+	 * Get the MatosoMessages object in the request if exists or create a new
+	 * one otherwise.
 	 * 
-	 * @param request Can't be null.
+	 * @param request
+	 *            Can't be null.
 	 * @return Always non null MatosoMessages object.
 	 */
 	public MatosoMessages getMatosoMessagesInRequest(HttpServletRequest request) {
-		if (request == null) throw new IllegalArgumentException("HttpServletRequest request object can't be null");
-		
-		if(request.getAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES) == null) {
+		if (request == null)
+			throw new IllegalArgumentException("HttpServletRequest request object can't be null");
+
+		if (request.getAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES) == null) {
 			request.setAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES, new MatosoMessages());
 		}
 		return (MatosoMessages) request.getAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES);
