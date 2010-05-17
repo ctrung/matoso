@@ -67,7 +67,7 @@ public class NumberUtils {
 	 */
 	public static String getPrettyPrintForm(Double d) {
 		if (d == null)
-			return "";
+			return "0";
 
 		if (Math.floor(d) == d)
 			return Integer.toString(d.intValue());
