@@ -465,7 +465,7 @@ public class Player {
 		if (this.nbDefeat == null || this.nbDefeat.intValue() == 0)
 			return "0 (0%)";
 		double percentage = ((double) this.nbDefeat.intValue()) / this.getNbGames().intValue() * 100;
-		return this.nbDefeat + " (" + NumberUtils.getPrettyPrintForm(percentage) + " %)";
+		return this.nbDefeat + " (" + NumberUtils.getPrettyPrintForm(percentage) + "%)";
 	}
 
 	/**
@@ -517,7 +517,7 @@ public class Player {
 		if (this.nbSustainSelfpick == null || this.nbSustainSelfpick.intValue() == 0)
 			return "0 (0%)";
 		double percentage = ((double) this.nbSustainSelfpick.intValue()) / this.getNbGames().intValue() * 100;
-		return this.nbSustainSelfpick + " (" + NumberUtils.getPrettyPrintForm(percentage) + " %)";
+		return this.nbSustainSelfpick + " (" + NumberUtils.getPrettyPrintForm(percentage) + "%)";
 	}
 
 	/**
@@ -539,7 +539,7 @@ public class Player {
 		if (this.nbDraw == null || this.nbDraw.intValue() == 0)
 			return "0 (0%)";
 		double percentage = ((double) this.nbDraw.intValue()) / this.getNbGames().intValue() * 100;
-		return this.nbDraw + " (" + NumberUtils.getPrettyPrintForm(percentage) + " %)";
+		return this.nbDraw + " (" + NumberUtils.getPrettyPrintForm(percentage) + "%)";
 	}
 
 	/**
@@ -702,19 +702,22 @@ public class Player {
 	}
 
 	public String getNbWinAndSelfDraw() {
-		return (getNbSelfpick() + getNbVictory()) + " (" + NumberUtils.getPrettyPrintForm(getPercSelfpick() + getPercVictory()) + " %)";
+		if (getNbSelfpick() == null || getNbVictory() == null || getPercSelfpick() == null || getPercVictory() == null)
+			return "0 (0%)";
+		else
+			return (getNbSelfpick() + getNbVictory()) + " (" + NumberUtils.getPrettyPrintForm(getPercSelfpick() + getPercVictory()) + "%)";
 	}
 
 	public String getSelfDraw() {
-		return getNbSelfpick() + " (" + NumberUtils.getPrettyPrintForm(getPercSelfpick()) + " %)";
+		return getNbSelfpick() + " (" + NumberUtils.getPrettyPrintForm(getPercSelfpick()) + "%)";
 	}
 
 	public String getWin() {
-		return getNbVictory() + " (" + NumberUtils.getPrettyPrintForm(getPercVictory()) + " %)";
+		return getNbVictory() + " (" + NumberUtils.getPrettyPrintForm(getPercVictory()) + "%)";
 	}
 
 	public String getLose() {
-		return getNbGiven() + " (" + NumberUtils.getPrettyPrintForm(getPercGiven()) + " %)";
+		return getNbGiven() + " (" + NumberUtils.getPrettyPrintForm(getPercGiven()) + "%)";
 	}
 
 	/**
