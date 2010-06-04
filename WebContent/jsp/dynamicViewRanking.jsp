@@ -1,7 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 %><%@ page import="org.mahjong.matoso.constant.*,
 org.mahjong.matoso.bean.Player,
-org.mahjong.matoso.bean.Tournament"
+org.mahjong.matoso.bean.Tournament,
+org.mahjong.matoso.service.RoundService"
 %><%@ taglib uri="http://displaytag.sf.net" prefix="display"
 %><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -13,10 +14,11 @@ org.mahjong.matoso.bean.Tournament"
 	</head>
 	<body id="bodyDynamicRanking">
 <%
+Tournament tournament = (Tournament) session.getAttribute("tournament");
 if (request.getParameter("team") == null) {
-	Tournament tournament = (Tournament) session.getAttribute("tournament");
 %>	<div id="dynamicRanking">
 		<h2><a href="/matoso/<%=ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=tournament.getName()%></a></h2>
+		<h3>Session <%=RoundService.getLastPlayedSession(tournament)%></h3>
 		<display:table name="sessionScope.ranking" pagesize="20" cellpadding="0" cellspacing="0" id="tableDynamicRanking">
 			<display:column property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" style="width:10%" />
 			<display:column titleKey="<%=BundleCst.PLAYER_NATIONALITY%>" style="width:10%"><img src="/matoso/img/flag/<%=((Player) tableDynamicRanking).getCountry()%>.gif" /></display:column>
@@ -32,9 +34,9 @@ if (request.getParameter("team") == null) {
 	int indexrankingTeam = 1;
 	if (value != null && value.length() != 0)
 		indexrankingTeam = 1 + (Integer.parseInt(value) - 1) * 10;
-	Tournament tournament = (Tournament) session.getAttribute("tournament");
 %>	<div id="dynamicTeamRanking">
 		<h2><a href="/matoso/<%=ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=tournament.getName()%></a></h2>
+		<h3>Session <%=RoundService.getLastPlayedSession(tournament)%></h3>
 		<display:table name="sessionScope.rankingTeam" pagesize="10" cellpadding="0" cellspacing="0" id="tableDynamicRanking">
 			<display:column titleKey="<%=BundleCst.RANKING_POSITION%>" headerClass="position" style="width:10%"><%=indexrankingTeam++%></display:column>
 			<display:column property="nameAndPlayers" titleKey="<%=BundleCst.RANKING_TEAM%>" class="nameAndPlayers" class="left" style="width:70%" />

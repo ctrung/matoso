@@ -337,4 +337,20 @@ public abstract class RoundService {
 		}
 		return true;
 	}
+
+	public static int getLastPlayedSession(Tournament tournament) {
+		int i = 0;
+		try {
+			List<Round> list = getRounds(tournament);
+			for (Round round : list) {
+				if (isFilledWithTotal(round.getId()))
+					i++;
+				else
+					break;
+			}
+		} catch (FatalException e) {
+			LOG.error("error to get rounds for tournament " + tournament.getName() + " (" + tournament.getId() + ')', e);
+		}
+		return i;
+	}
 }
