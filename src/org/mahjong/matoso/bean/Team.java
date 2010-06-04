@@ -28,11 +28,11 @@ public class Team {
 	Tournament tournament;
 
 	public Integer getScore() {
-		return player1.getScore() + player2.getScore() + player3.getScore() + player4.getScore();
+		return player1.getTeamScore() + player2.getTeamScore() + player3.getTeamScore() + player4.getTeamScore();
 	}
 
 	public Double getPoints() {
-		return player1.getPoints() + player2.getPoints() + player3.getPoints() + player4.getPoints();
+		return player1.getTeamPoints() + player2.getTeamPoints() + player3.getTeamPoints() + player4.getTeamPoints();
 	}
 
 	public String getPrettyPrintPoints() {

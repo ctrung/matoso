@@ -53,6 +53,8 @@ public class Player {
 	transient Integer nbDraw;
 	transient Integer score;
 	transient Double points;
+	transient Integer teamscore = 0;
+	transient Double teampoints = 0.0;
 
 	// TODO add a proper persistent mapping to Team
 	transient Team team;
@@ -581,6 +583,20 @@ public class Player {
 	}
 
 	/**
+	 * @return the points
+	 */
+	public Double getTeamPoints() {
+		return teampoints;
+	}
+
+	/**
+	 * @return the score
+	 */
+	public Integer getTeamScore() {
+		return teamscore;
+	}
+
+	/**
 	 * Return the the percentage of selfpick games. <br>
 	 * Unlike others getter methods, it directly returns a String type because
 	 * it is calculated by dividing the number of selfpick games by the number
@@ -691,6 +707,28 @@ public class Player {
 		if (points == null)
 			points = 0D;
 		this.points += points;
+	}
+
+	/**
+	 * Add to the score for the team
+	 * 
+	 * @param score
+	 */
+	public void addToTeamScore(Integer score) {
+		if (score == null)
+			score = 0;
+		this.teamscore += score;
+	}
+
+	/**
+	 * Add to the points for the team
+	 * 
+	 * @param points
+	 */
+	public void addToTeamPoints(Double points) {
+		if (points == null)
+			points = 0D;
+		this.teampoints += points;
 	}
 
 	public List<Table> getTables() {

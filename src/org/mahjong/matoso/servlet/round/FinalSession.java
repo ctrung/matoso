@@ -48,7 +48,7 @@ public class FinalSession extends MatosoServlet {
 
 					if (index % 4 == 0) {
 						table = new Table();
-						table.setName(Integer.toString(++tableNb));
+						table.setName(Integer.toString(++tableNb) + "_f");
 						table.setRoundNbr(lastRoundNb);
 						table.setTournament(tournament);
 

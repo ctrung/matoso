@@ -155,12 +155,36 @@ public class RankingService {
 			// updating score and points with table result
 			if (table.getResult() != null) {
 				updatePlayersScoreProps(p1, p2, p3, p4, table.getResult());
+				if (!table.getName().endsWith("_f"))
+					updatePlayersTeamScoreProps(p1, p2, p3, p4, table.getResult());
 			}
 		}
 
 		LOGGER.info("Finished loading players properties : " + ((System.currentTimeMillis() - time) / 1000) + " sec");
 
 		return new ArrayList<Player>(mapPlayers.values());
+	}
+
+	/**
+	 * Update the score, points of 4 players by looking at a table result.
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 * @param p4
+	 * @param result
+	 */
+	private static void updatePlayersTeamScoreProps(Player p1, Player p2, Player p3, Player p4, GameResult result) {
+		// score
+		p1.addToTeamScore(result.getScorePlayer1());
+		p2.addToTeamScore(result.getScorePlayer2());
+		p3.addToTeamScore(result.getScorePlayer3());
+		p4.addToTeamScore(result.getScorePlayer4());
+		// points
+		p1.addToTeamPoints(result.getPointsPlayer1());
+		p2.addToTeamPoints(result.getPointsPlayer2());
+		p3.addToTeamPoints(result.getPointsPlayer3());
+		p4.addToTeamPoints(result.getPointsPlayer4());
 	}
 
 	/**
