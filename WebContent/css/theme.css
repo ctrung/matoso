@@ -138,6 +138,14 @@ ul {
 #edit table {
 	width:700px;
 }
+
+/* Edit a table */
+#editTable form table input {
+	width : 50px;
+	text-align : center;
+}
+
+/* Page with sessions */
 .filledWithGames {
 	background-image : url("/matoso/img/star_gold.png");
 	background-repeat :  no-repeat;
@@ -146,4 +154,28 @@ ul {
 th.filledWithTotal, .filledWithTotal .table {
 	border : 1px dashed blue;
 	text-decoration : none;
+}
+
+/* Error messages */
+.matosoMesgs {
+	border: 1px solid black;
+	background-color: white;
+	padding: 10px;
+	font-weight: bold;
+}
+
+.matosoMesgs .s0 {
+	margin-left: 25px;
+	list-style-image: url(../img/info.png);
+	color: green;
+}
+.matosoMesgs .s1 {
+	margin-left: 25px;
+	list-style-image: url(../img/warning.png);
+	color: #FFA800; /* dark yellow */
+}
+.matosoMesgs .s2 {
+	margin-left: 25px;
+	list-style-image: url(../img/error.png);
+	color: red;
 }
