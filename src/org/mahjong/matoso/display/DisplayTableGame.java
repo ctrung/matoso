@@ -328,7 +328,7 @@ public class DisplayTableGame {
 				return "";
 		}
 		
-		if (thePlayerScore != null && thePlayerWin) return "checked=\"checked\"";
+		if (thePlayerScore != null && thePlayerWin) return " selected=\"selected\"";
 		return "";
 	}
 	
@@ -363,7 +363,7 @@ public class DisplayTableGame {
 				return "";
 		}
 		
-		if (thePlayerScore != null && thePlayerLose) return "checked=\"checked\"";
+		if (thePlayerScore != null && thePlayerLose) return " selected=\"selected\"";
 		return "";
 	}
 	
