@@ -179,3 +179,13 @@ th.filledWithTotal, .filledWithTotal .table {
 	list-style-image: url(../img/error.png);
 	color: red;
 }
+
+#bodyfinalsession {
+	text-align:center;
+}
+#bodyfinalsession table {
+	margin:auto;
+}
+#bodyfinalsession td {
+	border-right:1px solid #CCC;
+}

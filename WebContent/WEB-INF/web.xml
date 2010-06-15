@@ -157,6 +157,12 @@
 		<servlet-name>FinalSession</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.round.FinalSession</servlet-class>
 	</servlet>
+	<servlet>
+		<description>Final session view</description>
+		<display-name>FinalSessionView</display-name>
+		<servlet-name>FinalSessionView</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.round.FinalSessionView</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>ListTournament</servlet-name>
@@ -243,6 +249,7 @@
 		<url-pattern>/servlet/RankingExport</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping><servlet-name>FinalSession</servlet-name><url-pattern>/servlet/FinalSession</url-pattern></servlet-mapping>
+	<servlet-mapping><servlet-name>FinalSessionView</servlet-name><url-pattern>/servlet/FinalSessionView</url-pattern></servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

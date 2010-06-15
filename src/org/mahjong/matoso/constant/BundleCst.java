@@ -17,13 +17,15 @@ public abstract class BundleCst {
 	public static final String GENERAL_TABLE = "general.table";
 	public static final String GENERAL_ROUND = "general.round";
 	public static final String GENERAL_SAVE = "general.save";
-	
+
 	public static final String TOURNAMENT_TITLE = "tournament.title";
 	public static final String TOURNAMENT_NAME = "tournament.name";
 	public static final String TOURNAMENT_TEAM_ACTIVATE = "tournament.team.activate";
 	public static final String TOURNAMENT_DRAW_GOTO_LINK = "tounament.draw.goto.link";
 	public static final String TOURNAMENT_NB_PLAYERS = "tournament.nb.players";
-	
+	public static final String TOURNAMENT_FINAL_SESSION_VIEW = "tournament.final.session.view";
+	public static final String TOURNAMENT_FINAL_SESSION_TITLE = "tournament.final.session.title";
+
 	public static final String ROUND_NUMBER = "round.number";
 	public static final String ROUND_ADD = "round.add";
 
@@ -61,7 +63,7 @@ public abstract class BundleCst {
 	public static final String TABLE_POINTS = "table.points";
 	public static final String TABLE_AUTO_CALCULATE = "table.auto.calculate";
 	public static final String TABLE_AUTO_CALCULATE_DESC = "table.auto.calculate.desc";
-	
+
 	public static final String RANKING_STATS_GOTO_LINK = "ranking.stats.goto.link";
 	public static final String RANKING_STATS_TITLE = "ranking.stats.title";
 	public static final String RANKING_POSITION = "ranking.position";
@@ -78,11 +80,11 @@ public abstract class BundleCst {
 	public static final String RANKING_NB_DEFEAT = "ranking.nb.defeat";
 	public static final String RANKING_DYNAMIC_VIEW = "ranking.dynamic.view";
 	public static final String RANKING_TEAM = "ranking.team";
-	
-	public static final String RANKING_PERC_SELFPICK = "ranking.perc.selfpick";	
-	public static final String RANKING_PERC_VICTORY = "ranking.perc.victory";	
-	public static final String RANKING_PERC_GIVEN = "ranking.perc.given";	
-	public static final String RANKING_PERC_DRAW = "ranking.perc.draw";	
+
+	public static final String RANKING_PERC_SELFPICK = "ranking.perc.selfpick";
+	public static final String RANKING_PERC_VICTORY = "ranking.perc.victory";
+	public static final String RANKING_PERC_GIVEN = "ranking.perc.given";
+	public static final String RANKING_PERC_DRAW = "ranking.perc.draw";
 
 	public static final String ERROR_NAME_MISSING = "error.name.missing";
 }

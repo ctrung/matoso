@@ -1,20 +1,19 @@
-<%@page
-	import="
-		java.util.List,
-		java.util.TreeMap,
-		java.util.ResourceBundle,
-		org.mahjong.matoso.constant.BundleCst,
-		org.mahjong.matoso.constant.RequestCst,
-		org.mahjong.matoso.constant.ServletCst,
-		org.mahjong.matoso.constant.SessionCst,
-		org.mahjong.matoso.bean.*,
-		org.mahjong.matoso.service.TournamentService,
-		org.mahjong.matoso.service.GameResultService,
-		org.mahjong.matoso.service.RoundService,
-		org.mahjong.matoso.service.TableService"
-	language="java"
-	contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
+<%@page import="
+java.util.List,
+java.util.TreeMap,
+java.util.ResourceBundle,
+org.mahjong.matoso.constant.BundleCst,
+org.mahjong.matoso.constant.RequestCst,
+org.mahjong.matoso.constant.ServletCst,
+org.mahjong.matoso.constant.SessionCst,
+org.mahjong.matoso.bean.*,
+org.mahjong.matoso.service.TournamentService,
+org.mahjong.matoso.service.GameResultService,
+org.mahjong.matoso.service.RoundService,
+org.mahjong.matoso.service.TableService"
+language="java"
+contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"
 %><%
 Tournament tournament = (Tournament) request.getAttribute("tournament");
 List<Round> rounds = (List<Round>) request.getAttribute("rounds");
@@ -55,6 +54,7 @@ if (rounds.size() == 0) {
 %>			| <a href="<%=request.getContextPath()%>/servlet/DynamicViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_DYNAMIC_VIEW)%></a>
 			| <a href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
 			| <a href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
+			| <a href="<%=ServletCst.SERVLET_FINAL_SESSION%>"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FINAL_SESSION_VIEW)%></a>
 			<br/><br/>
 			<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER)%> : <%=rounds.size()%>
 <%--			<form id="addRound" action="<%=request.getContextPath()%>/servlet/AddMoreRounds" method="post">

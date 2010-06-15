@@ -22,12 +22,13 @@ public interface RequestCst {
 	String REQ_PARAM_PLAYER_NATIONALITY = "player-nationality";
 	String REQ_PARAM_PLAYER_TEAM = "player-team";
 	String REQ_PARAM_PLAYER_MAHJONGTIME = "player-mahjontime";
-	
+
 	String REQ_PARAM_TABLE_ID = "table-id";
 	String REQ_ATTR_TABLE = "table";
 	String REQ_ATTR_TABLE_DISPLAY_GAMES = "table_display_games";
 	String REQ_ATTR_TABLE_RESULT = "table_result";
-	
+
 	String REQ_ATTR_MATOSO_MESSAGES = "matosoMessages";
-	
+	String REQ_ATTR_FINAL_SESSION = "finalSession";
+
 }
