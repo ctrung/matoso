@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.SessionCst;
@@ -35,32 +36,29 @@ import org.mahjong.matoso.util.message.MatosoMessages;
 public abstract class MatosoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(MatosoServlet.class);
 
 	/**
 	 * Http GET method servicing.
 	 */
 	protected final void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-
 			// set encoding
 			try {
 				request.setCharacterEncoding("UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				// TODO : do something better ?
-				e.printStackTrace();
+				LOGGER.error("UTF-8 encoding", e);
 			}
 
 			String forwardTo = serve(request, response);
 
-			/* memorize last url in user's session */
-			SessionUtils.saveLastVisitedUrl(request);
-
-			if (forwardTo != null)
+			if (forwardTo != null) {
+				// memorize last url in user's session
+				SessionUtils.saveLastVisitedUrl(request);
 				request.getRequestDispatcher(forwardTo).forward(request, response);
-
+			}
 		} catch (Exception e) {
-			// TODO contain and deal with exception
-			e.printStackTrace();
+			LOGGER.error("unexpected error", e);
 		}
 	}
 
