@@ -121,4 +121,16 @@ public class TableService {
 		return !gameNotInside;
 	}
 
+	/**
+	 * Test if the table has saved games.
+	 * 
+	 * @param table
+	 * @return true if the game number X was effectively played, false
+	 *         otherwise.
+	 */
+	public static boolean hasSavedGame(Table table) {
+		boolean savedGame = table != null && table.getGames() != null && !table.getGames().isEmpty();
+		return savedGame;
+	}
+
 }
