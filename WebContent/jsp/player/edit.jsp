@@ -183,14 +183,16 @@ if (players != null && player != null && player.getId() != null) {
 					}
 				}
 				int scoreTable = -1;
-				if (table.getPlayer1().getId().equals(playerSession.getId()))
-					scoreTable= table.getResult().getScorePlayer1();
-				else if (table.getPlayer2().getId().equals(playerSession.getId()))
-					scoreTable = table.getResult().getScorePlayer2();
-				else if (table.getPlayer3().getId().equals(playerSession.getId()))
-					scoreTable = table.getResult().getScorePlayer3();
-				else if (table.getPlayer4().getId().equals(playerSession.getId()))
-					scoreTable = table.getResult().getScorePlayer4();
+				if (table.getResult() != null) {
+					if (table.getPlayer1().getId().equals(playerSession.getId()))
+						scoreTable= table.getResult().getScorePlayer1();
+					else if (table.getPlayer2().getId().equals(playerSession.getId()))
+						scoreTable = table.getResult().getScorePlayer2();
+					else if (table.getPlayer3().getId().equals(playerSession.getId()))
+						scoreTable = table.getResult().getScorePlayer3();
+					else if (table.getPlayer4().getId().equals(playerSession.getId()))
+						scoreTable = table.getResult().getScorePlayer4();
+				}
 %>					<tr><th colspan="4">Total</th><th colspan="4"><%=scoreTable%></th></tr>
 				</table>
 <%
