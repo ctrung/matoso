@@ -43,7 +43,7 @@ if (rounds.size() == 0) {
 						<td><label for="<%= RequestCst.REQ_PARAM_NB_PLAYERS %>"><%= BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NB_PLAYERS) %></label></td>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_NB_PLAYERS %>" /></td>
 					</tr><tr>
-						<td><div class="label"><label for="<%= RequestCst.REQ_PARAM_ROUND %>"><%= BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER) %></label></td>
+						<td><label for="<%= RequestCst.REQ_PARAM_ROUND %>"><%= BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER) %></label></td>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_ROUND %>" /></td>
 					</tr>
 				</table>
@@ -67,9 +67,9 @@ if (rounds.size() == 0) {
 <%
 	String classCss;
 	for (Round round : rounds) {
-		if (RoundService.isFilledWithGames(round.getNumber()))
+		if (RoundService.isFilledWithGames(round.getId()))
 			classCss = " filledWithGames";
-		else if(RoundService.isFilledWithTotal(round.getNumber()))
+		else if(RoundService.isFilledWithTotal(round.getId()))
 			classCss = " filledWithTotal";
 		else classCss = "";
 %>				<tr>
@@ -85,7 +85,7 @@ if (rounds.size() == 0) {
 							<tr>
 <%
 		for (Table table : round.getTables()) {
-			if (TableService.hasGame(table, 1))
+			if (TableService.hasSavedGame(table))
 				classCss = " class=\"filledWithGames\"";
 			else if (!GameResultService.isEmpty(table.getResult()))
 				classCss = " class=\"filledWithTotal\"";
