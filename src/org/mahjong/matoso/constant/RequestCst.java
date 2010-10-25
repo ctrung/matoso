@@ -31,4 +31,9 @@ public interface RequestCst {
 	String REQ_ATTR_MATOSO_MESSAGES = "matosoMessages";
 	String REQ_ATTR_FINAL_SESSION = "finalSession";
 
+	/** Name of the attribute to get the current player */
+	String ATTR_PLAYER = "player";
+
+	/** Name of the attribute to get the current player */
+	String ATTR_PLAYER_RESULT = "player_result";
 }
