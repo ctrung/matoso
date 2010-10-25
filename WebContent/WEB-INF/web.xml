@@ -163,6 +163,12 @@
 		<servlet-name>FinalSessionView</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.round.FinalSessionView</servlet-class>
 	</servlet>
+	<servlet>
+		<description>Export players</description>
+		<display-name>ExportPlayer</display-name>
+		<servlet-name>ExportPlayer</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.player.ExportPlayer</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>ListTournament</servlet-name>
@@ -250,6 +256,7 @@
 	</servlet-mapping>
 	<servlet-mapping><servlet-name>FinalSession</servlet-name><url-pattern>/servlet/FinalSession</url-pattern></servlet-mapping>
 	<servlet-mapping><servlet-name>FinalSessionView</servlet-name><url-pattern>/servlet/FinalSessionView</url-pattern></servlet-mapping>
+	<servlet-mapping><servlet-name>ExportPlayer</servlet-name><url-pattern>/servlet/ExportPlayer</url-pattern></servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
