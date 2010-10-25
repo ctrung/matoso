@@ -28,6 +28,7 @@ public abstract class BundleCst {
 
 	public static final String ROUND_NUMBER = "round.number";
 	public static final String ROUND_ADD = "round.add";
+	public static final String ROUND_LABEL = "round.label.round";
 
 	public static final String CSV_FILE = "csv";
 
@@ -42,6 +43,7 @@ public abstract class BundleCst {
 	public static final String PLAYER_MAHJONGTIME = "player.mahjontime";
 	public static final String PLAYER_SUBMIT = "player.submit";
 	public static final String PLAYER_STOP = "player.stop";
+	public static final String PLAYER_MODIFY = "player.modify";
 
 	public static final String TABLE_TITLE = "table.title";
 	public static final String TABLE_WIND = "table.wind";
@@ -85,6 +87,24 @@ public abstract class BundleCst {
 	public static final String RANKING_PERC_VICTORY = "ranking.perc.victory";
 	public static final String RANKING_PERC_GIVEN = "ranking.perc.given";
 	public static final String RANKING_PERC_DRAW = "ranking.perc.draw";
+
+	public interface EXPORT_PLAYERS {
+		String ROUND = "export.players.round";
+		String GAME = "export.players.game";
+		String POINTS = "export.players.points";
+		String SCORE = "export.players.score";
+		String PLAYER = "export.players.player";
+		String POSITION = "export.players.position";
+		String TEAM = "export.players.team";
+		String NB_GAMES = "export.players.nb.games";
+		String NB_SELFPICK_VICTORY = "export.players.nb.selfpick.victory";
+		String NB_SELFPICK = "export.players.nb.selfpick";
+		String NB_VICTORY = "export.players.nb.victory";
+		String NB_DEFEAT = "export.players.nb.defeat";
+		String NB_GIVEN = "export.players.nb.given";
+		String NB_DRAW = "export.players.nb.draw";
+		String NB_SUSTAIN_SELFPICK = "export.players.nb.sustain.selfpick";
+	}
 
 	public static final String ERROR_NAME_MISSING = "error.name.missing";
 }
