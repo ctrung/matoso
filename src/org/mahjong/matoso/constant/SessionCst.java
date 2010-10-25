@@ -15,9 +15,12 @@ package org.mahjong.matoso.constant;
  * @date 7 mars 2010
  */
 public interface SessionCst {
-	
+
 	String SESSION_TOURNAMENT_ID = "_session_tournament_id";
-	
+
 	String SES_ATTR_NB_PLAYERS_BY_PAGE = "nbPlayersByPage";
+
+	/** Name of the attribute to get the ranking of the current tournament */
+	String ATTR_RANKING = "ranking";
 
 }
