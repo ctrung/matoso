@@ -88,6 +88,10 @@ public abstract class BundleCst {
 	public static final String RANKING_PERC_GIVEN = "ranking.perc.given";
 	public static final String RANKING_PERC_DRAW = "ranking.perc.draw";
 
+	public interface RANKING {
+		String EXPORT_EMA = "ranking.export.ema";
+	}
+
 	public interface EXPORT_PLAYERS {
 		String ROUND = "export.players.round";
 		String GAME = "export.players.game";
