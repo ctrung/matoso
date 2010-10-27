@@ -65,6 +65,7 @@ public abstract class BundleCst {
 	public static final String TABLE_POINTS = "table.points";
 	public static final String TABLE_AUTO_CALCULATE = "table.auto.calculate";
 	public static final String TABLE_AUTO_CALCULATE_DESC = "table.auto.calculate.desc";
+	public static final String TABLE_ADD_PENALTY = "table.add.penalty";
 
 	public static final String RANKING_STATS_GOTO_LINK = "ranking.stats.goto.link";
 	public static final String RANKING_STATS_TITLE = "ranking.stats.title";

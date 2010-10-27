@@ -29,7 +29,7 @@
 		<title>MaToSo - <%=BundleCst.BUNDLE.getString(BundleCst.TABLE_TITLE)%></title>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
-		<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.1.min.js"></script>          
+		<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.1.min.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath()%>/js/editTable.js"></script>
 	</head>
 
@@ -83,14 +83,14 @@ if(MatosoMessages.isNotEmpty(mm)) {
 								</ul>
 							</th>
 							<th>
-								n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player3Name" name="EditTableForm"/> 
+								n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player3Name" name="EditTableForm"/>
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player3Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player3Team" name="EditTableForm"/></li>
 								</ul>
 							</th>
 							<th>
-								n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player4Name" name="EditTableForm"/> 
+								n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player4Name" name="EditTableForm"/>
 								<ul class="information">
 									<li>EMA : <jsp:getProperty property="player4Ema" name="EditTableForm" /></li>
 									<li><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM)%> : <jsp:getProperty property="player4Team" name="EditTableForm"/></li>
@@ -99,8 +99,8 @@ if(MatosoMessages.isNotEmpty(mm)) {
 						</tr>
 					</thead>
 					<tbody>
-<% 
-GameResult gr = (GameResult)request.getAttribute(RequestCst.REQ_ATTR_TABLE_RESULT); 
+<%
+GameResult gr = (GameResult)request.getAttribute(RequestCst.REQ_ATTR_TABLE_RESULT);
 String checkedAttr = "";
 if(gr.isAutoCalculate()) checkedAttr = "checked=\"checked\"";
 %>						<tr>
@@ -120,7 +120,7 @@ if(gr.isAutoCalculate()) checkedAttr = "checked=\"checked\"";
 						</tr>
 						<tr id="auto">
 							<td colspan="8">
-								<input type="checkbox" name="autoCalculate" value="yes" id="autoCalculate" <%=checkedAttr%> onclick="return actionAutoCalculate(this);"/> 
+								<input type="checkbox" name="autoCalculate" value="yes" id="autoCalculate" <%=checkedAttr%> onclick="return actionAutoCalculate(this);"/>
 								<label for="autoCalculate"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_AUTO_CALCULATE)%></label>
 								<p><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_AUTO_CALCULATE_DESC)%></p>
 							</td>
@@ -139,11 +139,11 @@ for(int i = 0; i < dtgs.size(); i++) {
 	if (cssWindColorNo == 0) {
 		wind = BundleCst.BUNDLE.getString(BundleCst.TABLE_EAST);
 	} else if (cssWindColorNo == 1) {
-		wind = BundleCst.BUNDLE.getString(BundleCst.TABLE_SOUTH);								
+		wind = BundleCst.BUNDLE.getString(BundleCst.TABLE_SOUTH);
 	} else if (cssWindColorNo == 2) {
-		wind = BundleCst.BUNDLE.getString(BundleCst.TABLE_WEST);								
+		wind = BundleCst.BUNDLE.getString(BundleCst.TABLE_WEST);
 	} else {
-		wind = BundleCst.BUNDLE.getString(BundleCst.TABLE_NORTH);								
+		wind = BundleCst.BUNDLE.getString(BundleCst.TABLE_NORTH);
 	}
 	if (i % 4 == 0) {
 %>					<thead>
@@ -228,7 +228,7 @@ if (penalties == null | penalties.size() == 0) {
 %>
 					<tbody>
 						<tr id="penalty">
-							<td colspan="4"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
+							<td colspan="6"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
 							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" /></td>
 							<td title="n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" /></td>
 							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" /></td>
@@ -242,7 +242,7 @@ if (penalties == null | penalties.size() == 0) {
 	for (int j = 0; j < penalties.size(); j++) {
 		Penalty pen = penalties.get(j);
 %>						<tr id="penalty">
-							<td colspan="4"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
+							<td colspan="6"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_PENALTY)%></td>
 							<td title="n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <%=table.getPlayer1().getPrettyPrintName() %>"><input type="text" name="penalty1" id="penalty1" class="score" value="<%=pen.getPenaltyPlayer1PrettyPrint() %>"/></td>
 							<td title="n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <%=table.getPlayer2().getPrettyPrintName() %>"><input type="text" name="penalty2" id="penalty2" class="score" value="<%=pen.getPenaltyPlayer2PrettyPrint() %>"/></td>
 							<td title="n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <%=table.getPlayer3().getPrettyPrintName() %>"><input type="text" name="penalty3" id="penalty3" class="score" value="<%=pen.getPenaltyPlayer3PrettyPrint() %>"/></td>
@@ -254,8 +254,8 @@ if (penalties == null | penalties.size() == 0) {
 <%
 }
 %>				</table>
-				<br/>				
-				<input type="button" class="addPenaltyButton" value="ajouter une pénalité" />
+				<br/>
+				<input type="button" class="addPenaltyButton" value="<%=BundleCst.BUNDLE.getString(BundleCst.TABLE_ADD_PENALTY)%>" />
 				<br/><br/>
 				<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_SAVE)%>" />
 				<input type="button" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_RESET)%>" onclick="return blankAllFields('<%=BundleCst.BUNDLE.getString("general.reset.confirm")%>');" />
