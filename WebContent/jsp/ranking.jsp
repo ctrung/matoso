@@ -38,6 +38,7 @@ String hrefLoadTournament = request.getContextPath()
 			| <a href="/matoso/servlet/RankingExport"><%=BundleCst.BUNDLE.getString("ranking.export.ranks")%></a>
 			| <a href="/matoso/servlet/FinalSession"><%=BundleCst.BUNDLE.getString("ranking.final.session")%></a>
 			| <a href="/matoso/servlet/ExportPlayer"><%=BundleCst.BUNDLE.getString("ranking.export.player")%></a>
+			| <a href="/matoso/servlet/EMAExport"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING.EXPORT_EMA)%></a>
 			<br/><br/>
 			<h3><%=BundleCst.BUNDLE.getString("ranking.stats.tournament")%></h3>
 			<table cellpadding="0" cellspacing="0">
