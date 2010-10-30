@@ -63,6 +63,28 @@ public class Team {
 				+ this.player3.getPrettyPrintName() + ", " + this.player4.getPrettyPrintName() + "</small>";
 	}
 
+	public String getNameAndEditPlayers() {
+		StringBuilder s = new StringBuilder(name);
+		s.append("<br/><small><a href=\"/matoso/servlet/EditPlayer?id=");
+		s.append(this.player1.getId());
+		s.append("\">");
+		s.append(this.player1.getPrettyPrintName());
+		s.append("</a>, <a href=\"/matoso/servlet/EditPlayer?id=");
+		s.append(this.player2.getId());
+		s.append("\">");
+		s.append(this.player2.getPrettyPrintName());
+		s.append("</a>, <a href=\"/matoso/servlet/EditPlayer?id=");
+		s.append(this.player3.getId());
+		s.append("\">");
+		s.append(this.player3.getPrettyPrintName());
+		s.append("</a>, <a href=\"/matoso/servlet/EditPlayer?id=");
+		s.append(this.player4.getId());
+		s.append("\">");
+		s.append(this.player4.getPrettyPrintName());
+		s.append("</a></small>");
+		return s.toString();
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

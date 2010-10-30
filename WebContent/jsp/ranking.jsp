@@ -85,7 +85,7 @@ TournamentStats ts = (TournamentStats)session.getAttribute("tournamentStats");
 			<% int indexrankingTeam = 1; %>
 			<display:table name="sessionScope.rankingTeam" sort="list" id="teamRanking" cellpadding="0" cellspacing="0">
 				<display:column titleKey="<%=BundleCst.RANKING_POSITION%>" sortable="true" headerClass="position"><%=indexrankingTeam++%></display:column>
-				<display:column property="nameAndPlayers" sortable="true" titleKey="<%=BundleCst.RANKING_TEAM%>" class="nameAndPlayers left" />
+				<display:column property="nameAndEditPlayers" sortable="true" titleKey="<%=BundleCst.RANKING_TEAM%>" class="nameAndPlayers left" />
 				<display:column property="prettyPrintPoints" titleKey="<%=BundleCst.RANKING_POINTS%>" sortable="true" />
 				<display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" sortable="true" />
 			</display:table>
