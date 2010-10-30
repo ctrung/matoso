@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-%><%@ page import="org.mahjong.matoso.constant.*,
+%><%@ page import="
+java.util.Locale,
+org.mahjong.matoso.constant.*,
 org.mahjong.matoso.bean.Player,
 org.mahjong.matoso.bean.Tournament,
 org.mahjong.matoso.service.RoundService"
@@ -14,14 +16,18 @@ org.mahjong.matoso.service.RoundService"
 	</head>
 	<body id="bodyDynamicRanking">
 <%
-Tournament tournament = (Tournament) session.getAttribute("tournament");
+Tournament tournament = (Tournament) session.getAttribute(SessionCst.ATTR_TOURNAMENT);
 if (request.getParameter("team") == null) {
 %>	<div id="dynamicRanking">
-		<h2><a href="/matoso/<%=ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET+"?"+RequestCst.REQ_PARAM_TOURNAMENT_ID+"="+tournament.getId()%>"><%=tournament.getName()%></a></h2>
-		<h3>Session <%=RoundService.getLastPlayedSession(tournament)%></h3>
+		<h2><a href="/matoso/<%=
+			ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?" + RequestCst.REQ_PARAM_TOURNAMENT_ID + "=" + tournament.getId()
+			%>"><%=tournament.getName()%></a></h2>
+		<h3>Session <%=session.getAttribute(SessionCst.ATTR_LAST_PLAYED_SESSION)%></h3>
 		<display:table name="sessionScope.ranking" pagesize="20" cellpadding="0" cellspacing="0" id="tableDynamicRanking">
 			<display:column property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" style="width:10%" />
-			<display:column titleKey="<%=BundleCst.PLAYER_NATIONALITY%>" style="width:10%"><img src="/matoso/img/flag/<%=((Player) tableDynamicRanking).getCountry()%>.gif" /></display:column>
+			<display:column titleKey="<%=BundleCst.PLAYER_NATIONALITY%>" style="width:10%">
+				<img src="/matoso/img/flag/<%=((Player) tableDynamicRanking).getCountry()%>.gif" />
+			</display:column>
 			<display:column property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" class="left" style="width:60%" />
 			<display:column property="points" titleKey="<%=BundleCst.RANKING_POINTS%>" format="{0,number,###.##}" style="width:10%" />
 			<display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" style="width:10%" />

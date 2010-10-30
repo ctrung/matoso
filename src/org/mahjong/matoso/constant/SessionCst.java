@@ -23,4 +23,9 @@ public interface SessionCst {
 	/** Name of the attribute to get the ranking of the current tournament */
 	String ATTR_RANKING = "ranking";
 
+	/** Name of the attribute to get the tournament */
+	String ATTR_TOURNAMENT = "tournament";
+
+	/** Name of the attribute to get the number of the last played session */
+	String ATTR_LAST_PLAYED_SESSION = "LastPlayedSession";
 }

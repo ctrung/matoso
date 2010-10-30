@@ -36,4 +36,7 @@ public interface RequestCst {
 
 	/** Name of the attribute to get the current player */
 	String ATTR_PLAYER_RESULT = "player_result";
+
+	/** Name of the parameter to get the number of elements to display per page */
+	String PARAM_NB_ELEMENTS_PER_PAGE = "nbElementsByPage";
 }
