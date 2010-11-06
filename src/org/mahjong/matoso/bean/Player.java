@@ -773,4 +773,8 @@ public class Player {
 		this.team = team;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return this.getId() != null && obj != null && obj instanceof Player && ((Player) obj).getId().equals(this.getId());
+	}
 }
