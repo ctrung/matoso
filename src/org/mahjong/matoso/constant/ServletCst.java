@@ -42,4 +42,6 @@ public interface ServletCst {
 	// Ranking page
 	String REDIRECT_TO_RANKING = "/jsp/ranking.jsp";
 	String REDIRECT_TO_DYNAMIC_VIEW_RANKING = "/jsp/dynamicViewRanking.jsp";
+
+	String REDIRECT_TO_VISUAL_CHECK = "/jsp/visualcheck.jsp";
 }
