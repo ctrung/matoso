@@ -26,44 +26,33 @@ import org.mahjong.matoso.util.exception.FatalException;
  */
 public class HibernateUtil {
 
-	/**
-	 * Logger.
-	 */
+	/** Logger */
 	private static Logger logger = Logger.getLogger(HibernateUtil.class);
 
-	/**
-	 * Hibernate configuration instance.
-	 */
+	/** Property key of the system to get the project of Matoso */
+	private static final String PROJECT_KEY = "MATOSO_HOME";
+
+	/** Hibernate configuration instance */
 	private static Configuration configuration;
 
-	/**
-	 * Hibernate session factory instance.
-	 */
+	/** Hibernate session factory instance */
 	private static SessionFactory sessionFactory;
 
-	/**
-	 * Session is stocked in a ThreadLocal instance.
-	 */
+	/** Session is stocked in a ThreadLocal instance */
 	private static final ThreadLocal<Session> threadSession = new ThreadLocal<Session>();
 
-	/**
-	 * Transaction is stocked in a ThreadLocal instance.
-	 */
+	/** Transaction is stocked in a ThreadLocal instance */
 	private static final ThreadLocal<Transaction> threadTransaction = new ThreadLocal<Transaction>();
 
-	// Create the initial SessionFactory
-	// from the default configuration files
 	static {
 		try {
 			configuration = new Configuration().configure();
-			
-			// using MATOSO_HOME env. variable value to locate database path
 			String connectionUrl = configuration.getProperty(Environment.URL);
-			String matosoHome = System.getenv("MATOSO_HOME") == null ? "" : System.getenv("MATOSO_HOME");
+			String matosoHome = System.getProperty(PROJECT_KEY) == null ? "" : System.getProperty(PROJECT_KEY);
 			connectionUrl = connectionUrl.replace("${MATOSO_HOME}", matosoHome);
+			if (logger.isInfoEnabled())
+				logger.info("connection url = " + connectionUrl);
 			configuration.setProperty(Environment.URL, connectionUrl);
-			
-			logger.info("connection url = " + connectionUrl);
 			sessionFactory = configuration.buildSessionFactory();
 		} catch (Throwable t) {
 			// we have to catch Throwable, otherwise we will miss
@@ -86,7 +75,8 @@ public class HibernateUtil {
 
 		try {
 			if (s == null) {
-				logger.debug("Opening new Session for this thread.");
+				if (logger.isDebugEnabled())
+					logger.debug("Opening new Session for this thread.");
 				s = sessionFactory.openSession();
 			}
 			threadSession.set(s);
@@ -108,7 +98,8 @@ public class HibernateUtil {
 			Session s = threadSession.get();
 			threadSession.set(null);
 			if (s != null && s.isOpen()) {
-				logger.debug("Closing Session of this thread");
+				if (logger.isDebugEnabled())
+					logger.debug("Closing Session of this thread");
 				s.close();
 			}
 		} catch (HibernateException e) {
@@ -126,7 +117,8 @@ public class HibernateUtil {
 
 		try {
 			if (tx == null) {
-				logger.debug("Starting new database transaction in this thread.");
+				if (logger.isDebugEnabled())
+					logger.debug("Starting new database transaction in this thread.");
 				tx = getSession().beginTransaction();
 				threadTransaction.set(tx);
 			}
@@ -145,7 +137,8 @@ public class HibernateUtil {
 
 		try {
 			if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack()) {
-				logger.debug("Commiting database transaction of this thread.");
+				if (logger.isDebugEnabled())
+					logger.debug("Commiting database transaction of this thread.");
 				tx.commit();
 			}
 			threadTransaction.set(null);
@@ -166,7 +159,8 @@ public class HibernateUtil {
 		try {
 			threadTransaction.set(null);
 			if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack()) {
-				logger.debug("Trying to rollback the database transaction of this thread.");
+				if (logger.isDebugEnabled())
+					logger.debug("Trying to rollback the database transaction of this thread.");
 				tx.rollback();
 			}
 		} catch (HibernateException e) {
@@ -182,7 +176,8 @@ public class HibernateUtil {
 	public static void init() {
 		// Nothing to do here.
 		// Initialization is done in the static block.
-		// In the future, we can consider implementing this method if we want to externalize
+		// In the future, we can consider implementing this method if we want to
+		// externalize
 		// Hibernate configuration files.
 	}
 
