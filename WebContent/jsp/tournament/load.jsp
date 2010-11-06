@@ -51,7 +51,8 @@ if (rounds.size() == 0) {
 			</form>
 <%
 } else {
-%>			| <a href="<%=request.getContextPath()%>/servlet/DynamicViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_DYNAMIC_VIEW)%></a>
+%>			| <a href="/matoso/servlet/VisualCheck"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_VISUAL_CHECK)%></a>
+			| <a href="<%=request.getContextPath()%>/servlet/DynamicViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_DYNAMIC_VIEW)%></a>
 			| <a href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
 			| <a href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
 			| <a href="<%=ServletCst.SERVLET_FINAL_SESSION%>"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FINAL_SESSION_VIEW)%></a>
