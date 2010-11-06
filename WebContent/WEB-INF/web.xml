@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
 	<display-name>matoso</display-name>
-	
+
 	<filter>
 		<filter-name>HibernateFilter</filter-name>
 		<filter-class>org.mahjong.matoso.filter.HibernateFilter</filter-class>
@@ -18,7 +21,7 @@
 		<servlet-class>org.mahjong.matoso.servlet.init.ServletInit</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet>
 		<description>List the tournaments</description>
 		<display-name>ListTournament</display-name>
@@ -36,7 +39,7 @@
 		<display-name>ImportFormPlayer</display-name>
 		<servlet-name>ImportFormPlayer</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.player.ImportFormPlayer</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
 		<description>Import the csv file of players</description>
 		<display-name>ImportPlayer</display-name>
@@ -60,7 +63,7 @@
 		<display-name>AddFormPlayer</display-name>
 		<servlet-name>AddFormPlayer</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.player.AddFormPlayer</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
 		<description>Add a player to the tournament</description>
 		<display-name>AddPlayer</display-name>
@@ -102,7 +105,7 @@
 		<display-name>SaveRound</display-name>
 		<servlet-name>SaveRound</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.round.SaveRound</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
 		<description>Save a player</description>
 		<display-name>SavePlayer</display-name>
@@ -114,7 +117,7 @@
 		<display-name>EditPlayer</display-name>
 		<servlet-name>EditPlayer</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.player.EditPlayer</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
 		<description>View ranking</description>
 		<display-name>ViewRanking</display-name>
@@ -175,7 +178,13 @@
 		<servlet-name>EMAExport</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.export.EMAExport</servlet-class>
 	</servlet>
-	
+	<servlet>
+		<description>Visual check</description>
+		<display-name>VisualCheck</display-name>
+		<servlet-name>VisualCheck</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.tournament.VisualCheck</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>ListTournament</servlet-name>
 		<url-pattern>/servlet/ListTournament</url-pattern>
@@ -187,7 +196,7 @@
 	<servlet-mapping>
 		<servlet-name>ImportFormPlayer</servlet-name>
 		<url-pattern>/servlet/ImportFormPlayer</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ImportPlayer</servlet-name>
 		<url-pattern>/servlet/ImportPlayer</url-pattern>
@@ -203,7 +212,7 @@
 	<servlet-mapping>
 		<servlet-name>AddFormPlayer</servlet-name>
 		<url-pattern>/servlet/AddFormPlayer</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AddPlayer</servlet-name>
 		<url-pattern>/servlet/AddPlayer</url-pattern>
@@ -231,7 +240,7 @@
 	<servlet-mapping>
 		<servlet-name>SaveRound</servlet-name>
 		<url-pattern>/servlet/SaveRound</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>SavePlayer</servlet-name>
 		<url-pattern>/servlet/SavePlayer</url-pattern>
@@ -260,19 +269,35 @@
 		<servlet-name>RankingExport</servlet-name>
 		<url-pattern>/servlet/RankingExport</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping><servlet-name>FinalSession</servlet-name><url-pattern>/servlet/FinalSession</url-pattern></servlet-mapping>
-	<servlet-mapping><servlet-name>FinalSessionView</servlet-name><url-pattern>/servlet/FinalSessionView</url-pattern></servlet-mapping>
-	<servlet-mapping><servlet-name>ExportPlayer</servlet-name><url-pattern>/servlet/ExportPlayer</url-pattern></servlet-mapping>
-	<servlet-mapping><servlet-name>EMAExport</servlet-name><url-pattern>/servlet/EMAExport</url-pattern></servlet-mapping>
-	
+	<servlet-mapping>
+		<servlet-name>FinalSession</servlet-name>
+		<url-pattern>/servlet/FinalSession</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FinalSessionView</servlet-name>
+		<url-pattern>/servlet/FinalSessionView</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ExportPlayer</servlet-name>
+		<url-pattern>/servlet/ExportPlayer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EMAExport</servlet-name>
+		<url-pattern>/servlet/EMAExport</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>VisualCheck</servlet-name>
+		<url-pattern>/servlet/VisualCheck</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<jsp-config>
 		<taglib>
-	        <taglib-uri>http://displaytag.sourceforge.net/</taglib-uri>
-	        <taglib-location>/WEB-INF/tld/displaytag.tld</taglib-location>
-	    </taglib>	
+			<taglib-uri>http://displaytag.sourceforge.net/</taglib-uri>
+			<taglib-location>/WEB-INF/tld/displaytag.tld</taglib-location>
+		</taglib>
 	</jsp-config>
 </web-app>
