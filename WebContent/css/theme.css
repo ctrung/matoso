@@ -11,6 +11,18 @@ body {
 a {
 	color:#444;
 }
+a.link {
+	border-right : 1px solid black;
+	margin-right : 10px;
+	padding-right : 10px;
+	width : 200px;
+}
+a {
+	text-decoration : none;
+}
+a:hover {
+	text-decoration : underline;
+}
 img {
 	border:0;
 }
@@ -66,18 +78,6 @@ ul {
 #loadTournament div {
 	margin : 0;
 	padding : 0;
-}
-#loadTournament a.link {
-	border-right : 1px solid black;
-	margin-right : 10px;
-	padding-right : 10px;
-	width : 200px;
-}
-#loadTournament a {
-	text-decoration : none;
-}
-#loadTournament a:hover {
-	text-decoration : underline;
 }
 #loadTournament #rounds div {
 	background-color : white;
