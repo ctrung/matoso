@@ -33,12 +33,13 @@ String hrefLoadTournament = request.getContextPath()
 <%@include file="include/head.jsp"%>
 		<div id="ranking">
 			<h2><%=request.getSession().getAttribute("tournamentName") + " - " + BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_TITLE)%></h2>
-			<a href="<%=hrefLoadTournament%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
-			| <a href="/matoso/servlet/GamesExport"><%=BundleCst.BUNDLE.getString("ranking.export.games")%></a>
-			| <a href="/matoso/servlet/RankingExport"><%=BundleCst.BUNDLE.getString("ranking.export.ranks")%></a>
-			| <a href="/matoso/servlet/FinalSession"><%=BundleCst.BUNDLE.getString("ranking.final.session")%></a>
-			| <a href="/matoso/servlet/ExportPlayer"><%=BundleCst.BUNDLE.getString("ranking.export.player")%></a>
-			| <a href="/matoso/servlet/EMAExport"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING.EXPORT_EMA)%></a>
+			<a class="link" href="<%=hrefLoadTournament%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+			<a class="link" href="<%=request.getContextPath()%>/servlet/DynamicViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_DYNAMIC_VIEW)%></a>
+			<a class="link" href="/matoso/servlet/GamesExport"><%=BundleCst.BUNDLE.getString("ranking.export.games")%></a>
+			<a class="link" href="/matoso/servlet/RankingExport"><%=BundleCst.BUNDLE.getString("ranking.export.ranks")%></a>
+			<a class="link" href="/matoso/servlet/FinalSession"><%=BundleCst.BUNDLE.getString("ranking.final.session")%></a>
+			<a class="link" href="/matoso/servlet/ExportPlayer"><%=BundleCst.BUNDLE.getString("ranking.export.player")%></a>
+			<a class="link" href="/matoso/servlet/EMAExport"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING.EXPORT_EMA)%></a>
 			<br/><br/>
 			<h3><%=BundleCst.BUNDLE.getString("ranking.stats.tournament")%></h3>
 			<table cellpadding="0" cellspacing="0">
