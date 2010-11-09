@@ -62,13 +62,48 @@ ul {
 	border-top:1px solid #ccc;
 }
 
-#loadTournament a.table {
-	font-weight:bold;
+/* Load a tournament */
+#loadTournament div {
+	margin : 0;
+	padding : 0;
 }
-#tableRounds td {
-	border-left:1px solid #CCC;
+#loadTournament a.link {
+	border-right : 1px solid black;
+	margin-right : 10px;
+	padding-right : 10px;
+	width : 200px;
 }
-#dynamicRanking{
+#loadTournament a {
+	text-decoration : none;
+}
+#loadTournament a:hover {
+	text-decoration : underline;
+}
+#loadTournament #rounds div {
+	background-color : white;
+	float : left;
+	margin-bottom : 2px;
+	margin-right : 2px;
+	padding-bottom : 10px;
+	padding-top : 10px;
+	text-align : center;
+	width : 150px;
+}
+#loadTournament div.round {
+	clear : left;
+}
+#loadTournament div.table {
+	background-color : white;
+	float : left;
+	margin-bottom : 2px;
+	margin-right : 2px;
+	padding-bottom : 10px;
+	padding-top : 10px;
+	text-align : center;
+	width : 150px;
+}
+
+#dynamicRanking {
 	width:500px;
 	margin:auto;
 	text-align:center;
