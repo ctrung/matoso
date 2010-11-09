@@ -30,12 +30,11 @@ List<Round> rounds = (List<Round>) request.getAttribute("rounds");
 		<%@include file="../include/head.jsp"%>
 		<div id="loadTournament">
 			<h2><%=tournament.getName() %></h2>
-			<a href="<%=request.getContextPath()%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
 <%
 if (rounds.size() == 0) {
 %>			<br/><br/>
 			<%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_FILL_METHOD)%><br/>
-			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_PLAYER_IMPORT_FORM_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></a>
+			<a class="link" href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_PLAYER_IMPORT_FORM_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></a>
 			<br/><br/>
 			<form action="/matoso/servlet/AddPlayer" method="post">
 				<table cellpadding="0" cellspacing="0">
@@ -51,75 +50,79 @@ if (rounds.size() == 0) {
 			</form>
 <%
 } else {
-%>			| <a href="/matoso/servlet/VisualCheck"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_VISUAL_CHECK)%></a>
-			| <a href="<%=request.getContextPath()%>/servlet/DynamicViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_DYNAMIC_VIEW)%></a>
-			| <a href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
-			| <a href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
-			| <a href="<%=ServletCst.SERVLET_FINAL_SESSION%>"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FINAL_SESSION_VIEW)%></a>
-			<br/><br/>
-			<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER)%> : <%=rounds.size()%>
+%>			<a class="link" href="/matoso/servlet/VisualCheck"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_VISUAL_CHECK)%></a>
+			<a class="link" href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
+			<a class="link" href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
+			<a class="link" href="<%=ServletCst.SERVLET_FINAL_SESSION%>"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FINAL_SESSION_VIEW)%></a>
 <%--			<form id="addRound" action="<%=request.getContextPath()%>/servlet/AddMoreRounds" method="post">
 				<input type="text" name="nbrounds" value="" />&nbsp;<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_ADD)%>" />
 			</form>
 --%>			<br/><br/>
- 			<a href="javascript:show(0)">+++</a>
-			<br/><br/>
-			<table cellpadding="0" cellspacing="0" id="tableRounds">
+			<div id="rounds">
 <%
 	String classCss;
 	for (Round round : rounds) {
 		if (RoundService.isFilledWithGames(round.getId()))
-			classCss = " filledWithGames";
+			classCss = "filledWithGames";
 		else if(RoundService.isFilledWithTotal(round.getId()))
-			classCss = " filledWithTotal";
+			classCss = "filledWithTotal";
 		else classCss = "";
-%>				<tr>
-					<th class="left<%=classCss%>">
-						<a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a>
-						<a href="javascript:show(<%=round.getNumber()%>)">+</a>
-					</th>
-				</tr>
-				<tr id="round<%=round.getNumber()%>">
-					<td>
-						<div style="<%=(round.getTables().size() > 10) ? "width:1000px;overflow:scroll" : "" %>">
-						<table cellpadding="0" cellspacing="0">
-							<tr>
+%>					<div class="<%=classCss%>" id="roundDiv<%=round.getNumber()%>">
+						<a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>" id="roundTitle<%=round.getNumber()%>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a>
+						<a href="javascript:show(<%=round.getNumber()%>)" id="roundPlus<%=round.getNumber()%>">+</a>
+					</div>
+<%
+	}
+%>			</div>
+<%
+	for (Round round : rounds) {
+%>			<div id="round<%=round.getNumber()%>" class="round">
 <%
 		for (Table table : round.getTables()) {
 			if (TableService.hasSavedGame(table))
-				classCss = " class=\"filledWithGames\"";
+				classCss = " filledWithGames";
 			else if (!GameResultService.isEmpty(table.getResult()))
-				classCss = " class=\"filledWithTotal\"";
+				classCss = " filledWithTotal";
 			else
 				classCss = "";
-%>					<td<%=classCss%>>
-						<a class="table" href="<%=request.getContextPath()%>/servlet/EditTable?<%= RequestCst.REQ_PARAM_TABLE_ID %>=<%=table.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.table") + " "  + table.getName() %></a>
-						<ul class="player">
+%>				<div class="table<%=classCss%>">
+					<a class="table" href="<%=request.getContextPath()%>/servlet/EditTable?<%= RequestCst.REQ_PARAM_TABLE_ID %>=<%=table.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.table") + " "  + table.getName() %></a>
+					<ul class="player">
 <%
 			for (Player player : table.getListPlayers()) {
-%>							<li><a href="<%=request.getContextPath() + "/servlet/EditPlayer?id=" + player.getId() %>"><%= player.getPrettyPrintName() %></a></li>
+%>						<li><a href="<%=request.getContextPath() + "/servlet/EditPlayer?id=" + player.getId() %>"><%= player.getPrettyPrintName() %></a></li>
 <%
 			}
-%>						</ul>
-					</td>
+%>					</ul>
+				</div>
 <%
 		}
-%>							</tr>
-						</table>
-						</div>
-					</td>
-				</tr>
+%>			</div>
 <%
 	}
-%>			</table>
+%>
 <script type="text/javascript">
 function show(number){
 	var i = 0;
 	while (document.getElementById("round" + ++i)) {
-		if (i == number || 0 == number) {document.getElementById("round" + i).style.display="block";}
-		else {document.getElementById("round" + i).style.display="none";}
+		if (i == number || 0 == number) {
+			document.getElementById("round" + i).style.display = "block";
+			document.getElementById("roundPlus" + i).style.display = "none";
+			document.getElementById("roundTitle" + i).style.fontStyle = "italic";
+			document.getElementById("roundTitle" + i).style.fontWeight = "bold";
+			document.getElementById("roundDiv" + i).style.marginBottom = "0";
+			document.getElementById("roundDiv" + i).style.paddingBottom = "12px";
+		} else {
+			document.getElementById("round" + i).style.display = "none";
+			document.getElementById("roundPlus" + i).style.display = "inline";
+			document.getElementById("roundTitle" + i).style.fontStyle = "normal";
+			document.getElementById("roundTitle" + i).style.fontWeight = "normal";
+			document.getElementById("roundDiv" + i).style.marginBottom = "2px";
+			document.getElementById("roundDiv" + i).style.paddingBottom = "10px";
+		}
 	}
 }
+show(1);
 </script>
 <%
 }
