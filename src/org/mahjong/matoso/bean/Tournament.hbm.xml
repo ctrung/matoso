@@ -2,25 +2,21 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
 <hibernate-mapping>
 	<class name="org.mahjong.matoso.bean.Tournament" table="TOURNAMENT">
 		<id name="id" column="ID">
-			<generator class="increment"/>
+			<generator class="increment" />
 		</id>
-	
-		<property name="name" 			type="string" column="NAME"/>
-		<property name="teamActivateStr" 	type="string" column="TEAM_ACTIVATE"/>
-		
+		<property name="name" type="string" column="NAME" />
+		<property name="teamActivateStr" type="string" column="TEAM_ACTIVATE" />
+		<property name="rules" type="string" column="RULES" />
 		<set name="players" table="TOURNAMENT_PLAYER">
-			<key column="ID_TOURNAMENT"/>
-			<many-to-many column="ID_PLAYER" class="org.mahjong.matoso.bean.Player"/>
+			<key column="ID_TOURNAMENT" />
+			<many-to-many column="ID_PLAYER" class="org.mahjong.matoso.bean.Player" />
 		</set>
-
 		<set name="teams" table="TEAM">
-			<key column="ID_TOURNAMENT"/>
+			<key column="ID_TOURNAMENT" />
 			<one-to-many class="org.mahjong.matoso.bean.Team" />
 		</set>
-
 	</class>
 </hibernate-mapping>

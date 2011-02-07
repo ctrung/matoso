@@ -71,36 +71,46 @@ ul {
 }
 .sorted a {
 	font-style:italic;
-	border-top:1px solid #ccc;
+	border-top:1px solid #CCC;
 }
 
 /* Load a tournament */
-#loadTournament div {
-	margin : 0;
-	padding : 0;
+#rounds, #loadTournament div.round {
+	clear : both;
 }
-#loadTournament #rounds div {
+#loadTournament .filledWithGames {
+	background : white url("/matoso/img/star_gold.png") no-repeat top right;
+	float : left;
+	margin : 0 2px 2px 0;
+	padding : 10px 0 0 0;
+	text-align : center;
+	width : 200px;
+}
+#loadTournament .filledWithGames2 {
+	background : #F0F0F0 url("/matoso/img/star_gold.png") no-repeat top right;
+	float : left;
+	margin : 0 2px 2px 0;
+	padding : 10px 0 0 0;
+	text-align : center;
+	width : 200px;
+}
+#loadTournament .filledWithTotal {
 	background-color : white;
 	float : left;
-	margin-bottom : 2px;
-	margin-right : 2px;
-	padding-bottom : 10px;
-	padding-top : 10px;
+	margin : 0 2px 2px 0;
+	padding : 10px 0 0 0;
 	text-align : center;
-	width : 150px;
+	width : 200px;
+	text-decoration : none;
 }
-#loadTournament div.round {
-	clear : left;
-}
-#loadTournament div.table {
-	background-color : white;
+#loadTournament .filledWithTotal2 {
+	background-color : #F0F0F0;
 	float : left;
-	margin-bottom : 2px;
-	margin-right : 2px;
-	padding-bottom : 10px;
-	padding-top : 10px;
+	margin : 0 2px 2px 0;
+	padding : 10px 0 0 0;
 	text-align : center;
-	width : 150px;
+	width : 200px;
+	text-decoration : none;
 }
 
 #dynamicRanking {
@@ -178,17 +188,6 @@ ul {
 #editTable form table input {
 	width : 50px;
 	text-align : center;
-}
-
-/* Page with sessions */
-.filledWithGames {
-	background-image : url("/matoso/img/star_gold.png");
-	background-repeat :  no-repeat;
-	background-position : top right;
-}
-th.filledWithTotal, .filledWithTotal .table {
-	border : 1px dashed blue;
-	text-decoration : none;
 }
 
 /* Error messages */

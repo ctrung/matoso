@@ -49,20 +49,21 @@ public abstract class TournamentService {
 	 * @param teamActivate
 	 *            <code>true</code> if the tournament allows teams, else
 	 *            <code>false</code>.
+	 * @param rules
+	 *            the rules to used
 	 * @return The newly persisted tournament ID.
 	 * @throws FatalException
 	 */
-	public static Tournament createNewTournament(String name, boolean teamActivate) throws FatalException {
+	public static Tournament createNewTournament(String name, boolean teamActivate, String rules) throws FatalException {
 		if (LOG.isDebugEnabled())
-			LOG.debug("createNewTournament(" + name + ", " + teamActivate + ')');
+			LOG.debug("createNewTournament(" + name + ", " + teamActivate + ", " + rules + ')');
 
 		Tournament tournament = new Tournament();
 		tournament.setName(name);
 		tournament.setTeamActivate(teamActivate);
+		tournament.setRules(rules);
 		tournament.setPlayers(new LinkedHashSet<Player>());
 		HibernateUtil.save(tournament);
-
-		LOG.debug("save " + name + '-' + teamActivate);
 		return tournament;
 	}
 

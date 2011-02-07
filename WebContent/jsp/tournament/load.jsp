@@ -29,7 +29,7 @@ List<Round> rounds = (List<Round>) request.getAttribute("rounds");
 	<body>
 		<%@include file="../include/head.jsp"%>
 		<div id="loadTournament">
-			<h2><%=tournament.getName() %></h2>
+			<h2><%=tournament.getName() + " - " + tournament.getRules()%></h2>
 <%
 if (rounds.size() == 0) {
 %>			<br/><br/>
@@ -61,31 +61,41 @@ if (rounds.size() == 0) {
 			<div id="rounds">
 <%
 	String classCss;
+	boolean changeCSS = false;
 	for (Round round : rounds) {
 		if (RoundService.isFilledWithGames(round.getId()))
 			classCss = "filledWithGames";
 		else if(RoundService.isFilledWithTotal(round.getId()))
 			classCss = "filledWithTotal";
-		else classCss = "";
+		else
+			classCss = "";
+		if (changeCSS)
+			classCss = classCss + "2";
+
 %>					<div class="<%=classCss%>" id="roundDiv<%=round.getNumber()%>">
 						<a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>" id="roundTitle<%=round.getNumber()%>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a>
 						<a href="javascript:show(<%=round.getNumber()%>)" id="roundPlus<%=round.getNumber()%>">+</a>
 					</div>
 <%
+		changeCSS = !changeCSS;
 	}
 %>			</div>
 <%
+	changeCSS = false;
 	for (Round round : rounds) {
 %>			<div id="round<%=round.getNumber()%>" class="round">
 <%
 		for (Table table : round.getTables()) {
 			if (TableService.hasSavedGame(table))
-				classCss = " filledWithGames";
+				classCss = "filledWithGames";
 			else if (!GameResultService.isEmpty(table.getResult()))
-				classCss = " filledWithTotal";
+				classCss = "filledWithTotal";
 			else
 				classCss = "";
-%>				<div class="table<%=classCss%>">
+			if (changeCSS)
+				classCss = classCss + "2";
+
+%>				<div class="<%=classCss%>">
 					<a class="table" href="<%=request.getContextPath()%>/servlet/EditTable?<%= RequestCst.REQ_PARAM_TABLE_ID %>=<%=table.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.table") + " "  + table.getName() %></a>
 					<ul class="player">
 <%
@@ -99,6 +109,7 @@ if (rounds.size() == 0) {
 		}
 %>			</div>
 <%
+		changeCSS = !changeCSS;
 	}
 %>
 <script type="text/javascript">

@@ -25,6 +25,7 @@ public abstract class BundleCst {
 	public static final String TOURNAMENT_NB_PLAYERS = "tournament.nb.players";
 	public static final String TOURNAMENT_FINAL_SESSION_VIEW = "tournament.final.session.view";
 	public static final String TOURNAMENT_FINAL_SESSION_TITLE = "tournament.final.session.title";
+	public static final String TOURNAMENT_RULES = "tournament.rules";
 	public static final String TOURNAMENT_VISUAL_CHECK = "tournament.visual.check";
 
 	public static final String ROUND_NUMBER = "round.number";

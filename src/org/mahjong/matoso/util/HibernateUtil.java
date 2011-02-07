@@ -49,7 +49,7 @@ public class HibernateUtil {
 			configuration = new Configuration().configure();
 			String connectionUrl = configuration.getProperty(Environment.URL);
 			String matosoHome = System.getProperty(PROJECT_KEY) == null ? "" : System.getProperty(PROJECT_KEY);
-			connectionUrl = connectionUrl.replace("${MATOSO_HOME}", matosoHome);
+			connectionUrl = connectionUrl.replace("${MATOSO_HOME}", "d:/PACK_UNILOG/a011771/profil/Mes Documents/matoso");
 			if (logger.isInfoEnabled())
 				logger.info("connection url = " + connectionUrl);
 			configuration.setProperty(Environment.URL, connectionUrl);

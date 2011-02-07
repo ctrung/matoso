@@ -20,8 +20,8 @@ import org.mahjong.matoso.servlet.MatosoServlet;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
- * Create a tournament and forward the user to a page asking 
- * to choose a method to fill the players.
+ * Create a tournament and forward the user to a page asking to choose a method
+ * to fill the players.
  * 
  * @author ctrung
  * @date 21 oct. 2009
@@ -32,20 +32,16 @@ public class CreateTournament extends MatosoServlet {
 	private static final Logger LOGGER = Logger.getLogger(CreateTournament.class);
 
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
-		
+
 		String tournamentName = request.getParameter("tournament-name");
 		String teamActivate = request.getParameter(RequestCst.REQ_PARAM_TEAM_ACTIVATE);
+		String rules = request.getParameter(RequestCst.PARAM_RULES);
 		boolean isTeam = teamActivate != null;
-		
 		if (LOGGER.isDebugEnabled())
 			LOGGER.debug("found in request, tournamentName=" + tournamentName + ", teamActivate=" + isTeam);
-		
-		Tournament tournament = TournamentService.createNewTournament(tournamentName, isTeam);
-		
+		Tournament tournament = TournamentService.createNewTournament(tournamentName, isTeam, rules);
 		if (LOGGER.isDebugEnabled())
-			LOGGER.debug("A new tournament with name=" + tournamentName + " id=" + tournament.getId() + 
-					" has been created.");
-		
+			LOGGER.debug("A new tournament with name=" + tournamentName + " id=" + tournament.getId() + " has been created.");
 		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?tournament-id=" + tournament.getId();
 	}
 }

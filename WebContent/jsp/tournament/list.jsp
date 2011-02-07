@@ -1,6 +1,13 @@
 <%@page
-	import="java.util.List,java.util.ResourceBundle,org.mahjong.matoso.bean.Tournament,org.mahjong.matoso.constant.BundleCst,org.mahjong.matoso.constant.RequestCst,org.mahjong.matoso.constant.ServletCst"
-	language="java" contentType="text/html; charset=UTF-8"
+	import="
+		java.util.List,
+		java.util.ResourceBundle,
+		org.mahjong.matoso.bean.Tournament,
+		org.mahjong.matoso.constant.BundleCst,
+		org.mahjong.matoso.constant.RequestCst,
+		org.mahjong.matoso.constant.ServletCst"
+	language="java"
+	contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,7 +19,7 @@
 		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 		<script>
 			function checkInputs() {
-				elt = document.getElementsByName('tournament-name');
+				elt = document.getElementsByName("tournament-name");
 				if (elt && elt.length == 1) {
 					if (elt[0] && elt[0].value == "") {
 						alert("<%=BundleCst.BUNDLE.getString(BundleCst.ERROR_NAME_MISSING)%>");
@@ -21,8 +28,8 @@
 				}
 			}
 			function check() {
-				var pwd=prompt('Confirmer par le mot de passe ?');
-				if (pwd=="adminMatoso") {
+				var pwd = prompt("Confirmer par le mot de passe ?");
+				if (pwd == "adminMatoso") {
 					return true;
 				} else {
 					alert("Mot de passe incorrect");
@@ -44,6 +51,15 @@
 					<tr>
 						<td class="left"><label for="teamActivate"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_TEAM_ACTIVATE)%></label></td>
 						<td class="left"><input type="checkBox" name="team-activate" id="teamActivate"/></td>
+					</tr>
+					<tr>
+						<td class="left"><label for="rules"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_RULES)%></label></td>
+						<td class="left">
+							<select name="rules" id="rules">
+								<option value="MCR">MCR</option>
+								<option value="RCR">RCR</option>
+							</select>
+						</td>
 					</tr>
 				</table>
 				<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_CREATE)%>" />

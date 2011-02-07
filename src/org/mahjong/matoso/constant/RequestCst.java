@@ -39,4 +39,6 @@ public interface RequestCst {
 
 	/** Name of the parameter to get the number of elements to display per page */
 	String PARAM_NB_ELEMENTS_PER_PAGE = "nbElementsByPage";
+
+	String PARAM_RULES = "rules";
 }

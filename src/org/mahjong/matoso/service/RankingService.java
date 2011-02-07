@@ -24,8 +24,10 @@ import org.mahjong.matoso.bean.Round;
 import org.mahjong.matoso.bean.Table;
 import org.mahjong.matoso.bean.Team;
 import org.mahjong.matoso.bean.Tournament;
+import org.mahjong.matoso.builder.RulesBuilder;
 import org.mahjong.matoso.form.RankingForm;
-import org.mahjong.matoso.util.comparator.RankingComparator;
+import org.mahjong.matoso.rules.IGameProps;
+import org.mahjong.matoso.util.comparator.MCRRankingComparator;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
@@ -48,11 +50,10 @@ public class RankingService {
 	 * @throws FatalException
 	 */
 	public static List<Player> getByTournament(Tournament tournament) throws FatalException {
-
 		List<Player> players = null;
 		List<Table> allTables = null;
-
 		assert (tournament != null);
+		String rules = tournament.getRules();
 
 		// 1. Get all tables (games, result, and players initialized within)
 		allTables = TableService.getAllByTournament(tournament);
@@ -60,16 +61,15 @@ public class RankingService {
 		// 2. Calculate the final score / points, number of victories, defeats,
 		// given and selpick for each player
 		// by still iterating on each table
-		players = getPlayersWithRankingProps(allTables);
+		players = getPlayersWithRankingProps(allTables, rules);
 
 		// 3. Order list
-		Collections.sort(players, new RankingComparator());
+		Collections.sort(players, RulesBuilder.buildRankingComparator(rules));
 
 		// 4. Allocate integer ranks to allow displaytag to sort correctly
 		// (pageContext.getAttribute("<id>_rowNum") is considered as String)
-		for (int i = 0; i < players.size(); i++) {
+		for (int i = 0; i < players.size(); i++)
 			players.get(i).setRank(i + 1);
-		}
 
 		return players;
 	}
@@ -92,7 +92,7 @@ public class RankingService {
 	 * 
 	 * @return a non <code>null</code> list of Player objects
 	 */
-	private static List<Player> getPlayersWithRankingProps(List<Table> tables) {
+	private static List<Player> getPlayersWithRankingProps(List<Table> tables, String rules) {
 		Table table = null;
 		long time = 0;
 		Iterator<Game> gIt = null;
@@ -146,10 +146,20 @@ public class RankingService {
 			// properties updated for a player...
 
 			gIt = table.getGames().iterator();
+			Game game;
+			IGameProps gameProps = RulesBuilder.buildGameProps(rules);
 			while (gIt.hasNext()) {
-
-				updatePlayersGameProps(p1, p2, p3, p4, gIt.next());
-
+				game = gIt.next();
+				if (game != null) {
+					gameProps.updateGamePropsForOnePlayer(p1, game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3(), game
+							.getScorePlayer4(), rules);
+					gameProps.updateGamePropsForOnePlayer(p2, game.getScorePlayer2(), game.getScorePlayer1(), game.getScorePlayer3(), game
+							.getScorePlayer4(), rules);
+					gameProps.updateGamePropsForOnePlayer(p3, game.getScorePlayer3(), game.getScorePlayer1(), game.getScorePlayer2(), game
+							.getScorePlayer4(), rules);
+					gameProps.updateGamePropsForOnePlayer(p4, game.getScorePlayer4(), game.getScorePlayer1(), game.getScorePlayer2(), game
+							.getScorePlayer3(), rules);
+				}
 			}
 
 			// updating score and points with table result
@@ -207,92 +217,6 @@ public class RankingService {
 		p2.addToPoints(result.getPointsPlayer2());
 		p3.addToPoints(result.getPointsPlayer3());
 		p4.addToPoints(result.getPointsPlayer4());
-	}
-
-	/**
-	 * Update the victories, defeats, given, sustain selfpick and selfpick
-	 * figures of 4 players by looking at a game.
-	 * 
-	 * @param player1
-	 * @param player2
-	 * @param player3
-	 * @param player4
-	 * @param game
-	 */
-	private static void updatePlayersGameProps(Player player1, Player player2, Player player3, Player player4, Game game) {
-
-		if (game == null)
-			return;
-
-		updateGamePropsForOnePlayer(player1, game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3(), game.getScorePlayer4());
-		updateGamePropsForOnePlayer(player2, game.getScorePlayer2(), game.getScorePlayer1(), game.getScorePlayer3(), game.getScorePlayer4());
-		updateGamePropsForOnePlayer(player3, game.getScorePlayer3(), game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer4());
-		updateGamePropsForOnePlayer(player4, game.getScorePlayer4(), game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3());
-
-	}
-
-	/**
-	 * Update the victories, defeats, given, sustain selfpick and selfpick
-	 * figures of one player
-	 * 
-	 * @param player
-	 * @param scorePlayer
-	 * 
-	 * @param scoreOtherPlayer1
-	 * @param scoreOtherPlayer2
-	 * @param scoreOtherPlayer3
-	 */
-	private static void updateGamePropsForOnePlayer(Player player, Integer scorePlayer, Integer scoreOtherPlayer1, Integer scoreOtherPlayer2,
-			Integer scoreOtherPlayer3) {
-
-		player.incrementNbGames();
-
-		if (scorePlayer.intValue() > 0) {
-
-			if (LOGGER.isDebugEnabled())
-				LOGGER.debug(player + " won with score=" + scorePlayer);
-
-			if (scoreOtherPlayer1.intValue() == scoreOtherPlayer2.intValue() && scoreOtherPlayer1.intValue() == scoreOtherPlayer3.intValue()
-					&& scoreOtherPlayer2.intValue() == scoreOtherPlayer3.intValue()) {
-				// 1. selfpick figure : one must have a positive score
-				// and others have the same negative score
-				player.incrementNbSelfpick();
-
-				if (LOGGER.isDebugEnabled())
-					LOGGER.debug("it was a selfpick because all players got some minus score=" + scoreOtherPlayer1);
-			} else {
-				// 2. victories figure : one must have a positive score
-				// AND others can't have the same negative score
-				player.incrementNbVictory();
-				if (LOGGER.isDebugEnabled())
-					LOGGER.debug("it was a normal victory");
-			}
-
-		} else if (scorePlayer.intValue() == 0) {
-			player.incrementNbDraw();
-		} else {
-
-			boolean selfpickAppeared = scorePlayer.intValue() * 3 == -scoreOtherPlayer1.intValue()
-					|| scorePlayer.intValue() * 3 == -scoreOtherPlayer2.intValue() || scorePlayer.intValue() * 3 == -scoreOtherPlayer3.intValue();
-
-			if (scorePlayer.intValue() == -8 && !selfpickAppeared) {
-				// 3. defeats figure : one must have a score of -8
-				player.incrementNbDefeat();
-			} else {
-
-				if (selfpickAppeared) {
-
-					// 4. sustain selfpick figure : one must have a score
-					// inferior to -8
-					// AND at least another player has the same score
-					player.incrementNbSustainSelfpick();
-				} else {
-					// 5. given figure : one must be the only one with a score
-					// inferior to -8 and
-					player.incrementNbGiven();
-				}
-			}
-		}
 	}
 
 	public static List<Team> getTeamsForTournament(Tournament tournament) {

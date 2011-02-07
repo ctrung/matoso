@@ -3,14 +3,20 @@ package org.mahjong.matoso.bean;
 import java.util.Set;
 
 public class Tournament {
-	
 	private Integer id;
-	
 	private String name;
 	private String teamActivateStr;
-	
+	private String rules;
 	private Set<Player> players;
 	private Set<Team> teams;
+
+	public String getRules() {
+		return rules;
+	}
+
+	public void setRules(String rules) {
+		this.rules = rules;
+	}
 
 	/**
 	 * @return the id
@@ -20,7 +26,8 @@ public class Tournament {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
@@ -42,7 +49,8 @@ public class Tournament {
 	}
 
 	/**
-	 * @param players the players to set
+	 * @param players
+	 *            the players to set
 	 */
 	public void setPlayers(Set<Player> players) {
 		this.players = players;
@@ -55,13 +63,13 @@ public class Tournament {
 	public void setTeamActivateStr(String teamActivateStr) {
 		this.teamActivateStr = teamActivateStr;
 	}
-	
-	public boolean isTeamActivate(){
-		return teamActivateStr!=null && teamActivateStr.equals("Y");
+
+	public boolean isTeamActivate() {
+		return teamActivateStr != null && teamActivateStr.equals("Y");
 	}
-	
+
 	public void setTeamActivate(boolean teamActivate) {
-		if(teamActivate){
+		if (teamActivate) {
 			this.teamActivateStr = "Y";
 			return;
 		}
@@ -76,7 +84,8 @@ public class Tournament {
 	}
 
 	/**
-	 * @param teams the teams to set
+	 * @param teams
+	 *            the teams to set
 	 */
 	public void setTeams(Set<Team> teams) {
 		this.teams = teams;
