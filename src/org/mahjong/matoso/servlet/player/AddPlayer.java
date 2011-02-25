@@ -8,6 +8,8 @@
  */
 package org.mahjong.matoso.servlet.player;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,9 +18,12 @@ import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
+import org.mahjong.matoso.display.TeamShuffling;
 import org.mahjong.matoso.service.TeamService;
 import org.mahjong.matoso.service.TournamentService;
 import org.mahjong.matoso.servlet.MatosoServlet;
+import org.mahjong.matoso.servlet.team.TeamShuffleGo;
+import org.mahjong.matoso.servlet.team.TeamShuffleValidate;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
@@ -59,6 +64,13 @@ public class AddPlayer extends MatosoServlet {
 				LOGGER.error("unable to save the player " + player, e);
 			}
 		}
+		
+		// shuffle players to create new teams
+		if (isTeam) {
+			List<TeamShuffling> tShList = TeamShuffleGo.generateNewShuffling(tournament);
+			TeamShuffleValidate.saveShuffling(tShList);
+		}
+		
 		if (LOGGER.isDebugEnabled())
 			LOGGER.debug("<=serv");
 		return ServletCst.REDIRECT_TO_TABLE_FILL_SERVLET;

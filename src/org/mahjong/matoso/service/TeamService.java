@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.mahjong.matoso.bean.Player;
@@ -198,5 +199,47 @@ public class TeamService {
 			if (team.getId().equals(t.getId()))
 				return teams.indexOf(team);
 		return -1;
+	}
+	
+	/**
+	 * Replace all 4 players
+	 * @param teamId
+	 * @param players must be size 4
+	 * @throws FatalException
+	 */
+	public static void replaceAllPlayers(Integer teamId, List<Player> players) throws FatalException {
+		
+		if(players!=null && players.size() == 4) {
+			// get the team
+			Team team = getById(teamId);
+			if(team!=null) {
+				players.get(0).setTeam(team);
+				players.get(1).setTeam(team);
+				players.get(2).setTeam(team);
+				players.get(3).setTeam(team);
+				
+				team.setPlayer1(players.get(0));
+				team.setPlayer2(players.get(1));
+				team.setPlayer3(players.get(2));
+				team.setPlayer4(players.get(3));
+			}
+			HibernateUtil.save(team);
+		}
+	}
+	
+	public static Team getById(Integer id) throws FatalException {
+		
+		if(id==null) return null;
+		
+		try {
+			Query q = HibernateUtil.getSession().createQuery(
+					"from Team t where t.id = :id");
+			q.setParameter("id", id);
+
+			return (Team) q.uniqueResult();
+			
+		} catch (HibernateException e) {
+			throw new FatalException(e);
+		}
 	}
 }

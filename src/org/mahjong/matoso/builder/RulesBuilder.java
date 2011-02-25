@@ -7,6 +7,7 @@ import org.mahjong.matoso.rules.IGameProps;
 import org.mahjong.matoso.rules.Impl.MCRGameProps;
 import org.mahjong.matoso.rules.Impl.RCRGameProps;
 import org.mahjong.matoso.util.comparator.MCRRankingComparator;
+import org.mahjong.matoso.util.comparator.RCRRankingComparator;
 
 public class RulesBuilder {
 	

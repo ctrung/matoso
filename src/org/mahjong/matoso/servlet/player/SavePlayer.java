@@ -49,7 +49,7 @@ public class SavePlayer extends MatosoServlet {
 		request.setAttribute("player", player);
 		
 		if(player == null) {
-			return ServletCst.REDIRECT_TO_PLAYER_EDIT_FORM;
+			return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET;
 		}
 		
 		// get player's team
@@ -69,6 +69,6 @@ public class SavePlayer extends MatosoServlet {
 		player.setPseudo(mahjongtime);
 		HibernateUtil.save(player);
 		
-		return ServletCst.REDIRECT_TO_PLAYER_EDIT_FORM;
+		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET;
 	}
 }

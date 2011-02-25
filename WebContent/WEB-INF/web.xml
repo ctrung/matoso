@@ -184,7 +184,25 @@
 		<servlet-name>VisualCheck</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.tournament.VisualCheck</servlet-class>
 	</servlet>
-
+	<servlet>
+		<description>Display the shuffle team screen</description>
+		<display-name>TeamShuffle</display-name>
+		<servlet-name>TeamShuffle</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.team.TeamShuffle</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Go for the teams shuffling</description>
+		<display-name>TeamShuffleGo</display-name>
+		<servlet-name>TeamShuffleGo</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.team.TeamShuffleGo</servlet-class>
+	</servlet>	
+	<servlet>
+		<description>Validate the teams shuffle</description>
+		<display-name>TeamShuffleValidate</display-name>
+		<servlet-name>TeamShuffleValidate</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.team.TeamShuffleValidate</servlet-class>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>ListTournament</servlet-name>
 		<url-pattern>/servlet/ListTournament</url-pattern>
@@ -289,7 +307,19 @@
 		<servlet-name>VisualCheck</servlet-name>
 		<url-pattern>/servlet/VisualCheck</url-pattern>
 	</servlet-mapping>
-
+	<servlet-mapping>
+		<servlet-name>TeamShuffle</servlet-name>
+		<url-pattern>/servlet/TeamShuffle</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TeamShuffleGo</servlet-name>
+		<url-pattern>/servlet/TeamShuffleGo</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TeamShuffleValidate</servlet-name>
+		<url-pattern>/servlet/TeamShuffleValidate</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

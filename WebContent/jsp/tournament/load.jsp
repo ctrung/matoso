@@ -50,14 +50,17 @@ if (rounds.size() == 0) {
 			</form>
 <%
 } else {
-%>			<a class="link" href="/matoso/servlet/VisualCheck"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_VISUAL_CHECK)%></a>
+%>			<a class="link" href="<%=request.getContextPath()%>/servlet/VisualCheck"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_VISUAL_CHECK)%></a>
 			<a class="link" href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
 			<a class="link" href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
 			<a class="link" href="<%=ServletCst.SERVLET_FINAL_SESSION%>"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FINAL_SESSION_VIEW)%></a>
-<%--			<form id="addRound" action="<%=request.getContextPath()%>/servlet/AddMoreRounds" method="post">
-				<input type="text" name="nbrounds" value="" />&nbsp;<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_ADD)%>" />
-			</form>
---%>			<br/><br/>
+			<%-- Can't activate yet because must also rewrite existing rounds
+			<%if(tournament!=null && tournament.isTeamActivate()) { %>
+				<a class="link" href="<%=request.getContextPath()%>/servlet/TeamShuffle"><%=BundleCst.BUNDLE.getString("team.shuffle")%></a>
+			<%} %>
+			--%>
+			<br/><br/>
+
 			<div id="rounds">
 <%
 	String classCss;
