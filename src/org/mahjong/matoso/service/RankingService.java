@@ -27,7 +27,6 @@ import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.builder.RulesBuilder;
 import org.mahjong.matoso.form.RankingForm;
 import org.mahjong.matoso.rules.IGameProps;
-import org.mahjong.matoso.util.comparator.MCRRankingComparator;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
@@ -151,14 +150,14 @@ public class RankingService {
 			while (gIt.hasNext()) {
 				game = gIt.next();
 				if (game != null) {
-					gameProps.updateGamePropsForOnePlayer(p1, game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3(), game
-							.getScorePlayer4(), rules);
-					gameProps.updateGamePropsForOnePlayer(p2, game.getScorePlayer2(), game.getScorePlayer1(), game.getScorePlayer3(), game
-							.getScorePlayer4(), rules);
-					gameProps.updateGamePropsForOnePlayer(p3, game.getScorePlayer3(), game.getScorePlayer1(), game.getScorePlayer2(), game
-							.getScorePlayer4(), rules);
-					gameProps.updateGamePropsForOnePlayer(p4, game.getScorePlayer4(), game.getScorePlayer1(), game.getScorePlayer2(), game
-							.getScorePlayer3(), rules);
+					gameProps.updateGamePropsForOnePlayer(p1, game.getScorePlayer1(), game.getScorePlayer2(), game.getScorePlayer3(),
+							game.getScorePlayer4(), rules);
+					gameProps.updateGamePropsForOnePlayer(p2, game.getScorePlayer2(), game.getScorePlayer1(), game.getScorePlayer3(),
+							game.getScorePlayer4(), rules);
+					gameProps.updateGamePropsForOnePlayer(p3, game.getScorePlayer3(), game.getScorePlayer1(), game.getScorePlayer2(),
+							game.getScorePlayer4(), rules);
+					gameProps.updateGamePropsForOnePlayer(p4, game.getScorePlayer4(), game.getScorePlayer1(), game.getScorePlayer2(),
+							game.getScorePlayer3(), rules);
 				}
 			}
 

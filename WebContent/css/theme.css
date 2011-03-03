@@ -78,6 +78,23 @@ ul {
 #rounds, #loadTournament div.round {
 	clear : both;
 }
+
+#loadTournament .notFilled {
+	background-color : white;
+	float : left;
+	margin : 0 2px 2px 0;
+	padding : 10px 0 0 0;
+	text-align : center;
+	width : 200px;
+}
+#loadTournament .notFilled2 {
+	background-color : #F0F0F0;
+	float : left;
+	margin : 0 2px 2px 0;
+	padding : 10px 0 0 0;
+	text-align : center;
+	width : 200px;
+}
 #loadTournament .filledWithGames {
 	background : white url("/matoso/img/star_gold.png") no-repeat top right;
 	float : left;

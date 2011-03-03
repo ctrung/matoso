@@ -59,8 +59,10 @@ if (rounds.size() == 0) {
 				<a class="link" href="<%=request.getContextPath()%>/servlet/TeamShuffle"><%=BundleCst.BUNDLE.getString("team.shuffle")%></a>
 			<%} %>
 			--%>
-			<br/><br/>
-
+<%--			<form id="addRound" action="<%=request.getContextPath()%>/servlet/AddMoreRounds" method="post">
+				<input type="text" name="nbrounds" value="" />&nbsp;<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_ADD)%>" />
+			</form>
+--%>			<br/><br/>
 			<div id="rounds">
 <%
 	String classCss;
@@ -71,7 +73,7 @@ if (rounds.size() == 0) {
 		else if(RoundService.isFilledWithTotal(round.getId()))
 			classCss = "filledWithTotal";
 		else
-			classCss = "";
+			classCss = "notFilled";
 		if (changeCSS)
 			classCss = classCss + "2";
 
@@ -94,7 +96,7 @@ if (rounds.size() == 0) {
 			else if (!GameResultService.isEmpty(table.getResult()))
 				classCss = "filledWithTotal";
 			else
-				classCss = "";
+				classCss = "notFilled";
 			if (changeCSS)
 				classCss = classCss + "2";
 

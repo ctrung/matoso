@@ -5,7 +5,7 @@ import java.util.Comparator;
 import org.mahjong.matoso.bean.Player;
 
 /**
- * Compare 2 players with RCR rules.
+ * Comparator of players with RCR rules.
  * <ol>
  * <li>Score</li>
  * <li>Points</li>
@@ -14,6 +14,16 @@ import org.mahjong.matoso.bean.Player;
  * </ol>
  */
 public class RCRRankingComparator implements Comparator<Player> {
+	/**
+	 * Compare two players
+	 * 
+	 * @param p1
+	 *            the first player
+	 * @param p2
+	 *            the second player
+	 * @return if the two players are equal then 0 else if p1 is better than p2
+	 *         then 1 else -1
+	 */
 	public int compare(Player p1, Player p2) {
 		if (p1 == p2)
 			return 0;
