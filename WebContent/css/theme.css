@@ -79,56 +79,46 @@ ul {
 	clear : both;
 }
 
-#loadTournament .notFilled {
-	background-color : white;
-	float : left;
-	margin : 0 2px 2px 0;
-	padding : 10px 0 0 0;
-	text-align : center;
-	width : 200px;
-}
+#loadTournament .notFilled,
 #loadTournament .notFilled2 {
-	background-color : #F0F0F0;
-	float : left;
-	margin : 0 2px 2px 0;
-	padding : 10px 0 0 0;
-	text-align : center;
-	width : 200px;
-}
-#loadTournament .filledWithGames {
-	background : white url("/matoso/img/star_gold.png") no-repeat top right;
-	float : left;
-	margin : 0 2px 2px 0;
-	padding : 10px 0 0 0;
-	text-align : center;
-	width : 200px;
-}
-#loadTournament .filledWithGames2 {
-	background : #F0F0F0 url("/matoso/img/star_gold.png") no-repeat top right;
-	float : left;
-	margin : 0 2px 2px 0;
-	padding : 10px 0 0 0;
-	text-align : center;
-	width : 200px;
-}
-#loadTournament .filledWithTotal {
 	background-color : white;
 	float : left;
 	margin : 0 2px 2px 0;
 	padding : 10px 0 0 0;
 	text-align : center;
 	width : 200px;
-	text-decoration : none;
 }
-#loadTournament .filledWithTotal2 {
-	background-color : #F0F0F0;
+
+#loadTournament .filledWithGames,
+#loadTournament .filledWithGames2 {
+	background-image : url("/matoso/img/star_gold.png");
+	background-position : top right;
+	background-repeat : repeat-y;
 	float : left;
 	margin : 0 2px 2px 0;
 	padding : 10px 0 0 0;
 	text-align : center;
 	width : 200px;
-	text-decoration : none;
 }
+
+#loadTournament .filledWithTotal,
+#loadTournament .filledWithTotal2 {
+	background-image : url("/matoso/img/star_gold.png");
+	background-position : top right;
+	background-repeat : no-repeat;
+	float : left;
+	margin : 0 2px 2px 0;
+	padding : 10px 0 0 0;
+	text-align : center;
+	text-decoration : none;
+	width : 200px;
+}
+#loadTournament .filledWithTotal,
+#loadTournament .filledWithGames,
+#loadTournament .notFilled {background-color : white;}
+#loadTournament .filledWithTotal2,
+#loadTournament .filledWithGames2,
+#loadTournament .notFilled2 {background-color : #F0F0F0;}
 
 #dynamicRanking {
 	width:500px;
