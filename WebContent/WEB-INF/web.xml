@@ -21,7 +21,6 @@
 		<servlet-class>org.mahjong.matoso.servlet.init.ServletInit</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
 	<servlet>
 		<description>List the tournaments</description>
 		<display-name>ListTournament</display-name>
@@ -203,6 +202,10 @@
 		<servlet-class>org.mahjong.matoso.servlet.team.TeamShuffleValidate</servlet-class>
 	</servlet>
 	
+	<servlet-mapping>
+		<servlet-name>ServletInit</servlet-name>
+		<url-pattern>/servlet/ServletInit</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ListTournament</servlet-name>
 		<url-pattern>/servlet/ListTournament</url-pattern>
