@@ -1,12 +1,10 @@
 function addPenaltyButtonClick() {
-	$('div#editTable table tbody>tr:last').clone(true).insertAfter('div#editTable table tbody>tr:last'); 
+	$('#penalties>tr:last').clone(true).insertAfter('#penalties>tr:last'); 
 }
-function documentReady() {
+$(function() {
 	// add penalty
 	$('.addPenaltyButton').click(addPenaltyButtonClick);
-}
-
-$(document).ready(documentReady);
+});
 
 function cancelPlayerRadioInput(id, labelId) {
 	document.getElementById(id).checked = false;
