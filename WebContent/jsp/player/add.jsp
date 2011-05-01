@@ -9,11 +9,10 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo - <%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_ADD)%></title>
-		<link rel="stylesheet" type="text/css" href="/matoso/css/theme.css" />
-		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
+		<%@include file="../include/cssAndScripts.jsp" %>
 	</head>
 	<body>
-		<%@include file="../include/head.jsp" %>
+		<%@include file="../include/head.jsp"%>
 		<h2><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_ADD)%></h2>
 		<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>">
 				<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%>

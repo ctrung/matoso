@@ -12,15 +12,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo - <%=BundleCst.BUNDLE.getString("team.shuffle")%></title>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
-		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
-	</head>
-	
+		<%@include file="../include/cssAndScripts.jsp" %>
+ 	</head>
 	<body>
+		<%@include file="../include/head.jsp"%>
 	
 		<% Tournament tournament = (Tournament) request.getAttribute("tournament"); %>
-		
-		<%@include file="../include/head.jsp"%>
 		<div>
 			<h2><%=tournament.getName() + " - " + tournament.getRules()%></h2>
 			

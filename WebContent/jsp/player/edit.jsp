@@ -13,16 +13,12 @@ pageEncoding="UTF-8"
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo - <%= BundleCst.BUNDLE.getString("player.edit") %></title>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
-		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
+		<%@include file="../include/cssAndScripts.jsp" %>
 	</head>
 	<body>
-<%@
-include file="../include/head.jsp"
-%>		<div id="edit">
-			<h2><%= BundleCst.BUNDLE.getString("player.edit") %></h2>		
-			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
-			<br/><br/>
+		<%@include file="../include/head.jsp"%>
+		<div class="matoso-content">
+			<h2><%= BundleCst.BUNDLE.getString("player.edit") %></h2>
 			<form action="/matoso/servlet/SavePlayer" method="post">
 <%
 Player player = (Player) request.getAttribute("player");
@@ -30,25 +26,25 @@ if (player != null) {
 %>				<input type="hidden" name="id" value="<%=player.getId().toString() %>" />	
 				<table>
 					<tr>
-						<th class="left"><label for="<%= RequestCst.REQ_PARAM_PLAYER_NAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NAME) %></label></th>
+						<th><label for="<%= RequestCst.REQ_PARAM_PLAYER_NAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NAME) %></label></th>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_NAME %>" value="<%=player.getLastname()%>" /></td>
-						<th class="left"><label for="<%= RequestCst.REQ_PARAM_PLAYER_FIRSTNAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_FIRSTNAME) %></label></th>
+						<th><label for="<%= RequestCst.REQ_PARAM_PLAYER_FIRSTNAME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_FIRSTNAME) %></label></th>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_FIRSTNAME %>" value="<%=player.getFirstname()%>" /></td>
 					</tr>
 					<tr>
-						<th class="left"><label for="<%= RequestCst.REQ_PARAM_PLAYER_EMA %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_EMA) %></label></th>
+						<th><label for="<%= RequestCst.REQ_PARAM_PLAYER_EMA %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_EMA) %></label></th>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_EMA %>" value="<%=player.getEma()%>" /></td>
-						<th class="left"><label for="<%= RequestCst.REQ_PARAM_PLAYER_NATIONALITY %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NATIONALITY) %></label></th>
+						<th><label for="<%= RequestCst.REQ_PARAM_PLAYER_NATIONALITY %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_NATIONALITY) %></label></th>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_NATIONALITY %>" value="<%=player.getCountry()%>" /></td>
 					</tr>
 					<tr>
-						<th class="left"><label for="<%= RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_MAHJONGTIME) %></label></th>
+						<th><label for="<%= RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_MAHJONGTIME) %></label></th>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_MAHJONGTIME %>" value="<%=player.getPseudo()%>" /></td>
 <% 
 	Team team = (Team) request.getAttribute("team");
 	if (team != null) {
 		String teamName = team.getName();
-%>						<th class="left"><label for="<%= RequestCst.REQ_PARAM_PLAYER_TEAM %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM) %></label></th>
+%>						<th><label for="<%= RequestCst.REQ_PARAM_PLAYER_TEAM %>"><%= BundleCst.BUNDLE.getString(BundleCst.PLAYER_TEAM) %></label></th>
 						<td><input type="text" name="<%= RequestCst.REQ_PARAM_PLAYER_TEAM %>" value="<%=teamName%>" /></td>
 <%}%>					</tr>
 				</table>
@@ -62,27 +58,27 @@ Player playerResult = (Player) request.getAttribute(RequestCst.ATTR_PLAYER_RESUL
 if (playerResult != null) {
 %>				<table>
 					<tr>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POSITION)%></th><td><%=playerResult.getRank()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POSITION)%></th><td><%=playerResult.getRank()%></td>
 					</tr>
 					<tr>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POINTS)%></th><td><%=playerResult.getPoints()%></td>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE)%></th><td><%=playerResult.getScore()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_POINTS)%></th><td><%=playerResult.getPoints()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE)%></th><td><%=playerResult.getScore()%></td>
 					</tr>
 					<tr>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_GAMES)%></th><td><%=playerResult.getNbGames()%></td>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK_VICTORY)%></th><td><%=playerResult.getNbWinAndSelfDraw()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_GAMES)%></th><td><%=playerResult.getNbGames()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK_VICTORY)%></th><td><%=playerResult.getNbWinAndSelfDraw()%></td>
 					</tr>
 					<tr>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK)%></th><td><%=playerResult.getSelfDraw()%></td>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_VICTORY)%></th><td><%=playerResult.getWin()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SELFPICK)%></th><td><%=playerResult.getSelfDraw()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_VICTORY)%></th><td><%=playerResult.getWin()%></td>
 					</tr>
 					<tr>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DEFEAT)%></th><td><%=playerResult.getNbDefeatForRankingPage()%></td>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_GIVEN)%></th><td><%=playerResult.getLose()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DEFEAT)%></th><td><%=playerResult.getNbDefeatForRankingPage()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_GIVEN)%></th><td><%=playerResult.getLose()%></td>
 					</tr>
 					<tr>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SUSTAIN_SELFPICK)%></th><td><%=playerResult.getNbSustainSelfpickForRankingPage()%></td>
-						<th class="left"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%></th><td><%=playerResult.getNbDrawForRankingPage()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_SUSTAIN_SELFPICK)%></th><td><%=playerResult.getNbSustainSelfpickForRankingPage()%></td>
+						<th><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%></th><td><%=playerResult.getNbDrawForRankingPage()%></td>
 					</tr>
 				</table>					
 <%

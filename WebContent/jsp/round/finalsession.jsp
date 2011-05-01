@@ -17,17 +17,14 @@ org.mahjong.matoso.service.TournamentService"
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo</title>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
-		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
+		<%@include file="../include/cssAndScripts.jsp" %>
 	</head>
-	<body id="bodyfinalsession">
+	<body class="matoso-display">
 <%
 Integer tournamentId = (Integer) session.getAttribute(SessionCst.SESSION_TOURNAMENT_ID);
 Tournament tournament = TournamentService.getById(tournamentId);
-%>		<h2><a href="/matoso/<%=
-			ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?"
-					+ RequestCst.REQ_PARAM_TOURNAMENT_ID
-					+ "=" + tournament.getId()%>"><%=tournament.getName()%></a></h2>
+%>
+		<h2><a href="/matoso/<%= ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET + "?" + RequestCst.REQ_PARAM_TOURNAMENT_ID + "=" + tournament.getId()%>"><%=tournament.getName()%></a></h2>
 		<h3><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FINAL_SESSION_TITLE)%></h3>
 <%
 Round round = (Round) request.getAttribute(RequestCst.REQ_ATTR_FINAL_SESSION);
@@ -36,37 +33,24 @@ else {
 	List<Table> tables = round.getTables();
 	if (tables == null) out.print("no tables");
 	else {
-%>		<table cellpadding="0" cellspacing="0" border="0">
+%>
+		<div class="matoso-round">
 <%
-		int i = 0;
-		boolean close = false;
 		for (Table table : tables) {
-			if (i++ % 4 == 0) {
-				close = false;
-%>				<tr>
-<%
-			}
-%>					<td>
-						Table <%=table.getName()%>
-						<ul>
-							<li><%=table.getPlayer1().getPrettyPrintName()%></li>
-							<li><%=table.getPlayer2().getPrettyPrintName()%></li>
-							<li><%=table.getPlayer3().getPrettyPrintName()%></li>
-							<li><%=table.getPlayer4().getPrettyPrintName()%></li>
-						</ul>
-					</td>
-<%
-			if (i % 4 == 0) {
-				close = true;
-%>				</tr>
-<%
-			}
-		}
-		if (!close) {
-%>				</tr>
+%>
+			<div class="ui-state-highlight">
+				<h4>Table <%=table.getName()%></h4>
+				<ul>
+					<li><%=table.getPlayer1().getPrettyPrintName()%></li>
+					<li><%=table.getPlayer2().getPrettyPrintName()%></li>
+					<li><%=table.getPlayer3().getPrettyPrintName()%></li>
+					<li><%=table.getPlayer4().getPrettyPrintName()%></li>
+				</ul>
+			</div>
 <%
 		}
-%>		</table>
+%>
+		</div>
 <%
 	}
 }

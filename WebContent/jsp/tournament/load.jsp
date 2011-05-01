@@ -1,16 +1,17 @@
 <%@page import="
-java.util.List,
-java.util.TreeMap,
-java.util.ResourceBundle,
-org.mahjong.matoso.constant.BundleCst,
-org.mahjong.matoso.constant.RequestCst,
-org.mahjong.matoso.constant.ServletCst,
-org.mahjong.matoso.constant.SessionCst,
-org.mahjong.matoso.bean.*,
-org.mahjong.matoso.service.TournamentService,
-org.mahjong.matoso.service.GameResultService,
-org.mahjong.matoso.service.RoundService,
-org.mahjong.matoso.service.TableService"
+	java.util.List,
+	java.util.TreeMap,
+	java.util.ResourceBundle,
+	org.mahjong.matoso.constant.BundleCst,
+	org.mahjong.matoso.constant.RequestCst,
+	org.mahjong.matoso.constant.ServletCst,
+	org.mahjong.matoso.constant.SessionCst,
+	org.mahjong.matoso.bean.*,
+	org.mahjong.matoso.service.TournamentService,
+	org.mahjong.matoso.service.GameResultService,
+	org.mahjong.matoso.service.RoundService,
+	org.mahjong.matoso.service.TableService,
+	org.mahjong.matoso.util.message.MatosoMessages"
 language="java"
 contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"
@@ -23,50 +24,88 @@ List<Round> rounds = (List<Round>) request.getAttribute("rounds");
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo - <%=rounds.size() == 0 ? BundleCst.BUNDLE.getString(BundleCst.PLAYER_FILL_METHOD) : BundleCst.BUNDLE.getString("round.label.round")%></title>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
-		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
+		<%@include file="../include/cssAndScripts.jsp" %>
 	</head>
 	<body>
 		<%@include file="../include/head.jsp"%>
-		<div id="loadTournament">
-			<h2><%=tournament.getName() + " - " + tournament.getRules()%></h2>
+		<div class="matoso-content">
+			<h2><%=tournament.getName() + " (" + tournament.getRules()%>)</h2>
 <%
 if (rounds.size() == 0) {
-%>			<br/><br/>
-			<%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_FILL_METHOD)%><br/>
-			<a class="link" href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_PLAYER_IMPORT_FORM_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></a>
-			<br/><br/>
-			<form action="/matoso/servlet/AddPlayer" method="post">
-				<table cellpadding="0" cellspacing="0">
-					<tr>
-						<td><label for="<%= RequestCst.REQ_PARAM_NB_PLAYERS %>"><%= BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NB_PLAYERS) %></label></td>
-						<td><input type="text" name="<%= RequestCst.REQ_PARAM_NB_PLAYERS %>" /></td>
-					</tr><tr>
-						<td><label for="<%= RequestCst.REQ_PARAM_ROUND %>"><%= BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER) %></label></td>
-						<td><input type="text" name="<%= RequestCst.REQ_PARAM_ROUND %>" /></td>
-					</tr>
-				</table>
-				<input type="submit" />
-			</form>
+%>
+			<jsp:include page="../include/info.jsp">
+				<jsp:param value="<%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_FILL_METHOD)%>" name="message" />
+			</jsp:include>
+			<div class="matoso-tabs">
+				<ul>
+					<li><a href="#matoso-import"><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></a></li>
+					<li><a href="#matoso-add"><%= BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NB_PLAYERS) %></a></li>
+				</ul>
+				<form action="<%="/matoso"+ServletCst.REDIRECT_TO_IMPORT_PLAYER_SERVLET%>" enctype="multipart/form-data" method="POST" id="matoso-import">
+<%
+	MatosoMessages mm = (MatosoMessages)request.getAttribute(RequestCst.REQ_ATTR_MATOSO_MESSAGES);
+	if(MatosoMessages.isNotEmpty(mm)) {
+		String icon, state;
+		for(int i=0; i<mm.getMesgs().size(); i++) {
+			icon = mm.getMesgs().get(i).getSeverity() == 0 ? "ui-icon-info" : "ui-icon-alert";
+			state = mm.getMesgs().get(i).getSeverity() == 0 ? "ui-state-highlight" : "ui-state-error";
+%>
+					<div class="ui-widget <%=state%> ui-corner-all matoso-message">
+						<span class="ui-icon <%=icon%>"></span>
+						<%=mm.getMesgs().get(i).getMesg()%>
+					</div>
+<%
+		}
+	}
+%>
+					<table>
+						<tr>
+							<td><label for="<%= RequestCst.REQ_PARAM_ROUND %>"><%= BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER) %></label></td>
+							<td><input type="text" name="<%= RequestCst.REQ_PARAM_ROUND %>" /></td>
+						</tr>
+					</table>
+					<div class="matoso-tabs">
+						<ul>
+							<li><a href="#matoso-import-csv" onclick="$('#csvImportRadioB').click()"><%=BundleCst.BUNDLE.getString("player.mass.import.type.label") %> CSV</a></li>
+							<li><a href="#matoso-import-xls" onclick="$('#xslImportRadioB').click()"><%=BundleCst.BUNDLE.getString("player.mass.import.type.label") %> XLS</a></li>
+						</ul>
+						<div id="matoso-import-csv">
+							<input type="radio" id="csvImportRadioB" name="importType" value="CSV" checked="checked" style="display:none" />
+							<input type="file" accept="text/csv" name="csvfile" class="matoso-button" />
+							<p><%=BundleCst.BUNDLE.getString("player.mass.import.csv.info")%></p>
+							<a class="matoso-button" href="<%=request.getContextPath()+"/csv/players-sample.csv"%>"><%=BundleCst.BUNDLE.getString("player.mass.import.csv.link.sample")%></a>
+						</div>
+						<div id="matoso-import-xls">
+							<input type="radio" id="xlsImportRadioB" name="importType" value="XLS" style="display:none" />
+							<div class="ui-widget ui-state-highlight ui-corner-all matoso-message">
+								<span class="ui-icon ui-icon-info"></span>En cours d'implémentation / still in development
+							</div>
+							<input type="file" accept="text/xls" name="xlsfile" disabled="disabled" class="matoso-button" />
+						</div>
+					</div>
+					<input type="submit" name="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_SUBMIT)%>" />
+				</form>
+				<form action="/matoso/servlet/AddPlayer" method="post" id="matoso-add">
+					<table>
+						<tr>
+							<td><label for="<%= RequestCst.REQ_PARAM_NB_PLAYERS %>"><%= BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NB_PLAYERS) %></label></td>
+							<td><input type="text" name="<%= RequestCst.REQ_PARAM_NB_PLAYERS %>" /></td>
+						</tr>
+						<tr>
+							<td><label for="<%= RequestCst.REQ_PARAM_ROUND %>"><%= BundleCst.BUNDLE.getString(BundleCst.ROUND_NUMBER) %></label></td>
+							<td><input type="text" name="<%= RequestCst.REQ_PARAM_ROUND %>" /></td>
+						</tr>
+					</table>
+					<input type="submit" />
+				</form>
+			</div>
 <%
 } else {
-%>			<a class="link" href="<%=request.getContextPath()%>/servlet/VisualCheck"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_VISUAL_CHECK)%></a>
-			<a class="link" href="<%=request.getContextPath()%>/servlet/ViewTournamentDraw"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_DRAW_GOTO_LINK)%></a>
-			<a class="link" href="<%=request.getContextPath()%>/servlet/ViewRanking"><%=BundleCst.BUNDLE.getString(BundleCst.RANKING_STATS_GOTO_LINK)%></a>
-			<a class="link" href="<%=ServletCst.SERVLET_FINAL_SESSION%>"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FINAL_SESSION_VIEW)%></a>
-			<%-- Can't activate yet because must also rewrite existing rounds
-			<%if(tournament!=null && tournament.isTeamActivate()) { %>
-				<a class="link" href="<%=request.getContextPath()%>/servlet/TeamShuffle"><%=BundleCst.BUNDLE.getString("team.shuffle")%></a>
-			<%} %>
-			--%>
-<%--			<form id="addRound" action="<%=request.getContextPath()%>/servlet/AddMoreRounds" method="post">
-				<input type="text" name="nbrounds" value="" />&nbsp;<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.ROUND_ADD)%>" />
-			</form>
---%>			<br/><br/>
-			<div id="rounds">
+%>
+			<div class="matoso-tabs">
+				<ul>
 <%
 	String classCss;
-	boolean changeCSS = false;
 	for (Round round : rounds) {
 		if (RoundService.isFilledWithGames(round.getId()))
 			classCss = "filledWithGames";
@@ -74,21 +113,15 @@ if (rounds.size() == 0) {
 			classCss = "filledWithTotal";
 		else
 			classCss = "notFilled";
-		if (changeCSS)
-			classCss = classCss + "2";
 
-%>					<div class="<%=classCss%>" id="roundDiv<%=round.getNumber()%>">
-						<a href="<%=request.getContextPath() + "/servlet/EditRound?id=" + round.getId() %>" id="roundTitle<%=round.getNumber()%>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a>
-						<a href="javascript:show(<%=round.getNumber()%>)" id="roundPlus<%=round.getNumber()%>">+</a>
-					</div>
+%>					<li class="<%=classCss%>"><a href="#round<%=round.getNumber()%>"><%= BundleCst.BUNDLE.getString("round.label.round") + " " + round.getNumber() %></a></li>
 <%
-		changeCSS = !changeCSS;
 	}
-%>			</div>
+%>
+				</ul>
 <%
-	changeCSS = false;
 	for (Round round : rounds) {
-%>			<div id="round<%=round.getNumber()%>" class="round">
+%>			<div id="round<%=round.getNumber()%>" class="matoso-round">
 <%
 		for (Table table : round.getTables()) {
 			if (TableService.hasSavedGame(table))
@@ -97,12 +130,12 @@ if (rounds.size() == 0) {
 				classCss = "filledWithTotal";
 			else
 				classCss = "notFilled";
-			if (changeCSS)
-				classCss = classCss + "2";
 
-%>				<div class="<%=classCss%>">
-					<a class="table" href="<%=request.getContextPath()%>/servlet/EditTable?<%= RequestCst.REQ_PARAM_TABLE_ID %>=<%=table.getId() %>"><%= BundleCst.BUNDLE.getString("round.label.table") + " "  + table.getName() %></a>
-					<ul class="player">
+%>				<div class="<%=classCss%> ui-state-highlight">
+					<a class="matoso-button" href="<%=request.getContextPath()%>/servlet/EditTable?<%= RequestCst.REQ_PARAM_TABLE_ID %>=<%=table.getId() %>">
+						<%= BundleCst.BUNDLE.getString("round.label.table") + " "  + table.getName() %>
+					</a>
+					<ul>
 <%
 			for (Player player : table.getListPlayers()) {
 %>						<li><a href="<%=request.getContextPath() + "/servlet/EditPlayer?id=" + player.getId() %>"><%= player.getPrettyPrintName() %></a></li>
@@ -114,32 +147,8 @@ if (rounds.size() == 0) {
 		}
 %>			</div>
 <%
-		changeCSS = !changeCSS;
 	}
-%>
-<script type="text/javascript">
-function show(number){
-	var i = 0;
-	while (document.getElementById("round" + ++i)) {
-		if (i == number || 0 == number) {
-			document.getElementById("round" + i).style.display = "block";
-			document.getElementById("roundPlus" + i).style.display = "none";
-			document.getElementById("roundTitle" + i).style.fontStyle = "italic";
-			document.getElementById("roundTitle" + i).style.fontWeight = "bold";
-			document.getElementById("roundDiv" + i).style.marginBottom = "0";
-			document.getElementById("roundDiv" + i).style.paddingBottom = "12px";
-		} else {
-			document.getElementById("round" + i).style.display = "none";
-			document.getElementById("roundPlus" + i).style.display = "inline";
-			document.getElementById("roundTitle" + i).style.fontStyle = "normal";
-			document.getElementById("roundTitle" + i).style.fontWeight = "normal";
-			document.getElementById("roundDiv" + i).style.marginBottom = "2px";
-			document.getElementById("roundDiv" + i).style.paddingBottom = "10px";
-		}
-	}
-}
-show(1);
-</script>
+%>		</div>
 <%
 }
 %>		</div>

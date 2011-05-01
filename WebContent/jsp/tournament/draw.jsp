@@ -14,45 +14,43 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo</title>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" media="screen" />
+		<%@include file="../include/cssAndScripts.jsp"%>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/print.css" media="print" />
-		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
 	</head>
-	<body id="draw">
-<%@include file="../include/head.jsp"%>
+	<body>
+		<%@include file="../include/head.jsp"%>
 		<div class="noprint">
 <% Tournament tournament = (Tournament) request.getAttribute("tournament"); %>
 			<h2><%=tournament.getName() %></h2>
-			<div class="left">		
-				<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
-				<br/>
-<%List<Player> ps = (List<Player>) request.getAttribute("players"); %>
-				nb : <%=Integer.toString(ps.size()) %>
-			</div>
+<%
+List<Player> ps = (List<Player>) request.getAttribute("players");
+%>
 		</div>
-		<hr/>			
+		<div class="matoso-content">
 <% 	
 	for(int i=0; i<ps.size(); i++){
 		Player p = ps.get(i);
 %>
-			<div class="player">
-				<p>n°<%= p.getTournamentNumber()%> <%= p.getPrettyPrintName() %></p>
+			<table cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="3">n°<%= p.getTournamentNumber()%> <%= p.getPrettyPrintName() %></th>
 <%
 if(p.getTeam() != null) {
-%>				<p class="team"><%= p.getTeam().getName() %></p>
+%>
+						<th colspan="2"><%= p.getTeam().getName() %></th>
 <%
 }
 %>
-				<table>
-					<thead>
-						<tr>
-							<td colspan="2" width="10%"><%=BundleCst.BUNDLE.getString("draw.player.session.lbl")%></td>
-							<td width="10%"><%=BundleCst.BUNDLE.getString("draw.player.table.lbl")%></td>
-							<td width="30%"><%=BundleCst.BUNDLE.getString("draw.player.table.points.lbl")%></td>
-							<td width="50%"><%=BundleCst.BUNDLE.getString("draw.player.score.lbl")%></td>
-						</tr>
-					</thead>
-					<tbody>
+					</tr>
+					<tr>
+						<th colspan="2"><%=BundleCst.BUNDLE.getString("draw.player.session.lbl")%></th>
+						<th><%=BundleCst.BUNDLE.getString("draw.player.table.lbl")%></th>
+						<th><%=BundleCst.BUNDLE.getString("draw.player.table.points.lbl")%></th>
+						<th><%=BundleCst.BUNDLE.getString("draw.player.score.lbl")%></th>
+					</tr>
+				</thead>
+				<tbody>
 <%
 	List<Table> ts = (List<Table>) p.getTables();
 	if(ts!=null) {
@@ -67,26 +65,29 @@ if(p.getTeam() != null) {
 			String startTime = DateUtils.formatSQLTime(t.getRound().getStartTime());
 			String finishTime = DateUtils.formatSQLTime(t.getRound().getFinishTime());
 
-%>							<tr>
-								<td><%=t.getRound().getNumber()%></td>
-								<td style="text-align:right"><%= date + startTime + "-" + finishTime %></td>
-								<td><%=t.getName()%></td>
-								<td></td>
-								<td></td>
-							</tr>
-						<%		}
-							} %>
-						<tr>
-							<td colspan="2" class="invisible">Powered by MaToSo</td>
-							<td><%=BundleCst.BUNDLE.getString("draw.player.total.lbl")%></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<hr class="print"/>
+%>
+					<tr>
+						<td><%=t.getRound().getNumber()%></td>
+						<td><%= date == null ? "" : (date + startTime + "-" + finishTime) %></td>
+						<td><%=t.getName()%></td>
+						<td></td>
+						<td></td>
+					</tr>
+<%
+		}
+	}
+%>
+					<tr>
+						<td colspan="2">Powered by MaToSo</td>
+						<td><%=BundleCst.BUNDLE.getString("draw.player.total.lbl")%></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
 <%
 }
-%>	</body>
+%>
+		</div>
+	</body>
 </html>

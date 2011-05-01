@@ -9,21 +9,20 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo - <%= BundleCst.BUNDLE.getString("round.edit.title") %></title>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/theme.css" />
-		<link rel="shortcut icon"  href="<%=request.getContextPath()%>/img/favicon.ico" />
+		<%@include file="../include/cssAndScripts.jsp" %>
 	</head>
 	<body>
-<%@include file="../include/head.jsp" %>
+		<%@include file="../include/head.jsp"%>
 		<div id="edit">
 			<h2><%= BundleCst.BUNDLE.getString("round.edit.title") %></h2>		
-			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_BACK)%></a>
+			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.LINK_GOTO_SESSIONS)%></a>
 			<form action="<%=request.getContextPath()%>/servlet/SaveRound" method="post">
 <%
 Round round = (Round) request.getAttribute("round");
 if(round != null) {
 %>					<input type="hidden" name="id" value="<%=round.getId().toString() %>" />
 				<br />
-				<table cellpadding="0" cellspacing="0">
+				<table>
 					<tr>
 						<td class="left"><label><%= BundleCst.BUNDLE.getString("round.number.lbl") %></label></td>
 						<td><%=round.getNumber()%></td>
