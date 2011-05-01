@@ -69,7 +69,9 @@ public class ViewRanking extends MatosoServlet {
 		session.setAttribute("tournamentStats", TournamentService.getTournamentStats(orderedPlayers));
 
 		// The teams ranking
-		session.setAttribute("rankingTeam", RankingService.getTeamsForTournament(tournament));
+		session.removeAttribute("rankingTeam");
+		if (tournament.isTeamActivate())
+			session.setAttribute("rankingTeam", RankingService.getTeamsForTournament(tournament));
 
 		// Redefine the nb. of elements by page
 		Integer newValue = NumberUtils.getInteger(request.getParameter("nbElementsByPage"));
@@ -79,7 +81,7 @@ public class ViewRanking extends MatosoServlet {
 		} else if (inSessionValue == null) {
 			session.setAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE, ApplicationCst.NB_ELEMENTS_BY_PAGE_DEFAULT);
 		}
-		
+
 		session.setAttribute("rankingForm", RankingService.getRankingForm(tournament));
 
 		LOGGER.debug("end");
