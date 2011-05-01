@@ -8,6 +8,7 @@
  */
 package org.mahjong.matoso.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -36,6 +37,39 @@ import org.mahjong.matoso.util.message.MatosoMessages;
  */
 public class TeamService {
 	private static final Logger LOG = Logger.getLogger(TeamService.class);
+
+	/**
+	 * Builds random teams with the players in the given tournament
+	 * 
+	 * @param tnmt
+	 *            a tournament
+	 * @throws FatalException
+	 */
+	public static void buildsRandomTeams(Tournament tnmt) throws FatalException {
+		if (LOG.isDebugEnabled())
+			LOG.debug("=>buildsRandomTeams");
+		List<Player> players = new ArrayList<Player>(tnmt.getPlayers());
+		List<Player> dealedPlayers = new ArrayList<Player>();
+		int indexPlayer;
+		int numberOfTeam = 0;
+		while (dealedPlayers.size() != players.size()) {
+			// Gets a random player
+			indexPlayer = (int) Math.floor(Math.random() * players.size());
+
+			// Checks if the user is not dealed
+			if (!dealedPlayers.contains(players.get(indexPlayer))) {
+				// Builds a new team
+				if (dealedPlayers.size() % 4 == 0)
+					numberOfTeam++;
+
+				// Adds the player to a team
+				addPlayerToTeam(tnmt, "Team " + numberOfTeam, players.get(indexPlayer));
+				dealedPlayers.add(players.get(indexPlayer));
+			}
+		}
+		if (LOG.isDebugEnabled())
+			LOG.debug("<=buildsRandomTeams");
+	}
 
 	public static void addPlayerToTeam(Tournament tournament, String teamName, Player player) throws FatalException {
 		if (LOG.isDebugEnabled())
@@ -200,24 +234,26 @@ public class TeamService {
 				return teams.indexOf(team);
 		return -1;
 	}
-	
+
 	/**
 	 * Replace all 4 players
+	 * 
 	 * @param teamId
-	 * @param players must be size 4
+	 * @param players
+	 *            must be size 4
 	 * @throws FatalException
 	 */
 	public static void replaceAllPlayers(Integer teamId, List<Player> players) throws FatalException {
-		
-		if(players!=null && players.size() == 4) {
+
+		if (players != null && players.size() == 4) {
 			// get the team
 			Team team = getById(teamId);
-			if(team!=null) {
+			if (team != null) {
 				players.get(0).setTeam(team);
 				players.get(1).setTeam(team);
 				players.get(2).setTeam(team);
 				players.get(3).setTeam(team);
-				
+
 				team.setPlayer1(players.get(0));
 				team.setPlayer2(players.get(1));
 				team.setPlayer3(players.get(2));
@@ -226,18 +262,18 @@ public class TeamService {
 			HibernateUtil.save(team);
 		}
 	}
-	
+
 	public static Team getById(Integer id) throws FatalException {
-		
-		if(id==null) return null;
-		
+
+		if (id == null)
+			return null;
+
 		try {
-			Query q = HibernateUtil.getSession().createQuery(
-					"from Team t where t.id = :id");
+			Query q = HibernateUtil.getSession().createQuery("from Team t where t.id = :id");
 			q.setParameter("id", id);
 
 			return (Team) q.uniqueResult();
-			
+
 		} catch (HibernateException e) {
 			throw new FatalException(e);
 		}
