@@ -8,8 +8,10 @@
  */
 package org.mahjong.matoso.servlet.tournament;
 
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,15 +30,24 @@ import org.mahjong.matoso.util.exception.FatalException;
  * @author npochic
  * @date 30/10/2010
  */
+@SuppressWarnings("serial")
 public class VisualCheck extends MatosoServlet {
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
 		Tournament tournament = super.getTournament(request);
-		HashMap<Player, HashMap<Player, Integer>> result = new HashMap<Player, HashMap<Player, Integer>>();
+		Map<Player, TreeMap<Player, Integer>> result = new TreeMap<Player, TreeMap<Player, Integer>>(new Comparator<Player>() {
+			public int compare(Player o1, Player o2) {
+				return o1.getPrettyPrintName().compareTo(o2.getPrettyPrintName());
+			}
+		});
 		List<Table> tables = TableService.getAllByTournament(tournament);
 		List<Player> players;
 		Integer i;
 		for (Player player : tournament.getPlayers()) {
-			result.put(player, new HashMap<Player, Integer>());
+			result.put(player, new TreeMap<Player, Integer>(new Comparator<Player>() {
+				public int compare(Player o1, Player o2) {
+					return o1.getPrettyPrintName().compareTo(o2.getPrettyPrintName());
+				}
+			}));
 			// Initializes
 			for (Player player2 : tournament.getPlayers())
 				result.get(player).put(player2, 0);
