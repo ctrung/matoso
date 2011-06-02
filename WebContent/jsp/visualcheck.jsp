@@ -17,15 +17,15 @@
 		<title>MaToSo - <%=BundleCst.BUNDLE.getString(BundleCst.TABLE_TITLE)%></title>
 		<%@include file="include/cssAndScripts.jsp" %>
 	</head>
-	<body>
+	<body class="matoso-visualCheck">
 		<%@include file="include/head.jsp"%>
-<table class="matoso-visualCheck">
+<table>
 	<tr><td></td>
 <%
 Map<Player, Map<Player, Integer>> players = (Map<Player, Map<Player, Integer>>) request.getAttribute("result");
 Iterator<Player> iteratorPlayers = players.keySet().iterator();
 while (iteratorPlayers.hasNext()) {
-%>	<th><%=iteratorPlayers.next().getPrettyPrintName()%></th>
+%>	<th><%=iteratorPlayers.next().getTournamentNumber()%></th>
 <%
 }
 %>	</tr>
@@ -41,7 +41,7 @@ Map<Player, Integer> playerNbGames;
 while (iteratorPlayers.hasNext()) {
 	player = iteratorPlayers.next();
 %>	<tr>
-		<th><%=player.getPrettyPrintName()%></th>
+		<th><%=player.getTournamentNumber()%></th>
 <%
 	playerNbGames = players.get(player);
 	opponents = playerNbGames.keySet().iterator();

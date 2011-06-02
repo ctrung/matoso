@@ -16,7 +16,8 @@ public interface ServletCst {
 	// Tournament pages
 	String REDIRECT_TO_TOURNAMENT_LIST = "/jsp/tournament/list.jsp";
 	String REDIRECT_TO_TOURNAMENT_LIST_SERVLET = "/servlet/ListTournament";
-	String REDIRECT_TO_TOURNAMENT_LOAD = "/jsp/tournament/load.jsp";
+	String REDIRECT_TO_TOURNAMENT_ROUNDS = "/jsp/tournament/rounds.jsp";
+	String REDIRECT_TO_TOURNAMENT_NO_ROUND = "/jsp/tournament/noRound.jsp";
 	String REDIRECT_TO_TOURNAMENT_LOAD_SERVLET = "/servlet/LoadTournament";
 	String REDIRECT_TO_TOURNAMENT_DRAW = "/jsp/tournament/draw.jsp";
 	String REDIRECT_TO_TOURNAMENT_FINAL_SESSION_VIEW = "/jsp/round/finalsession.jsp";

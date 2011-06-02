@@ -53,11 +53,27 @@ if(MatosoMessages.isNotEmpty(mm)) {
 <%
 	}
 }
-%>			<form action="/matoso/servlet/SaveTableGamesAndScores" method="post">
+GameResult gr = (GameResult)request.getAttribute(RequestCst.REQ_ATTR_TABLE_RESULT);
+String checkedAttr = "";
+if(gr.isAutoCalculate()) checkedAttr = "checked=\"checked\"";
+%>
+			<form action="/matoso/servlet/SaveTableGamesAndScores" method="post">
 				<input type="hidden" name="<%=RequestCst.REQ_PARAM_TABLE_ID%>" value="<%=table.getId()%>" />
 				<div>
 					<input type="submit" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_SAVE)%>" />
-					<input type="button" value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_RESET)%>" onclick="return blankAllFields('<%=BundleCst.BUNDLE.getString("general.reset.confirm")%>');" />
+					<input
+						onclick="return blankAllFields('<%=BundleCst.BUNDLE.getString("general.reset.confirm")%>');"
+						type="button"
+						value="<%=BundleCst.BUNDLE.getString(BundleCst.GENERAL_RESET)%>" />
+					<input <%=checkedAttr%>
+						id="autoCalculate"
+						name="autoCalculate"
+						onclick="return actionAutoCalculate(this);"
+						type="checkbox"
+						value="yes" />
+					<label for="autoCalculate" title="<%=BundleCst.BUNDLE.getString(BundleCst.TABLE_AUTO_CALCULATE_DESC)%>">
+						<%=BundleCst.BUNDLE.getString(BundleCst.TABLE_AUTO_CALCULATE)%>
+					</label>
 				</div>
 				<table id="editTable">
 					<thead>
@@ -92,11 +108,7 @@ if(MatosoMessages.isNotEmpty(mm)) {
 						</tr>
 					</thead>
 					<tbody>
-<%
-GameResult gr = (GameResult)request.getAttribute(RequestCst.REQ_ATTR_TABLE_RESULT);
-String checkedAttr = "";
-if(gr.isAutoCalculate()) checkedAttr = "checked=\"checked\"";
-%>						<tr>
+						<tr>
 							<td colspan="5"></td>
 							<td><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_SCORE)%></td>
 							<td><input type="text"size="5"  name="score1" id="score1" value="<%=gr.getScorePlayer1PrettyPrint() %>" tabindex="<%=++indexTab%>" /></td>
@@ -112,13 +124,6 @@ if(gr.isAutoCalculate()) checkedAttr = "checked=\"checked\"";
 							<td><input type="text" size="5" name="points3" id="points3" value="<%=gr.getPointsPlayer3PrettyPrint() %>" disabled="disabled"/></td>
 							<td><input type="text" size="5" name="points4" id="points4" value="<%=gr.getPointsPlayer4PrettyPrint() %>" disabled="disabled"/></td>
 						</tr>
-						<tr id="auto">
-							<td colspan="10">
-								<input type="checkbox" name="autoCalculate" value="yes" id="autoCalculate" <%=checkedAttr%> onclick="return actionAutoCalculate(this);" tabindex="<%=++indexTab%>" />
-								<label for="autoCalculate"><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_AUTO_CALCULATE)%></label>
-								<small><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_AUTO_CALCULATE_DESC)%></small>
-							</td>
-						</tr>		
 					</tbody>
 <%
 //scoring inputs

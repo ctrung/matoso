@@ -1,48 +1,50 @@
-*{white-space:nowrap;}
-body{font-size:small;}
-h1,h2,h3,h4,h5,h6{margin:0;padding:5px;display:inline;font-family:cursive;}
+body{font-size:small;margin:auto;width:1024px}
+h1,h2,h3,h4,h5,h6{margin:0;padding:0 5px;display:inline;font-family:cursive;}
 a {text-decoration:none}
 a:HOVER {text-decoration:underline;}
 h1 a:HOVER{border-bottom:2px ridge white;text-decoration:none}
 th,td {padding:5px}
 
-input.ui-button,
-.ui-button-text-only .ui-button-text{padding:5px;}
+.ui-accordion .ui-accordion-header a{padding:2px 2px 2px 30px;}
+input.ui-button{padding:2px;}
+.ui-tabs .ui-tabs-nav li a,
+.ui-button-text-only .ui-button-text{padding:2px 5px;}
 
 ul{padding:0 0 0 5px;list-style-type:none;margin:0}
 li{padding:0 0 0 10px}
 
-.matoso-button{width:90%;text-align:left}
+.matoso-button {text-align:left}
 
 .matoso-menu {float:left;width:200px;text-transform:capitalize;margin-right:20px}
 .matoso-menu .ui-accordion-content {padding:0}
-.matoso-menu .matoso-button {float:left;clear:left;margin-left:10px}
+.matoso-menu .matoso-button {display:block;margin-left:10px;}
 
-.matoso-content{float:left;width:75%}
+.matoso-content{float:left;width:804px}
 
 .matoso-round div{float:left;padding:10px;margin:10px}
+.matoso-round div a{display:block}
 
 .matoso-message {padding:5px;margin:10px 0 10px 0}
 .matoso-message span {float:left;margin-right:10px;}
 
-.matoso-display {text-align:center}
+.matoso-display {font-size:x-large;text-align:center;}
 .matoso-display table {width:800px;margin:auto}
 .matoso-display .matoso-round {margin:auto;text-align:left;width:800px;}
 
 /**************************** Games */
 .table{font-weight:bold}
-.filledWithGames .table {background:url("/matoso/img/star_gold.png") no-repeat top right;padding-right:20px}
-.filledWithTotal .table {font-weight:bolder;font-variant:small-caps;padding-right:20px}
+.filledWithGames .matoso-button {background:url("/matoso/img/star_gold.png") no-repeat top right}
+.filledWithTotal .matoso-button {font-variant:small-caps;font-style:italic;}
 
 .nowrap{white-space:nowrap;}
 
 /*************************** Header */
-#head {
-	border-bottom:2px ridge #444;
-	margin-bottom:20px;
-	padding:10px;
-}
-#head form {display:inline;}
-#powered {position:absolute;top:20px;right:20px}
+#head{height:40px;margin-bottom:10px;padding:10px}
+#head h1,#head form{float:left}
+#head form{padding-top:20px}
+#powered {float:right}
 
-.visualCheck * {font-size:xx-small;width:1%}
+.matoso-visualCheck table * {font-size:xx-small;margin:0;padding:0;text-align:center}
+.matoso-visualCheck{width:100%}
+
+.matoso-draw table {float:left;margin:0 10px 10px 0}

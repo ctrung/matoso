@@ -8,9 +8,13 @@
  */
 package org.mahjong.matoso.servlet.tournament;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+import org.mahjong.matoso.bean.Round;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
@@ -21,25 +25,38 @@ import org.mahjong.matoso.util.NumberUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
 /**
- * Load a tournament, that is retrieve the tournament and puts its ID in session.
+ * Loads a tournament, that is retrieve the tournament and puts its ID in session.
  * 
  * @author ctrung
  * @date 7 mars 2010
  */
 public class LoadTournament extends MatosoServlet {
-	
+	private static final Logger LOG = Logger.getLogger(LoadTournament.class);
 	private static final long serialVersionUID = 1L;
 
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
-		
+		if (LOG.isDebugEnabled())
+			LOG.debug("=>serve");
+
+		// Gets the tournament
 		Integer tournamentId = NumberUtils.getInteger(request.getParameter(RequestCst.REQ_PARAM_TOURNAMENT_ID));
-		Tournament tournament = super.getTournament(request, tournamentId!=null);
-		
+		Tournament tournament = super.getTournament(request, tournamentId != null);
 		request.getSession().setAttribute(SessionCst.SESSION_TOURNAMENT_ID, tournament.getId());
-		
 		request.setAttribute("tournament", tournament);
-		request.setAttribute("rounds", RoundService.getRounds(tournament));
-		
-		return ServletCst.REDIRECT_TO_TOURNAMENT_LOAD;
+
+		// Gets the rounds
+		List<Round> rounds = RoundService.getRounds(tournament);
+
+		String forward;
+		if (rounds.isEmpty())
+			forward = ServletCst.REDIRECT_TO_TOURNAMENT_NO_ROUND;
+		else {
+			request.setAttribute("rounds", rounds);
+			forward = ServletCst.REDIRECT_TO_TOURNAMENT_ROUNDS;
+		}
+
+		if (LOG.isDebugEnabled())
+			LOG.debug("<=serve:" + forward);
+		return forward;
 	}
 }

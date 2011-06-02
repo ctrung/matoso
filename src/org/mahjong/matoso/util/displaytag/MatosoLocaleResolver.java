@@ -22,19 +22,15 @@ import org.displaytag.localization.LocaleResolver;
  * @date 23 janv. 2010
  */
 public class MatosoLocaleResolver implements LocaleResolver {
-
-	/** 
-	 * Logger 
-	 */
 	private static final Logger LOGGER = Logger.getLogger(MatosoLocaleResolver.class);
-	
+
 	/**
 	 * Just get it the way we set it in org.mahjong.matoso.servlet.other.ChangeLanguage servlet
 	 */
 	public Locale resolveLocale(HttpServletRequest arg0) {
-		
 		Locale locale = Locale.getDefault();
-		LOGGER.info("displaytag is resolving the locale, send him : " + locale.toString());
+		if (LOGGER.isDebugEnabled())
+			LOGGER.debug("displaytag is resolving the locale, send him : " + locale.toString());
 		return locale;
 	}
 

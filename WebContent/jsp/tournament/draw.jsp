@@ -14,7 +14,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MaToSo</title>
-		<%@include file="../include/cssAndScripts.jsp"%>
+		<script src="/matoso/js/jquery-1.5.1.min.js"></script>
+		<script src="/matoso/js/jquery-ui-1.8.12.custom.min.js"></script>
+		<script src="/matoso/js/matoso.js"></script>
+		<link rel="stylesheet" type="text/css" href="/matoso/css/jquery-ui-1.8.12.custom.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/matoso/css/theme.css" media="screen" />
+		<link rel="shortcut icon"  href="/matoso/img/favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/print.css" media="print" />
 	</head>
 	<body>
@@ -26,22 +31,29 @@
 List<Player> ps = (List<Player>) request.getAttribute("players");
 %>
 		</div>
-		<div class="matoso-content">
+		<div class="matoso-content matoso-draw">
 <% 	
+	Player p;
+	int nbLines = 0;
 	for(int i=0; i<ps.size(); i++){
-		Player p = ps.get(i);
+		p = ps.get(i);
+		if (i%2==0) {
 %>
-			<table cellpadding="0" cellspacing="0">
+			<table cellpadding="0" cellspacing="0"<%=(++nbLines)%5==0?" class=\"matoso-page-break\"":""%>>
+				<tr><td>
+<%
+		} else {
+%>
+				<td>
+<%
+		}
+%>
+			<table cellpadding="0" cellspacing="0" border="1">
 				<thead>
 					<tr>
-						<th colspan="3">n°<%= p.getTournamentNumber()%> <%= p.getPrettyPrintName() %></th>
-<%
-if(p.getTeam() != null) {
-%>
-						<th colspan="2"><%= p.getTeam().getName() %></th>
-<%
-}
-%>
+						<th colspan="5">
+							n°<%= p.getTournamentNumber()%> <%= p.getPrettyPrintName() %><%=p.getTeam()!=null?" - "+p.getTeam().getName():""%>
+						</th>
 					</tr>
 					<tr>
 						<th colspan="2"><%=BundleCst.BUNDLE.getString("draw.player.session.lbl")%></th>
@@ -86,6 +98,15 @@ if(p.getTeam() != null) {
 				</tbody>
 			</table>
 <%
+	if (i%2==0) {
+%>
+		</td>
+<%
+	} else {
+%>
+		</td></tr></table>
+<%
+	}
 }
 %>
 		</div>

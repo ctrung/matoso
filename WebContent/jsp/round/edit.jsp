@@ -15,7 +15,6 @@
 		<%@include file="../include/head.jsp"%>
 		<div id="edit">
 			<h2><%= BundleCst.BUNDLE.getString("round.edit.title") %></h2>		
-			<a href="<%=request.getContextPath()+ServletCst.REDIRECT_TO_TOURNAMENT_LOAD_SERVLET%>"><%=BundleCst.BUNDLE.getString(BundleCst.LINK_GOTO_SESSIONS)%></a>
 			<form action="<%=request.getContextPath()%>/servlet/SaveRound" method="post">
 <%
 Round round = (Round) request.getAttribute("round");

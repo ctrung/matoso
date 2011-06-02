@@ -44,13 +44,6 @@ boolean displayBestGame = rankingForm != null && rankingForm.getBestScore() != n
 					<li><a href="#matoso-ranking-players"><%=BundleCst.BUNDLE.getString("ranking.by.player")%></a></li>
 <%if(displayRankingTeam){%>
 					<li><a href="#matoso-ranking-team"><%=BundleCst.BUNDLE.getString("ranking.by.team")%></a></li>
-<%}
-if (displayBestScoreBySession) {
-%>
-					<li><a href="#matoso-ranking-session"><%= BundleCst.BUNDLE.getString("ranking.best.score.by.session") %></a></li>
-<%}
-if (displayBestGame) {%>
-					<li><a href="#matoso-ranking-game"><%= BundleCst.BUNDLE.getString("ranking.best.game.for.tournament") %></a></li>
 <%}%>
 				</ul>
 				<div id="matoso-stats">
@@ -68,14 +61,37 @@ if (displayBestGame) {%>
 							<td title="<%=BundleCst.BUNDLE.getString(BundleCst.RANKING_NB_DRAW)%>"><%=ts.getNbDraw() %> (<%=ts.getPercDraw() %>)</td>
 						</tr>
 					</table>
+<%if (displayBestScoreBySession) {%>
+					<h3><%=BundleCst.BUNDLE.getString("ranking.best.score.by.session")%></h3>
+					<display:table name="sessionScope.rankingForm.bestPlayerRoundList" sort="list" id="bestPlayerRoundList">
+						<display:column property="round" titleKey="ranking.session" />
+						<display:column property="player" titleKey="ranking.player" class="left" />
+						<display:column property="score" titleKey="ranking.score" />
+					</display:table>
+<%} if (displayBestGame) {%>
+					<h3><%=BundleCst.BUNDLE.getString("ranking.best.game.for.tournament")%></h3>
+					<table>
+						<tr>
+							<th><%= BundleCst.BUNDLE.getString(BundleCst.RANKING_PLAYER) %></th>
+							<td><%= rankingForm.getBestScore().getNamePlayer() %></td>
+						</tr>
+						<tr>
+							<th><%= BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE) %></th>
+							<td><%= rankingForm.getBestScore().getScore() %></td>
+						</tr>
+					</table>
+<%}%>
 				</div>
 
 				<div id="matoso-ranking-players">
 					<p class="info"><%= BundleCst.BUNDLE.getString("ranking.stats.player.text")%></p>
 					<display:table name="sessionScope.ranking" sort="list" decorator="org.mahjong.matoso.util.decorator.PlayerDecorator" id="player" export="true">
-						<display:column media="html" headerClass="edit"><a href="<%=request.getContextPath()%>/servlet/EditPlayer?id=<%=((Player) player).getId() %>"><img class="editUser" src="<%=request.getContextPath() + "/img/user_48.png"%>" title="<%= BundleCst.BUNDLE.getString("general.edit") %>" width="10px" /></a></display:column>
 					 	<display:column property="rank" titleKey="<%=BundleCst.RANKING_POSITION%>" sortable="true" headerClass="position" />
-					 	<display:column property="prettyPrintName" titleKey="<%=BundleCst.RANKING_PLAYER%>" sortable="true" headerClass="name" class="nowrap" />
+					 	<display:column titleKey="<%=BundleCst.RANKING_PLAYER%>" sortable="true" headerClass="name" class="nowrap" media="html">
+					 		<a href="<%=request.getContextPath()%>/servlet/EditPlayer?id=<%=((Player) player).getId() %>">
+					 			<%= ((Player) player).getPrettyPrintName() %>
+					 		</a>
+					 	</display:column>
 					    <display:column property="points" titleKey="<%=BundleCst.RANKING_POINTS%>" format="{0,number,###.##}" sortable="true" defaultorder="descending" />
 					    <display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" sortable="true" defaultorder="descending" />
 					    <display:column property="nbGames" titleKey="<%=BundleCst.RANKING_NB_GAMES%>" sortable="true" defaultorder="descending" />
@@ -96,29 +112,6 @@ if (displayBestGame) {%>
 						<display:column property="prettyPrintPoints" titleKey="<%=BundleCst.RANKING_POINTS%>" sortable="true" />
 						<display:column property="score" titleKey="<%=BundleCst.RANKING_SCORE%>" sortable="true" />
 					</display:table>
-				</div>
-<%}
-if (displayBestScoreBySession) {%>
-				<div id="matoso-ranking-session">
-					<display:table name="sessionScope.rankingForm.bestPlayerRoundList" sort="list" id="bestPlayerRoundList">
-						<display:column property="round" titleKey="ranking.session" />
-						<display:column property="player" titleKey="ranking.player" class="left" />
-						<display:column property="score" titleKey="ranking.score" />
-					</display:table>
-				</div>
-<%}
-if (displayBestGame) {%>
-				<div id="matoso-ranking-game">
-					<table>
-						<tr>
-							<th><%= BundleCst.BUNDLE.getString(BundleCst.RANKING_PLAYER) %></th>
-							<td><%= rankingForm.getBestScore().getNamePlayer() %></td>
-						</tr>
-						<tr>
-							<th><%= BundleCst.BUNDLE.getString(BundleCst.RANKING_SCORE) %></th>
-							<td><%= rankingForm.getBestScore().getScore() %></td>
-						</tr>
-					</table>
 				</div>
 <%}%>
 			</div>
