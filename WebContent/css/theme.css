@@ -21,7 +21,7 @@ li{padding:0 0 0 10px}
 
 .matoso-content{float:left;width:804px}
 
-.matoso-round div{float:left;padding:10px;margin:10px}
+.matoso-round div{float:left;padding:5px;margin:5px;width:160px;}
 .matoso-round div a{display:block}
 
 .matoso-message {padding:5px;margin:10px 0 10px 0}
@@ -35,6 +35,7 @@ li{padding:0 0 0 10px}
 .table{font-weight:bold}
 .filledWithGames .matoso-button {background:url("/matoso/img/star_gold.png") no-repeat top right}
 .filledWithTotal .matoso-button {font-variant:small-caps;font-style:italic;}
+.matoso-player{font-size:x-small;}
 
 .nowrap{white-space:nowrap;}
 

@@ -70,7 +70,9 @@ List<Round> rounds = (List<Round>) request.getAttribute("rounds");
 							</a>
 <%
 			for (Player player : table.getListPlayers()) {
-%>							<a href="<%=request.getContextPath() + "/servlet/EditPlayer?id=" + player.getId() %>"><%= player.getPrettyPrintName() %></a>
+%>							<a href="/matoso/servlet/EditPlayer?id=<%=player.getId()%>" class="matoso-player">
+								<%= player.getPrettyPrintName() %>
+							</a>
 <%
 			}
 %>						</div>

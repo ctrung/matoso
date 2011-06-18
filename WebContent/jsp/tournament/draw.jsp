@@ -39,7 +39,7 @@ List<Player> ps = (List<Player>) request.getAttribute("players");
 		p = ps.get(i);
 		if (i%2==0) {
 %>
-			<table cellpadding="0" cellspacing="0"<%=(++nbLines)%5==0?" class=\"matoso-page-break\"":""%>>
+			<table cellpadding="0" cellspacing="0"<%=(nbLines++)%5==0?" class=\"matoso-page-break\"":""%>>
 				<tr><td>
 <%
 		} else {
@@ -80,7 +80,7 @@ List<Player> ps = (List<Player>) request.getAttribute("players");
 %>
 					<tr>
 						<td><%=t.getRound().getNumber()%></td>
-						<td><%= date == null ? "" : (date + startTime + "-" + finishTime) %></td>
+						<td><small><%= date == null ? "" : (date + startTime + "-" + finishTime) %></small></td>
 						<td><%=t.getName()%></td>
 						<td></td>
 						<td></td>

@@ -82,10 +82,15 @@ public final class EditTable extends MatosoServlet {
 		
 		EditTableForm form = new EditTableForm();
 		// Player names
-		form.setPlayer1Name(table.getPlayer1().getPrettyPrintName());
-		form.setPlayer2Name(table.getPlayer2().getPrettyPrintName());
-		form.setPlayer3Name(table.getPlayer3().getPrettyPrintName());
-		form.setPlayer4Name(table.getPlayer4().getPrettyPrintName());
+		form.setPlayer1Name(table.getPlayer1().getLastname());
+		form.setPlayer2Name(table.getPlayer2().getLastname());
+		form.setPlayer3Name(table.getPlayer3().getLastname());
+		form.setPlayer4Name(table.getPlayer4().getLastname());
+		// Player first names
+		form.setPlayer1FirstName(table.getPlayer1().getFirstname());
+		form.setPlayer2FirstName(table.getPlayer2().getFirstname());
+		form.setPlayer3FirstName(table.getPlayer3().getFirstname());
+		form.setPlayer4FirstName(table.getPlayer4().getFirstname());
 		// EMAs
 		form.setPlayer1Ema(table.getPlayer1().getEma());
 		form.setPlayer2Ema(table.getPlayer2().getEma());

@@ -78,12 +78,19 @@ if(gr.isAutoCalculate()) checkedAttr = "checked=\"checked\"";
 				<table id="editTable">
 					<thead>
 						<tr>
-							<td colspan="5" rowspan="4"></td>
+							<td colspan="5" rowspan="5"></td>
 							<td><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_NAME)%> :</td>
 							<td><jsp:getProperty property="player1Name" name="EditTableForm"/></td>
 							<td><jsp:getProperty property="player2Name" name="EditTableForm"/></td>
 							<td><jsp:getProperty property="player3Name" name="EditTableForm"/></td>
 							<td><jsp:getProperty property="player4Name" name="EditTableForm"/></td>
+						</tr>
+						<tr>
+							<td><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_FIRSTNAME)%> :</td>
+							<td><jsp:getProperty property="player1FirstName" name="EditTableForm"/></td>
+							<td><jsp:getProperty property="player2FirstName" name="EditTableForm"/></td>
+							<td><jsp:getProperty property="player3FirstName" name="EditTableForm"/></td>
+							<td><jsp:getProperty property="player4FirstName" name="EditTableForm"/></td>
 						</tr>
 						<tr>
 							<td>n° :</td>
@@ -153,17 +160,17 @@ for(int i = 0; i < dtgs.size(); i++) {
 							<th><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_SELFPICK)%></th>
 							<th>Win/Lose</th>
 							<th></th>
-							<th>
-								n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player1Name" name="EditTableForm"/>
+							<th title="<jsp:getProperty property="player1Name" name="EditTableForm"/>">
+								n°<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/> 
 							</th>
-							<th>
-								n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player2Name" name="EditTableForm"/>
+							<th title="<jsp:getProperty property="player2Name" name="EditTableForm"/>">
+								n°<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/>
 							</th>
-							<th>
-								n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player3Name" name="EditTableForm"/>
+							<th title="<jsp:getProperty property="player3Name" name="EditTableForm"/>">
+								n°<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/>
 							</th>
-							<th>
-								n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/> <jsp:getProperty property="player4Name" name="EditTableForm"/>
+							<th title="<jsp:getProperty property="player4Name" name="EditTableForm"/>">
+								n°<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/>
 							</th>
 						</tr>
 					</thead>
@@ -192,23 +199,39 @@ for(int i = 0; i < dtgs.size(); i++) {
 							<td>
 <div class="matoso-radio">
 	<input<%=dtg.isPlayer1Win()?" checked='checked'" : ""%> type="radio" id="radio<%=i%>_1" name="<%=i%>_winner" value="1" tabindex="<%=++indexTab%>" />
-	<label for="radio<%=i%>_1"><jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player1Name" name="EditTableForm"/>" for="radio<%=i%>_1">
+		<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/>
+	</label>
 	<input<%=dtg.isPlayer2Win()?" checked='checked'" : ""%> type="radio" id="radio<%=i%>_2" name="<%=i%>_winner" value="2" tabindex="<%=++indexTab%>" />
-	<label for="radio<%=i%>_2"><jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player2Name" name="EditTableForm"/>" for="radio<%=i%>_2">
+		<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/>
+	</label>
 	<input<%=dtg.isPlayer3Win()?" checked='checked'" : ""%> type="radio" id="radio<%=i%>_3" name="<%=i%>_winner" value="3" tabindex="<%=++indexTab%>" />
-	<label for="radio<%=i%>_3"><jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player3Name" name="EditTableForm"/>" for="radio<%=i%>_3">
+		<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/>
+	</label>
 	<input<%=dtg.isPlayer4Win()?" checked='checked'" : ""%> type="radio" id="radio<%=i%>_4" name="<%=i%>_winner" value="4" tabindex="<%=++indexTab%>" />
-	<label for="radio<%=i%>_4"><jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player4Name" name="EditTableForm"/>" for="radio<%=i%>_4">
+		<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/>
+	</label>
 </div>
 <div class="matoso-radio">
 	<input<%=dtg.isPlayer1Lose()?" checked='checked'" : ""%> type="radio" id="lose_radio<%=i%>_1" name="<%=i%>_loser" value="1" tabindex="<%=++indexTab%>" />
-	<label for="lose_radio<%=i%>_1"><jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player1Name" name="EditTableForm"/>" for="lose_radio<%=i%>_1">
+		<jsp:getProperty property="player1TournamentNumber" name="EditTableForm"/>
+	</label>
 	<input<%=dtg.isPlayer2Lose()?" checked='checked'" : ""%> type="radio" id="lose_radio<%=i%>_2" name="<%=i%>_loser" value="2" tabindex="<%=++indexTab%>" />
-	<label for="lose_radio<%=i%>_2"><jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player2Name" name="EditTableForm"/>" for="lose_radio<%=i%>_2">
+		<jsp:getProperty property="player2TournamentNumber" name="EditTableForm"/>
+	</label>
 	<input<%=dtg.isPlayer3Lose()?" checked='checked'" : ""%> type="radio" id="lose_radio<%=i%>_3" name="<%=i%>_loser" value="3" tabindex="<%=++indexTab%>" />
-	<label for="lose_radio<%=i%>_3"><jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player3Name" name="EditTableForm"/>" for="lose_radio<%=i%>_3">
+		<jsp:getProperty property="player3TournamentNumber" name="EditTableForm"/>
+	</label>
 	<input<%=dtg.isPlayer4Lose()?" checked='checked'" : ""%> type="radio" id="lose_radio<%=i%>_4" name="<%=i%>_loser" value="4" tabindex="<%=++indexTab%>" />
-	<label for="lose_radio<%=i%>_4"><jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/></label>
+	<label title="<jsp:getProperty property="player4Name" name="EditTableForm"/>" for="lose_radio<%=i%>_4">
+		<jsp:getProperty property="player4TournamentNumber" name="EditTableForm"/>
+	</label>
 </div>
 							</td>
 							<td><%=BundleCst.BUNDLE.getString(BundleCst.TABLE_SCORE)%></td>
