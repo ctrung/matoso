@@ -47,8 +47,7 @@ public abstract class TournamentService {
 	 * @param name
 	 *            The tournament name given.
 	 * @param teamActivate
-	 *            <code>true</code> if the tournament allows teams, else
-	 *            <code>false</code>.
+	 *            <code>true</code> if the tournament allows teams, else <code>false</code>.
 	 * @param rules
 	 *            the rules to used
 	 * @return The newly persisted tournament ID.
@@ -139,6 +138,9 @@ public abstract class TournamentService {
 
 		if (lines == null || tournament == null)
 			return;
+		
+		// Checks the number of players
+		
 
 		try {
 			for (int i = 0; i < lines.size(); i++) {
@@ -321,8 +323,7 @@ public abstract class TournamentService {
 	 * @param players
 	 *            The players of the tournament.
 	 * 
-	 * @return A never null object TournamentStats encapsulating the tournaments
-	 *         stats.
+	 * @return A never null object TournamentStats encapsulating the tournaments stats.
 	 */
 	public static TournamentStats getTournamentStats(List<Player> players) {
 		TournamentStats ts = new TournamentStats();

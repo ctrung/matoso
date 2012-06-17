@@ -9,12 +9,11 @@
 package org.mahjong.matoso.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -178,10 +177,7 @@ public class TeamService {
 	}
 
 	/**
-	 * Check teams consistency :
-	 * <ul>
-	 * <li>max. 4 players per team</li>
-	 * </ul>
+	 * Checks the team has 4 players.
 	 * 
 	 * @param players
 	 * @param msgs
@@ -193,37 +189,30 @@ public class TeamService {
 			return;
 		assert msgs != null;
 
-		Map<String, Integer> teamCount = new HashMap<String, Integer>();
-		String badTeams = "";
-
-		for (Iterator<String[]> iterator = players.iterator(); iterator.hasNext();) {
-
-			String[] player = (String[]) iterator.next();
+		Map<String, Integer> teamCount = new TreeMap<String, Integer>();
+		StringBuilder badTeams = new StringBuilder();
+		String team;
+		Integer count;
+		for (String[] player : players) {
 			if (player == null)
 				continue;
-
-			String team = player[5]; // team property is at position 5
-
+			team = player[5]; // team property is at position 5
 			if (team != null) {
-				if (teamCount.get(team) == null) {
+				if (!teamCount.containsKey(team))
 					teamCount.put(team, 0);
-				}
-
-				Integer count = teamCount.get(team);
-				count++;
-				teamCount.put(team, count);
-
-				if (count > 4) {
-					badTeams += ", " + team;
-				}
+				count = teamCount.get(team);
+				teamCount.put(team, ++count);
+			}
+		}
+		for (String teamName : teamCount.keySet())
+			if (teamCount.get(teamName) != 4) {
+				if (badTeams.length() != 0)
+					badTeams.append(", ");
+				badTeams.append(teamName);
 			}
 
-		}
-
-		badTeams = badTeams.replaceFirst(", ", "");
-		if (badTeams.length() > 0) {
-			msgs.addMessage(MatosoMessage.ERROR, I18nUtils.getMessage("player.mass.import.error.team.too.many.players", badTeams));
-		}
+		if (badTeams.length() > 0)
+			msgs.addMessage(MatosoMessage.ERROR, I18nUtils.getMessage("player.mass.import.error.team.too.many.players", badTeams.toString()));
 	}
 
 	public static int getIndexInList(Team t, List<Team> teams) {

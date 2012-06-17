@@ -8,6 +8,8 @@
  */
 package org.mahjong.matoso.service;
 
+import static org.mahjong.matoso.constant.ApplicationCst.MAX_GAMES_FOR_ONE_SESSION;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +31,7 @@ import org.mahjong.matoso.util.exception.FatalException;
  * @date 16 août 2009
  */
 public abstract class GameService {
-
-	private static Logger LOGGER = Logger.getLogger(GameService.class);
+	private static Logger LOG = Logger.getLogger(GameService.class);
 
 	/**
 	 * Retrieve the games played at a table ordered by the game number.
@@ -49,35 +50,32 @@ public abstract class GameService {
 	 * 
 	 * @param table
 	 * 
-	 * @return a list of 16 games data, the games data are never
-	 *         <code>null</code>
+	 * @return a list of 16 games data, the games data are never <code>null</code>
 	 * 
 	 * @throws FatalException
 	 */
 	public static List<DisplayTableGame> getDisplayedTableGames(Table table) throws FatalException {
-		// In mahjong MCR rules, there's always 16 games max.
-		int maxGames = ApplicationCst.MAX_GAMES_FOR_ONE_SESSION;
+		List<DisplayTableGame> res = new ArrayList<DisplayTableGame>();
+		for (int i = 0; i < MAX_GAMES_FOR_ONE_SESSION; i++)
+			res.add(null);
 
-		List<DisplayTableGame> res = new ArrayList<DisplayTableGame>(maxGames);
-		List<Game> games = null;
-		int gamesFoundInd = 0;
-		Game aGame = null;
-
-		games = GameService.getOrderedListFromTable(table);
-		assert (games != null && games.size() <= maxGames);
+		List<Game> games = GameService.getOrderedListFromTable(table);
+		assert (games != null && games.size() <= MAX_GAMES_FOR_ONE_SESSION);
 
 		// filling displayed data of found games
-		for (gamesFoundInd = 0; gamesFoundInd < games.size(); gamesFoundInd++) {
-			aGame = games.get(gamesFoundInd);
-			res.add(new DisplayTableGame(aGame.getScorePlayer1(), aGame.getScorePlayer2(), aGame.getScorePlayer3(), aGame.getScorePlayer4()));
+		DisplayTableGame dtg;
+		for (Game aGame : games) {
+			dtg = new DisplayTableGame(aGame.getScorePlayer1(), aGame.getScorePlayer2(), aGame.getScorePlayer3(), aGame.getScorePlayer4());
+			if (LOG.isDebugEnabled())
+				LOG.debug("getDisplayedTableGames:adds " + (aGame.getGameNumber() - 1));
+			res.set(aGame.getGameNumber() - 1, dtg);
 		}
 
-		// filling empty games scores if all games haven't been played
-		if (gamesFoundInd < maxGames) {
-			for (int i = gamesFoundInd; i < maxGames; i++) {
-				res.add(new DisplayTableGame());
-			}
-		}
+		// filling empty games scores if all games haven't been saved
+		if (games.size() < MAX_GAMES_FOR_ONE_SESSION)
+			for (int i = 0; i < MAX_GAMES_FOR_ONE_SESSION; i++)
+				if (res.get(i) == null)
+					res.set(i, new DisplayTableGame());
 
 		return res;
 	}
@@ -95,11 +93,11 @@ public abstract class GameService {
 	public static void addOrUpdateResult(Table table, DisplayTableGame gameData, int round) throws FatalException {
 		Game theGame = null;
 
-		assert (round <= ApplicationCst.MAX_GAMES_FOR_ONE_SESSION);
+		assert (round <= MAX_GAMES_FOR_ONE_SESSION);
 
 		// retrieve the game
-		theGame = (Game) HibernateUtil.getSession().createCriteria(Game.class).add(Restrictions.eq("table", table)).add(
-				Restrictions.eq("gameNumber", round)).uniqueResult();
+		theGame = (Game) HibernateUtil.getSession().createCriteria(Game.class).add(Restrictions.eq("table", table))
+				.add(Restrictions.eq("gameNumber", round)).uniqueResult();
 
 		if (theGame == null) { // new game
 			theGame = new Game();
@@ -119,8 +117,7 @@ public abstract class GameService {
 	}
 
 	/**
-	 * Calculate the player scores for a game and update the DisplayTableGame
-	 * object.
+	 * Calculate the player scores for a game and update the DisplayTableGame object.
 	 * 
 	 * @param gameData
 	 *            the table game data, asserts not null.
@@ -214,8 +211,7 @@ public abstract class GameService {
 	}
 
 	/**
-	 * Try to collect a game data, that is a selfpick info, hand value, who won
-	 * or who gave. If collection succeeds, the list of DisplayTableGame is
+	 * Try to collect a game data, that is a selfpick info, hand value, who won or who gave. If collection succeeds, the list of DisplayTableGame is
 	 * updated.
 	 * 
 	 * @param paramName
@@ -226,8 +222,7 @@ public abstract class GameService {
 	 * @param rcvdGamesData
 	 *            the games list to fill, can't be <code>null</code>
 	 * 
-	 * @return true if collection succeeds, that is to say the parameter was a
-	 *         game data, false otherwise.
+	 * @return true if collection succeeds, that is to say the parameter was a game data, false otherwise.
 	 */
 	public static boolean collectGameData(String paramName, String paramValue, List<DisplayTableGame> rcvdGamesData) {
 
@@ -250,7 +245,7 @@ public abstract class GameService {
 		else
 			round = null;
 
-		if (round == null || round + 1 > ApplicationCst.MAX_GAMES_FOR_ONE_SESSION)
+		if (round == null || round + 1 > MAX_GAMES_FOR_ONE_SESSION)
 			return false;
 
 		/*
@@ -276,7 +271,7 @@ public abstract class GameService {
 				try {
 					indexWinner = Integer.parseInt(paramValue);
 				} catch (NumberFormatException e) {
-					LOGGER.debug(paramValue + " is not an integer");
+					LOG.debug(paramValue + " is not an integer");
 				}
 				if (indexWinner != 0) {
 					dtg.setPlayer1Win(false);
@@ -307,7 +302,7 @@ public abstract class GameService {
 				try {
 					indexLoser = Integer.parseInt(paramValue);
 				} catch (NumberFormatException e) {
-					LOGGER.debug(paramValue + " is not an integer");
+					LOG.debug(paramValue + " is not an integer");
 				}
 				if (indexLoser != 0) {
 					dtg.setPlayer1Lose(false);
@@ -338,16 +333,14 @@ public abstract class GameService {
 	}
 
 	/**
-	 * Delete the game number X from a table. This method will never fail. You
-	 * should test if the game exists before calling deleteGame if you want to
+	 * Delete the game number X from a table. This method will never fail. You should test if the game exists before calling deleteGame if you want to
 	 * be sure deletion is effective.
 	 * 
 	 * @param table
 	 * @param gameNumber
 	 *            Starts at 0 ... n-1.
 	 * 
-	 * @see TableService#hasGame(Table, int) test if the game number X exists at
-	 *      a table.
+	 * @see TableService#hasGame(Table, int) test if the game number X exists at a table.
 	 */
 	public static void deleteGame(Table table, int gameNumber) {
 
@@ -359,14 +352,13 @@ public abstract class GameService {
 			HibernateUtil.delete(game);
 		} catch (Exception e) {
 			// do not throw exception, see javadoc
-			LOGGER.warn("Deletion of game " + gameNumber + " of table [id=" + table.getId() + "] has gone wrong. This can be an important error.", e);
+			LOG.warn("Deletion of game " + gameNumber + " of table [id=" + table.getId() + "] has gone wrong. This can be an important error.", e);
 		}
 
 	}
 
 	/**
-	 * Test if a winner is present. A game always have a winner except for draw
-	 * games !
+	 * Test if a winner is present. A game always have a winner except for draw games !
 	 * 
 	 * @param game
 	 * @return true if he's present, false otherwise.
