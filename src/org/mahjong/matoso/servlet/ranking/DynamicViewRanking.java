@@ -8,18 +8,19 @@
  */
 package org.mahjong.matoso.servlet.ranking;
 
-import java.util.List;
+import static org.mahjong.matoso.constant.SessionCst.ATTR_LAST_PLAYED_SESSION;
+import static org.mahjong.matoso.constant.SessionCst.ATTR_RANKING;
+import static org.mahjong.matoso.constant.SessionCst.ATTR_TOURNAMENT;
+import static org.mahjong.matoso.constant.SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mahjong.matoso.bean.Player;
 import org.mahjong.matoso.bean.Tournament;
 import org.mahjong.matoso.constant.ApplicationCst;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.constant.ServletCst;
-import org.mahjong.matoso.constant.SessionCst;
 import org.mahjong.matoso.service.RankingService;
 import org.mahjong.matoso.service.RoundService;
 import org.mahjong.matoso.servlet.MatosoServlet;
@@ -33,37 +34,39 @@ import org.mahjong.matoso.util.exception.FatalException;
  * @date 7 mars 2010
  */
 public class DynamicViewRanking extends MatosoServlet {
+	private static final long serialVersionUID = -6276513462234178966L;
+
 	@Override
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
 
 		HttpSession session = request.getSession();
 
-		Tournament tournament = super.getTournament(request);
-		session.setAttribute(SessionCst.ATTR_TOURNAMENT, tournament);
-
-		// Get the players ranking
-		List<Player> orderedPlayers = (List<Player>) session.getAttribute(SessionCst.ATTR_RANKING);
-		if (orderedPlayers == null) {
-			orderedPlayers = RankingService.getByTournament(tournament);
-			session.setAttribute(SessionCst.ATTR_RANKING, orderedPlayers);
+		Tournament tournament = (Tournament) session.getAttribute(ATTR_TOURNAMENT);
+		if (tournament == null) {
+			tournament = super.getTournament(request);
+			session.setAttribute(ATTR_TOURNAMENT, tournament);
 		}
 
+		// Get the players ranking
+		if (session.getAttribute(ATTR_RANKING) == null)
+			session.setAttribute(ATTR_RANKING, RankingService.getByTournament(tournament));
+
 		// The teams ranking
-		session.setAttribute("rankingTeam", RankingService.getTeamsForTournament(tournament));
+		if (session.getAttribute("rankingTeam") == null)
+			session.setAttribute("rankingTeam", RankingService.getTeamsForTournament(tournament));
 
 		// Get the number of the last session
-		session.setAttribute(SessionCst.ATTR_LAST_PLAYED_SESSION, RoundService.getLastPlayedSession(tournament));
+		session.setAttribute(ATTR_LAST_PLAYED_SESSION, RoundService.getLastPlayedSession(tournament));
 
 		// Redefine the nb of elements by page
 		Integer newValue = NumberUtils.getInteger(request.getParameter(RequestCst.PARAM_NB_ELEMENTS_PER_PAGE));
-		Integer inSessionValue = (Integer) session.getAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE);
+		Integer inSessionValue = (Integer) session.getAttribute(SES_ATTR_NB_PLAYERS_BY_PAGE);
 		if (newValue != null)
-			session.setAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE, newValue);
+			session.setAttribute(SES_ATTR_NB_PLAYERS_BY_PAGE, newValue);
 		else if (inSessionValue == null)
-			session.setAttribute(SessionCst.SES_ATTR_NB_PLAYERS_BY_PAGE, ApplicationCst.NB_ELEMENTS_BY_PAGE_DEFAULT);
+			session.setAttribute(SES_ATTR_NB_PLAYERS_BY_PAGE, ApplicationCst.NB_ELEMENTS_BY_PAGE_DEFAULT);
 
 		// go to jsp
 		return ServletCst.REDIRECT_TO_DYNAMIC_VIEW_RANKING;
 	}
-
 }
