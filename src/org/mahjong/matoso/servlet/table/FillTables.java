@@ -37,9 +37,7 @@ import org.mahjong.matoso.util.exception.FatalException;
  * @author Nicolas POCHIC
  */
 public final class FillTables extends MatosoServlet {
-
 	private static final long serialVersionUID = 1L;
-
 	private static final Logger LOG = Logger.getLogger(FillTables.class);
 
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
@@ -49,7 +47,7 @@ public final class FillTables extends MatosoServlet {
 
 		// Get the tournament
 		Tournament tournament = super.getTournament(request);
-		
+
 		// Get the number of wanted rounds
 		String parameterRound = request.getParameter(RequestCst.REQ_PARAM_ROUND);
 
@@ -87,19 +85,20 @@ public final class FillTables extends MatosoServlet {
 			} catch (FatalException e) {
 				LOG.error("save error table : " + table, e);
 			}
-			
+
 			// filling the round map
 			int round = table.getRoundNbr();
-			if(mapRoundTables.get(round) == null) mapRoundTables.put(round, new ArrayList<Table>());
+			if (mapRoundTables.get(round) == null)
+				mapRoundTables.put(round, new ArrayList<Table>());
 			mapRoundTables.get(round).add(table);
 		}
 
 		// Save the rounds
-		for(Integer roundInt : mapRoundTables.keySet()) {
+		for (Integer roundInt : mapRoundTables.keySet()) {
 			List<Table> roundTables = mapRoundTables.get(roundInt);
 			RoundService.create(tournament, roundInt, roundTables);
 		}
-		
+
 		if (LOG.isDebugEnabled())
 			LOG.debug("<=serve");
 

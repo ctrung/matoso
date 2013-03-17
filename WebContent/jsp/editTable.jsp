@@ -43,8 +43,8 @@ MatosoMessages mm = (MatosoMessages)request.getAttribute(RequestCst.REQ_ATTR_MAT
 if(MatosoMessages.isNotEmpty(mm)) {
 	String state,icon;
 	for(int i=0; i<mm.getMesgs().size(); i++) {
-		icon = mm.getMesgs().get(i).getSeverity() == 0 ? "ui-icon-info" : "ui-icon-alert";
-		state = mm.getMesgs().get(i).getSeverity() == 0 ? "ui-state-highlight" : "ui-state-error";
+		icon = mm.getMesgs().get(i).getSeverity() == 2 ? "ui-icon-alert" : "ui-icon-info";
+		state = mm.getMesgs().get(i).getSeverity() == 2 ? "ui-state-error" : "ui-state-highlight";
 %>
 			<div class="ui-widget <%=state%> ui-corner-all matoso-message"> 
 				<span class="ui-icon <%=icon%>"></span>

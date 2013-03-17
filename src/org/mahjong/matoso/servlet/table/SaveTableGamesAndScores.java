@@ -72,8 +72,7 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 		assert results != null;
 
 		/*
-		 * 2. Collect the user inputs via the request parameters...
-		 * DisplayTableGame is used to collect data
+		 * 2. Collect the user inputs via the request parameters... DisplayTableGame is used to collect data
 		 */
 		// initialization
 		for (int i = 0; i < ApplicationCst.MAX_GAMES_FOR_ONE_SESSION; i++)
@@ -128,7 +127,7 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 
 		// tables scores
 		if (!autoCalculate && !GameResultService.isEmpty(results) && !GameResultService.isTableScoresValid(results)) {
-			userMsgs.addMessage(MatosoMessage.ERROR, BundleCst.BUNDLE.getString("table.errors.scores.not.valid"));
+			userMsgs.addMessage(MatosoMessage.WARNING, BundleCst.BUNDLE.getString("table.errors.scores.not.valid"));
 		}
 
 		// games data
@@ -173,7 +172,7 @@ public class SaveTableGamesAndScores extends MatosoServlet {
 			}
 		}
 
-		if (MatosoMessages.isNotEmpty(userMsgs)) {
+		if (MatosoMessages.hasError(userMsgs)) {
 			LOGGER.info("Validation failed, forwarding to round and table JSP");
 			request.setAttribute(RequestCst.REQ_ATTR_TABLE, table);
 			request.setAttribute(RequestCst.REQ_ATTR_TABLE_DISPLAY_GAMES, rcvdGamesData);

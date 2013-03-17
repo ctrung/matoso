@@ -1,7 +1,6 @@
 <%@page
 	import="
 		java.util.List,
-		java.util.ResourceBundle,
 		org.mahjong.matoso.bean.Tournament,
 		org.mahjong.matoso.constant.BundleCst,
 		org.mahjong.matoso.constant.RequestCst,

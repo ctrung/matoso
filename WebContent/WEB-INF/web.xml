@@ -201,6 +201,12 @@
 		<servlet-name>TeamShuffleValidate</servlet-name>
 		<servlet-class>org.mahjong.matoso.servlet.team.TeamShuffleValidate</servlet-class>
 	</servlet>
+	<servlet>
+		<description>Imports rounds to the tournament</description>
+		<display-name>ImportRounds</display-name>
+		<servlet-name>ImportRounds</servlet-name>
+		<servlet-class>org.mahjong.matoso.servlet.round.ImportRounds</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>ServletInit</servlet-name>
@@ -321,6 +327,10 @@
 	<servlet-mapping>
 		<servlet-name>TeamShuffleValidate</servlet-name>
 		<url-pattern>/servlet/TeamShuffleValidate</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ImportRounds</servlet-name>
+		<url-pattern>/servlet/ImportRounds</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>

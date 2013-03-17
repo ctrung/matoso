@@ -8,6 +8,8 @@
  */
 package org.mahjong.matoso.util.message;
 
+import static org.mahjong.matoso.util.message.MatosoMessage.ERROR;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class MatosoMessages {
 	 * @return true if there's at least one message, false otherwise.
 	 */
 	public static boolean isNotEmpty(MatosoMessages matosoMessages) {
-		return matosoMessages!=null && matosoMessages.getMesgs()!=null && !matosoMessages.getMesgs().isEmpty();
+		return matosoMessages != null && matosoMessages.getMesgs() != null && !matosoMessages.getMesgs().isEmpty();
 	}
 
 	/**
@@ -55,10 +57,18 @@ public class MatosoMessages {
 	}
 
 	/**
-	 * @param mesgs the mesgs to set
+	 * @param mesgs
+	 *            the mesgs to set
 	 */
 	public void setMesgs(List<MatosoMessage> mesgs) {
 		this.mesgs = mesgs;
 	}
-	
+
+	public static boolean hasError(MatosoMessages mm) {
+		if (mm != null && mm.getMesgs() != null)
+			for (MatosoMessage msg : mm.getMesgs())
+				if (msg != null && msg.getSeverity() == ERROR)
+					return true;
+		return false;
+	}
 }

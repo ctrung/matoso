@@ -1,3 +1,4 @@
+body{font-size:small}
 .noprint{display:none}
 * {
 	color:black;
@@ -5,7 +6,8 @@
 	padding:0;
 	text-align:center;
 }
-table table {margin:0 10px 10px 0}
+table{width:100%}
+table table {margin:0 10px 10px 0;width:95%}
 table table td,table table th{padding:0 5px}
 .matoso-page-break {page-break-before:always}
 small{white-space:nowrap;}

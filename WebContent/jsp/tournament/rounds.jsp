@@ -1,7 +1,6 @@
 <%@page import="
 	java.util.List,
 	java.util.TreeMap,
-	java.util.ResourceBundle,
 	org.mahjong.matoso.constant.BundleCst,
 	org.mahjong.matoso.constant.RequestCst,
 	org.mahjong.matoso.constant.ServletCst,

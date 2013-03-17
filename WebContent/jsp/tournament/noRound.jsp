@@ -1,7 +1,6 @@
 <%@page import="
 	java.util.List,
 	java.util.TreeMap,
-	java.util.ResourceBundle,
 	org.mahjong.matoso.constant.BundleCst,
 	org.mahjong.matoso.constant.RequestCst,
 	org.mahjong.matoso.constant.ServletCst,
@@ -35,7 +34,8 @@ Tournament tournament = (Tournament) request.getAttribute("tournament");
 			<div class="matoso-tabs">
 				<ul>
 					<li><a href="#matoso-import"><%=BundleCst.BUNDLE.getString(BundleCst.PLAYER_MASS_IMPORT)%></a></li>
-					<li><a href="#matoso-add"><%= BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NB_PLAYERS) %></a></li>
+					<li><a href="#matoso-add"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_NB_PLAYERS)%></a></li>
+					<li><a href="#matoso-force-rounds"><%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_FORCE_ROUNDS)%></a></li>
 				</ul>
 				<form action="<%="/matoso"+ServletCst.REDIRECT_TO_IMPORT_PLAYER_SERVLET%>" enctype="multipart/form-data" method="POST" id="matoso-import">
 <%
@@ -92,6 +92,11 @@ Tournament tournament = (Tournament) request.getAttribute("tournament");
 							<td><input type="text" name="<%= RequestCst.REQ_PARAM_ROUND %>" /></td>
 						</tr>
 					</table>
+					<input type="submit" />
+				</form>
+				<form action="/matoso/servlet/ImportRounds" method="post" id="matoso-force-rounds" enctype="multipart/form-data">
+					<%=BundleCst.BUNDLE.getString(BundleCst.TOURNAMENT_SELECT_FILE)%>
+					<input type="file" accept="text/csv" name="csvfile" class="matoso-button" />
 					<input type="submit" />
 				</form>
 			</div>

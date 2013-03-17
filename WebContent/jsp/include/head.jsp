@@ -6,7 +6,7 @@
 		<input type="image" src="/matoso/img/flag/gb.gif" alt="English" title="English" onclick="language.value='en'" />
 		<input type="image" src="/matoso/img/flag/fr.gif" alt="Français" title="Français" />
 	</form>
-	<div id="powered">Project MaToSo v3<br/>2011 by Lionel, Nicolas and Cl&eacute;ment</div>
+	<div id="powered">Project MaToSo v4<br/>2013</div>
 </div>
 <%
 Object tnmtId = session.getAttribute(SessionCst.SESSION_TOURNAMENT_ID);

@@ -39,7 +39,7 @@ List<Player> ps = (List<Player>) request.getAttribute("players");
 		p = ps.get(i);
 		if (i%2==0) {
 %>
-			<table cellpadding="0" cellspacing="0"<%=(nbLines++)%5==0?" class=\"matoso-page-break\"":""%>>
+			<table cellpadding="0" cellspacing="0"<%=(nbLines++)%4==0?" class=\"matoso-page-break\"":""%>>
 				<tr><td>
 <%
 		} else {
