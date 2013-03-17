@@ -138,9 +138,8 @@ public abstract class TournamentService {
 
 		if (lines == null || tournament == null)
 			return;
-		
+
 		// Checks the number of players
-		
 
 		try {
 			for (int i = 0; i < lines.size(); i++) {
@@ -194,8 +193,8 @@ public abstract class TournamentService {
 				details = line[15];
 				club = line[16];
 
-				player = new Player(firstname, lastname, email, country, ema, null, pseudo, dateArrival, dateDeparture, dateFormular, datePayment,
-						paymentMode, hasPhoto, cj, cp, details, club);
+				player = new Player(firstname, lastname, email, country, ema, null, pseudo, dateArrival, dateDeparture,
+						dateFormular, datePayment, paymentMode, hasPhoto, cj, cp, details, club);
 				player.setTournamentNumber(i + 1);
 
 				addPlayer(player, tournament);
@@ -372,5 +371,38 @@ public abstract class TournamentService {
 		}
 
 		return ts;
+	}
+
+	public static void addRounds(Tournament tournament, List<String[]> roundsLines) throws FatalException {
+		int roundNum = 1, index, tableNum;
+		Table table = null;
+		List<Table> tables;
+		Map<String, Player> players = new HashMap<String, Player>();
+		for (String[] roundLine : roundsLines) {
+			index = 0;
+			tableNum = 1;
+			tables = new ArrayList<Table>();
+			for (String playerNum : roundLine) {
+				// Creates a new table
+				if (index++ % 4 == 0) {
+					table = new Table();
+					table.setRoundNbr(roundNum);
+					table.setName(Integer.toString(tableNum++));
+					table.setTournament(tournament);
+					tables.add(table);
+				}
+
+				// Creates the player if not exist
+				if (!players.containsKey(playerNum)) {
+					players.put(playerNum, new Player("Player " + playerNum));
+					players.get(playerNum).setTournamentNumber(Integer.parseInt(playerNum));
+					addPlayer(players.get(playerNum), tournament);
+				}
+
+				TableService.addPlayerToTable(players.get(playerNum), table);
+				HibernateUtil.save(table);
+			}
+			RoundService.create(tournament, roundNum++, tables);
+		}
 	}
 }
