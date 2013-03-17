@@ -9,7 +9,6 @@
 package org.mahjong.matoso.servlet.other;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.mahjong.matoso.constant.BundleCst;
 import org.mahjong.matoso.constant.RequestCst;
 import org.mahjong.matoso.servlet.MatosoServlet;
+import org.mahjong.matoso.util.I18n;
 import org.mahjong.matoso.util.SessionUtils;
 import org.mahjong.matoso.util.exception.FatalException;
 
@@ -27,22 +27,22 @@ import org.mahjong.matoso.util.exception.FatalException;
  */
 @SuppressWarnings("serial")
 public class ChangeLanguage extends MatosoServlet {
-	/** 
-	 * Logger 
+	/**
+	 * Logger
 	 */
 	private static final Logger LOGGER = Logger.getLogger(ChangeLanguage.class);
 
 	public String serve(HttpServletRequest request, HttpServletResponse response) throws FatalException {
-		
+
 		LOGGER.debug(RequestCst.REQ_PARAM_LANGUAGE + " = " + request.getParameter(RequestCst.REQ_PARAM_LANGUAGE));
 
 		// Change the default language
 		if (request.getParameter(RequestCst.REQ_PARAM_LANGUAGE) != null) {
 			Locale newLocale = new Locale(request.getParameter(RequestCst.REQ_PARAM_LANGUAGE));
 			Locale.setDefault(newLocale);
-			
+
 			// Updating the resources locale too
-			BundleCst.BUNDLE = ResourceBundle.getBundle("properties/labels", newLocale);
+			BundleCst.BUNDLE = new I18n("properties/labels", newLocale);
 
 			LOGGER.debug("new locale = " + Locale.getDefault());
 		}

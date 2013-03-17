@@ -1,11 +1,11 @@
 package org.mahjong.matoso.constant;
 
-import java.util.ResourceBundle;
+import org.mahjong.matoso.util.I18n;
 
 /** Constants for the translations */
 public abstract class BundleCst {
 	/** the file */
-	public static ResourceBundle BUNDLE = ResourceBundle.getBundle("properties/labels");
+	public static I18n BUNDLE = new I18n("properties/labels");
 
 	public static final String GENERAL_CREATE = "general.create";
 	public static final String GENERAL_DELETE = "general.delete";
@@ -23,10 +23,12 @@ public abstract class BundleCst {
 	public static final String TOURNAMENT_TEAM_ACTIVATE = "tournament.team.activate";
 	public static final String TOURNAMENT_DRAW_GOTO_LINK = "tounament.draw.goto.link";
 	public static final String TOURNAMENT_NB_PLAYERS = "tournament.nb.players";
+	public static final String TOURNAMENT_FORCE_ROUNDS = "tournament.force.rounds";
 	public static final String TOURNAMENT_FINAL_SESSION_VIEW = "tournament.final.session.view";
 	public static final String TOURNAMENT_FINAL_SESSION_TITLE = "tournament.final.session.title";
 	public static final String TOURNAMENT_RULES = "tournament.rules";
 	public static final String TOURNAMENT_VISUAL_CHECK = "tournament.visual.check";
+	public static final String TOURNAMENT_SELECT_FILE = "tournament.select.file";
 
 	public static final String ROUND_NUMBER = "round.number";
 	public static final String ROUND_ADD = "round.add";
