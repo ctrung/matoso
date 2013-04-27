@@ -167,7 +167,11 @@ public abstract class RoundService {
 							TableService.addPlayerToTable(numPlayer2Player.get(player), t);
 						max.add(t);
 					}
-					numRound++;
+					if (nbWantedRounds == numRound)
+						// Stops if the number of filled rounds is the wanted number
+						break;
+					else
+						numRound++;
 				}
 			}
 		}
